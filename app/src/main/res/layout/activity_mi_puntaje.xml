@@ -6,4 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".MiPuntaje">
 
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/red"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-366dp" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mi Puntaje"
+        android:textColor="#FBFBFB"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="144dp"
+        tools:layout_editor_absoluteY="93dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
