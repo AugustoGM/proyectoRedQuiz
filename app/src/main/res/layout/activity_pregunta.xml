@@ -20,7 +20,8 @@
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button16"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="HardcodedText,VisualLintButtonSize" />
 
     <Button
         android:id="@+id/button18"
@@ -33,7 +34,8 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button14" />
+        app:layout_constraintTop_toBottomOf="@+id/button14"
+        tools:ignore="HardcodedText,VisualLintButtonSize" />
 
     <Button
         android:id="@+id/button2"
@@ -49,7 +51,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
-        tools:ignore="HardcodedText,TextContrastCheck" />
+        tools:ignore="HardcodedText,TextContrastCheck,UnknownIdInLayout" />
 
     <TextView
         android:id="@+id/textView27"
@@ -70,7 +72,8 @@
         android:layout_marginTop="76dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/corazon" />
+        app:srcCompat="@drawable/corazon"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/textView31"
@@ -84,7 +87,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/imageView3"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText,TextSizeCheck" />
 
     <TextView
         android:id="@+id/textView32"
@@ -98,7 +102,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/textView27"
         app:layout_constraintEnd_toEndOf="@+id/textView27"
         app:layout_constraintStart_toStartOf="@+id/textView27"
-        app:layout_constraintTop_toTopOf="@+id/textView27" />
+        app:layout_constraintTop_toTopOf="@+id/textView27"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/textView33"
@@ -108,7 +113,8 @@
         android:backgroundTint="#E1E1E1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView27" />
+        app:layout_constraintTop_toBottomOf="@+id/textView27"
+        tools:ignore="VisualLintOverlap" />
 
     <Button
         android:id="@+id/button14"
@@ -121,7 +127,8 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView33" />
+        app:layout_constraintTop_toBottomOf="@+id/textView33"
+        tools:ignore="HardcodedText,VisualLintButtonSize" />
 
     <Button
         android:id="@+id/button16"
@@ -134,7 +141,8 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button18" />
+        app:layout_constraintTop_toBottomOf="@+id/button18"
+        tools:ignore="HardcodedText,VisualLintButtonSize" />
 
     <TextView
         android:id="@+id/textView34"
@@ -158,6 +166,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/textView34"
         app:layout_constraintEnd_toEndOf="@+id/textView34"
         app:layout_constraintStart_toStartOf="@+id/textView34"
-        app:layout_constraintTop_toTopOf="@+id/textView34" />
+        app:layout_constraintTop_toTopOf="@+id/textView34"
+        tools:ignore="HardcodedText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
