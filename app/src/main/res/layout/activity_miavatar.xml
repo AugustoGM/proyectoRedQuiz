@@ -48,7 +48,7 @@
         android:id="@+id/button13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="220dp"
+        android:layout_marginTop="276dp"
         android:backgroundTint="#FF0000"
         android:text="Editar"
         android:textColor="#FFFFFF"
@@ -66,10 +66,10 @@
         android:backgroundTint="#EFECEC"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.457"
+        app:layout_constraintHorizontal_bias="0.485"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button13"
-        app:layout_constraintVertical_bias="0.74" />
+        app:layout_constraintVertical_bias="0.877" />
 
     <TextView
         android:id="@+id/textView23"
