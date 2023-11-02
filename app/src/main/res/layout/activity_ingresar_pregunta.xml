@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".IngresarPregunta">
+
+    <CheckBox
+        android:id="@+id/checkBox5"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="15dp"
+        android:text="CheckBox"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView38"
+        tools:ignore="DuplicateSpeakableTextCheck,HardcodedText,TouchTargetSizeCheck" />
+
+    <CheckBox
+        android:id="@+id/checkBox4"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:text="CheckBox"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox2"
+        tools:ignore="HardcodedText,TouchTargetSizeCheck" />
+
+    <CheckBox
+        android:id="@+id/checkBox3"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:text="CheckBox"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox5"
+        tools:ignore="HardcodedText,TouchTargetSizeCheck" />
+
+    <TextView
+        android:id="@+id/textView26"
+        android:layout_width="411dp"
+        android:layout_height="43dp"
+        android:background="#FF0000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView36"
+        android:layout_width="345dp"
+        android:layout_height="67dp"
+        android:layout_marginTop="25dp"
+        android:text="@string/ingresar_la_informaci_n_de_la_pregunta"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView26"
+        tools:ignore="TextSizeCheck" />
+
+    <EditText
+        android:id="@+id/editTextText4"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:hint="Pregunta"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView36"
+        tools:ignore="HardcodedText,TouchTargetSizeCheck"
+        android:autofillHints="" />
+
+    <Spinner
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="14dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextText4"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <EditText
+        android:id="@+id/editTextText5"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="14dp"
+        android:ems="10"
+        android:hint="@string/rating"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/_dynamic"
+        tools:ignore="TouchTargetSizeCheck,UnknownId"
+        android:autofillHints="" />
+
+    <CheckBox
+        android:id="@+id/checkBox2"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:text="CheckBox"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox3"
+        tools:ignore="HardcodedText,TouchTargetSizeCheck" />
+
+    <TextView
+        android:id="@+id/textView38"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
+        android:text="Seleccione la respuesta correcta"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.241"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextText5"
+        tools:ignore="HardcodedText" />
+
+    <Button
+        android:id="@+id/button20"
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#FF0202"
+        android:text="Subir"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox4"
+        tools:ignore="HardcodedText,TextContrastCheck,VisualLintButtonSize" />
+
+    <Button
+        android:id="@+id/button21"
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+        android:backgroundTint="#DFDBDB"
+        android:text="Volver"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button20"
+        app:layout_constraintVertical_bias="0.151"
+        tools:ignore="HardcodedText,VisualLintButtonSize" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
