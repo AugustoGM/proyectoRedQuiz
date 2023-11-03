@@ -16,7 +16,9 @@
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextText"
+        tools:ignore="HardcodedText,TextContrastCheck,TouchTargetSizeCheck"
+        android:autofillHints="" />
 
     <EditText
         android:id="@+id/editTextTextEmailAddress2"
@@ -28,7 +30,8 @@
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText3" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextText3"
+        tools:ignore="Autofill,HardcodedText,TextContrastCheck,TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/textView2"
@@ -44,7 +47,8 @@
         app:layout_constraintHorizontal_bias="0.174"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.643" />
+        app:layout_constraintVertical_bias="0.643"
+        tools:ignore="HardcodedText,VisualLintOverlap" />
 
     <EditText
         android:id="@+id/editTextText"
@@ -56,7 +60,7 @@
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="DuplicateSpeakableTextCheck"
+        tools:ignore="Autofill,DuplicateSpeakableTextCheck,HardcodedText,MissingConstraints,TouchTargetSizeCheck"
         tools:layout_editor_absoluteY="122dp" />
 
     <EditText
@@ -70,20 +74,23 @@
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDate" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextDate"
+        tools:ignore="HardcodedText,TouchTargetSizeCheck"
+        android:importantForAutofill="no" />
 
     <Button
         android:id="@+id/button3"
         android:layout_width="350dp"
         android:layout_height="52dp"
-        android:backgroundTint="#C50B0B"
+        android:backgroundTint="#FF0000"
         android:text="Registrarse"
         app:layout_constraintBottom_toTopOf="@+id/imageView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinner"
-        app:layout_constraintVertical_bias="0.506" />
+        app:layout_constraintVertical_bias="0.506"
+        tools:ignore="DuplicateSpeakableTextCheck,HardcodedText,VisualLintButtonSize,TextContrastCheck" />
 
     <Button
         android:id="@+id/button4"
@@ -92,6 +99,7 @@
         android:backgroundTint="#FDFDFD"
         android:text="Inicia sesión"
         android:textColor="#FB0404"
+        tools:ignore="HardcodedText,MissingConstraints,TextContrastCheck"
         tools:layout_editor_absoluteX="248dp"
         tools:layout_editor_absoluteY="56dp" />
 
@@ -105,7 +113,8 @@
         android:inputType="date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword2" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword2"
+        tools:ignore="Autofill,HardcodedText,TextContrastCheck,TouchTargetSizeCheck" />
 
     <EditText
         android:id="@+id/editTextTextPassword2"
@@ -117,7 +126,8 @@
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress2" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress2"
+        tools:ignore="Autofill,HardcodedText,TextContrastCheck,TouchTargetSizeCheck" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -127,7 +137,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/descargar" />
+        app:srcCompat="@drawable/descargar"
+        tools:ignore="ContentDescription" />
 
     <Spinner
         android:id="@+id/spinner"
@@ -136,6 +147,7 @@
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText2" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextText2"
+        tools:ignore="TouchTargetSizeCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

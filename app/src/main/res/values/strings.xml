@@ -2,4 +2,6 @@
     <string name="app_name">proyectoRedQuiz</string>
     <string name="rating">Rating</string>
     <string name="ingresar_la_informaci_n_de_la_pregunta">Ingresar la información de la pregunta</string>
+    <string name="cerrar_sesi_n">Cerrar Sesión</string>
+    <string name="todo">TODO</string>
 </resources>

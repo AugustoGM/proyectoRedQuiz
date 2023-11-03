@@ -19,7 +19,8 @@
         app:layout_constraintHorizontal_bias="0.175"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.676" />
+        app:layout_constraintVertical_bias="0.676"
+        tools:ignore="HardcodedText" />
 
     <EditText
         android:id="@+id/editTextTextEmailAddress"
@@ -31,7 +32,8 @@
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toTopOf="@+id/editTextTextPassword"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="Autofill,HardcodedText,TextContrastCheck,TouchTargetSizeCheck" />
 
     <EditText
         android:id="@+id/editTextTextPassword"
@@ -42,6 +44,7 @@
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="Autofill,HardcodedText,MissingConstraints,TextContrastCheck,TouchTargetSizeCheck"
         tools:layout_editor_absoluteY="209dp" />
 
     <Button
@@ -49,11 +52,12 @@
         android:layout_width="350dp"
         android:layout_height="52dp"
         android:layout_marginTop="116dp"
-        android:backgroundTint="#C71212"
+        android:backgroundTint="#FF0303"
         android:text="Iniciar sesión"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword"
+        tools:ignore="DuplicateSpeakableTextCheck,HardcodedText,TextContrastCheck,VisualLintButtonSize" />
 
     <Button
         android:id="@+id/button5"
@@ -69,7 +73,8 @@
         app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toEndOf="@+id/textView"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.779" />
+        app:layout_constraintVertical_bias="0.779"
+        tools:ignore="HardcodedText,TextContrastCheck" />
 
     <Button
         android:id="@+id/button6"
@@ -82,7 +87,8 @@
         android:textColorHighlight="#F30505"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toBottomOf="@+id/button"
+        tools:ignore="HardcodedText,TextContrastCheck,VisualLintButtonSize" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -92,5 +98,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button6"
-        app:srcCompat="@drawable/descargar" />
+        app:srcCompat="@drawable/descargar"
+        android:importantForAccessibility="no" />
 </androidx.constraintlayout.widget.ConstraintLayout>
