@@ -7,133 +7,139 @@
     tools:context=".RegistroActivity">
 
     <EditText
-        android:id="@+id/editTextText3"
+        android:id="@+id/apellidos"
         android:layout_width="289dp"
         android:layout_height="40dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginBottom="15dp"
+        android:autofillHints=""
         android:ems="10"
         android:hint="Apellidos"
         android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/correo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText"
-        tools:ignore="HardcodedText,TextContrastCheck,TouchTargetSizeCheck"
-        android:autofillHints="" />
+        tools:ignore="HardcodedText,TextContrastCheck,TouchTargetSizeCheck" />
 
     <EditText
-        android:id="@+id/editTextTextEmailAddress2"
+        android:id="@+id/correo"
         android:layout_width="289dp"
         android:layout_height="40dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginBottom="15dp"
         android:ems="10"
         android:hint="Correo electrónico"
         android:inputType="textEmailAddress"
+        app:layout_constraintBottom_toTopOf="@+id/contrasena"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText3"
         tools:ignore="Autofill,HardcodedText,TextContrastCheck,TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
         android:fontFamily="sans-serif-black"
         android:text="Registrarse"
         android:textColor="#000000"
         android:textSize="26sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/editTextText"
+        app:layout_constraintBottom_toTopOf="@+id/nombre"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.174"
+        app:layout_constraintHorizontal_bias="0.175"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.643"
+        app:layout_constraintVertical_bias="0.793"
         tools:ignore="HardcodedText,VisualLintOverlap" />
 
     <EditText
-        android:id="@+id/editTextText"
+        android:id="@+id/nombre"
         android:layout_width="289dp"
         android:layout_height="40dp"
+        android:layout_marginBottom="15dp"
         android:ems="10"
         android:hint="Nombre"
         android:inputType="text"
         android:minHeight="48dp"
+        app:layout_constraintBottom_toTopOf="@+id/apellidos"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="Autofill,DuplicateSpeakableTextCheck,HardcodedText,MissingConstraints,TouchTargetSizeCheck"
-        tools:layout_editor_absoluteY="122dp" />
+        tools:ignore="Autofill,DuplicateSpeakableTextCheck,HardcodedText,MissingConstraints,TouchTargetSizeCheck" />
 
     <EditText
-        android:id="@+id/editTextText2"
+        android:id="@+id/curp"
         android:layout_width="289dp"
         android:layout_height="40dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginBottom="15dp"
         android:ems="10"
         android:hint="CURP"
+        android:importantForAutofill="no"
         android:inputType="text"
         android:minHeight="48dp"
+        app:layout_constraintBottom_toTopOf="@+id/genero"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDate"
-        tools:ignore="HardcodedText,TouchTargetSizeCheck"
-        android:importantForAutofill="no" />
+        tools:ignore="HardcodedText,TouchTargetSizeCheck" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btn_registrar"
         android:layout_width="350dp"
         android:layout_height="52dp"
+        android:layout_marginBottom="25dp"
         android:backgroundTint="#FF0000"
         android:text="Registrarse"
         app:layout_constraintBottom_toTopOf="@+id/imageView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner"
-        app:layout_constraintVertical_bias="0.506"
         tools:ignore="DuplicateSpeakableTextCheck,HardcodedText,VisualLintButtonSize,TextContrastCheck" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/btn_inicio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
         android:backgroundTint="#FDFDFD"
         android:text="Inicia sesión"
         android:textColor="#FB0404"
-        tools:ignore="HardcodedText,MissingConstraints,TextContrastCheck"
-        tools:layout_editor_absoluteX="248dp"
-        tools:layout_editor_absoluteY="56dp" />
+        app:layout_constraintBottom_toTopOf="@+id/nombre"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.512"
+        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.887"
+        tools:ignore="HardcodedText,MissingConstraints,TextContrastCheck" />
 
     <EditText
-        android:id="@+id/editTextDate"
+        android:id="@+id/fechaN"
         android:layout_width="289dp"
         android:layout_height="40dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginBottom="15dp"
         android:ems="10"
         android:hint="Fecha de nacimiento"
         android:inputType="date"
+        app:layout_constraintBottom_toTopOf="@+id/curp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword2"
         tools:ignore="Autofill,HardcodedText,TextContrastCheck,TouchTargetSizeCheck" />
 
     <EditText
-        android:id="@+id/editTextTextPassword2"
+        android:id="@+id/contrasena"
         android:layout_width="289dp"
         android:layout_height="45dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginBottom="15dp"
         android:ems="10"
         android:hint="Contraseña"
         android:inputType="textPassword"
+        app:layout_constraintBottom_toTopOf="@+id/fechaN"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress2"
         tools:ignore="Autofill,HardcodedText,TextContrastCheck,TouchTargetSizeCheck" />
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="124dp"
-        android:layout_height="119dp"
-        android:layout_marginBottom="4dp"
+        android:layout_width="147dp"
+        android:layout_height="155dp"
+        android:layout_marginBottom="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -141,13 +147,13 @@
         tools:ignore="ContentDescription" />
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/genero"
         android:layout_width="289dp"
         android:layout_height="40dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginBottom="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_registrar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText2"
         tools:ignore="TouchTargetSizeCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

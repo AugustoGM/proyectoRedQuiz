@@ -11,7 +11,7 @@
         android:id="@+id/button10"
         android:layout_width="300dp"
         android:layout_height="48dp"
-        android:layout_marginTop="488dp"
+        android:layout_marginTop="520dp"
         android:backgroundTint="#E40E0E"
         android:text="Jugar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -66,7 +66,7 @@
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tiempo de regeneración para la próxima vida"
+        android:text="Tiempo de regeneración para la próxima vida:"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -136,7 +136,7 @@
         tools:ignore="HardcodedText,TextContrastCheck" />
 
     <Button
-        android:id="@+id/button15"
+        android:id="@+id/btn_cerrar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
