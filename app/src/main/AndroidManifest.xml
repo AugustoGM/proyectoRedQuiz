@@ -13,13 +13,13 @@
         android:theme="@style/Theme.ProyectoRedQuiz"
         tools:targetApi="31">
         <activity
-            android:name=".VerReactivos"
+            android:name=".IngresarPregunta"
             android:exported="false" />
         <activity
             android:name=".MenuUserActivity"
             android:exported="false" />
         <activity
-            android:name=".IngresarPregunta"
+            android:name=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".EditarAvatar"
@@ -37,7 +37,7 @@
             android:name=".RegistroActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".VerReactivos"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

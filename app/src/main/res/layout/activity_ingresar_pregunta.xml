@@ -28,13 +28,13 @@
         android:textColor="#000000"
         android:textSize="26sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/editTextText4"
+        app:layout_constraintBottom_toTopOf="@+id/pregunta"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="TextSizeCheck" />
 
     <EditText
-        android:id="@+id/editTextText4"
+        android:id="@+id/pregunta"
         android:layout_width="300dp"
         android:layout_height="40dp"
         android:layout_marginBottom="15dp"
@@ -42,23 +42,24 @@
         android:ems="10"
         android:hint="Pregunta"
         android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/_dynamic"
+        app:layout_constraintBottom_toTopOf="@+id/categoria"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="HardcodedText,TouchTargetSizeCheck,UnknownId" />
 
     <Spinner
+        android:id="@+id/categoria"
         android:layout_width="300dp"
         android:layout_height="40dp"
         android:layout_marginBottom="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/editTextText5"
+        app:layout_constraintBottom_toTopOf="@+id/rating"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="TouchTargetSizeCheck" />
 
     <EditText
-        android:id="@+id/editTextText5"
+        android:id="@+id/rating"
         android:layout_width="300dp"
         android:layout_height="40dp"
         android:layout_marginBottom="15dp"
@@ -77,26 +78,26 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="15dp"
         android:text="Escriba las posibles respuestas"
-        app:layout_constraintBottom_toTopOf="@+id/editTextText"
+        app:layout_constraintBottom_toTopOf="@+id/correcta"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.241"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="HardcodedText" />
 
     <Button
-        android:id="@+id/button20"
+        android:id="@+id/btn_agregar"
         android:layout_width="350dp"
         android:layout_height="50dp"
         android:layout_marginBottom="10dp"
         android:backgroundTint="#FF0202"
         android:text="Subir"
-        app:layout_constraintBottom_toTopOf="@+id/button21"
+        app:layout_constraintBottom_toTopOf="@+id/btn_back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="HardcodedText,TextContrastCheck,VisualLintButtonSize" />
 
     <Button
-        android:id="@+id/button21"
+        android:id="@+id/btn_back"
         android:layout_width="350dp"
         android:layout_height="50dp"
         android:layout_marginBottom="32dp"
@@ -110,7 +111,7 @@
         tools:ignore="HardcodedText,VisualLintButtonSize" />
 
     <EditText
-        android:id="@+id/editTextText"
+        android:id="@+id/correcta"
         android:layout_width="300dp"
         android:layout_height="40dp"
         android:layout_marginBottom="20dp"
@@ -118,13 +119,13 @@
         android:hint="Respuesta correcta"
         android:importantForAutofill="no"
         android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/editTextText3"
+        app:layout_constraintBottom_toTopOf="@+id/incorrecta1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="HardcodedText,TextContrastCheck,TouchTargetSizeCheck" />
 
     <EditText
-        android:id="@+id/editTextText2"
+        android:id="@+id/incorrecta2"
         android:layout_width="300dp"
         android:layout_height="40dp"
         android:layout_marginBottom="20dp"
@@ -132,38 +133,36 @@
         android:hint="Respuesta incorrecta 2"
         android:importantForAutofill="no"
         android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/editTextText6"
+        app:layout_constraintBottom_toTopOf="@+id/incorrecta3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="HardcodedText,TextContrastCheck,TouchTargetSizeCheck" />
 
     <EditText
-        android:id="@+id/editTextText6"
-        android:layout_width="300dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="20dp"
-        android:ems="10"
-        android:hint="Respuesta incorrecta 3"
-        android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/button20"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="Autofill,HardcodedText,TextContrastCheck,TouchTargetSizeCheck" />
-
-    <EditText
-        android:id="@+id/editTextText3"
+        android:id="@+id/incorrecta1"
         android:layout_width="300dp"
         android:layout_height="40dp"
         android:layout_marginBottom="20dp"
         android:ems="10"
         android:hint="Respuesta incorrecta 1"
         android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/editTextText2"
+        app:layout_constraintBottom_toTopOf="@+id/incorrecta2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="Autofill,HardcodedText,TextContrastCheck,TouchTargetSizeCheck" />
+
+    <EditText
+        android:id="@+id/incorrecta3"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="20dp"
+        android:ems="10"
+        android:hint="Respuesta incorrecta 3"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/btn_agregar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

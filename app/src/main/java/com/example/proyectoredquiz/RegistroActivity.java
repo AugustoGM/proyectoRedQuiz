@@ -7,8 +7,11 @@ import android.content.ContentUris;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -30,6 +33,8 @@ public class RegistroActivity extends AppCompatActivity {
     EditText name, lastname, email, password, date, curp;
     FirebaseFirestore mFirestore;
     FirebaseAuth mAuth;
+    private Spinner spinnerGender;
+    private ArrayAdapter<CharSequence> genderAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +51,25 @@ public class RegistroActivity extends AppCompatActivity {
         curp = findViewById(R.id.curp);
         btn_register = findViewById(R.id.btn_registrar);
         btn_index = findViewById(R.id.btn_inicio);
+
+        //SPINNER
+        spinnerGender = findViewById(R.id.genero);
+        genderAdapter = ArrayAdapter.createFromResource(this, R.array.gender_array, android.R.layout.simple_spinner_item);
+        genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerGender.setAdapter(genderAdapter);
+
+        spinnerGender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String selectedGender = (String) genderAdapter.getItem(i);
+                Toast.makeText(RegistroActivity.this, "Género: " + selectedGender, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         btn_index.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,49 +89,53 @@ public class RegistroActivity extends AppCompatActivity {
                 String passUser = password.getText().toString().trim();
                 String dateUser = date.getText().toString().trim();
                 String curpUser = curp.getText().toString().trim();
+                String selectedGender = spinnerGender.getSelectedItem().toString();
 
                 if (nameUser.isEmpty() && lastnameUser.isEmpty() && emailUser.isEmpty() && passUser.isEmpty() && dateUser.isEmpty() && curpUser.isEmpty()){
                     Toast.makeText(RegistroActivity.this, "Complete los datos", Toast.LENGTH_SHORT).show();
                 }else{
-                    registerUser(nameUser, lastnameUser, emailUser, passUser, dateUser, curpUser);
+                    registerUser(nameUser, lastnameUser, emailUser, passUser, dateUser, curpUser, selectedGender);
                 }
             }
         });
     }
 
-    private void registerUser(String nameUser, String lastnameUser, String emailUser, String passUser, String dateUser, String curpUser) {
+    private void registerUser(String nameUser, String lastnameUser, String emailUser, String passUser, String dateUser, String curpUser, String selectedGender) {
+        //String selectedGender = spinnerGender.getSelectedItem().toString();
+
         mAuth.createUserWithEmailAndPassword(emailUser, passUser).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                String id = mAuth.getCurrentUser().getUid();
-                Map<String, Object> map = new HashMap<>();
-                map.put("id", id);
-                map.put("nombre", nameUser);
-                map.put("apellidos", lastnameUser);
-                map.put("email", emailUser);
-                map.put("password", passUser);
-                map.put("fechaNacimiento", dateUser);
-                map.put("curp", curpUser);
+                if (task.isSuccessful()) {
+                    String id = mAuth.getCurrentUser().getUid();
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("id", id);
+                    map.put("nombre", nameUser);
+                    map.put("apellidos", lastnameUser);
+                    map.put("email", emailUser);
+                    map.put("password", passUser);
+                    map.put("fechaNacimiento", dateUser);
+                    map.put("curp", curpUser);
+                    map.put("genero", selectedGender); // Agregar el género al mapa de datos
 
-                mFirestore.collection("users").document(id).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        finish();
-                        startActivity(new Intent(RegistroActivity.this, MainActivity.class));
-                        Toast.makeText(RegistroActivity.this, "Registro Exitoso", Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(RegistroActivity.this, "Error al guardar", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(RegistroActivity.this, "Error al registrar", Toast.LENGTH_SHORT).show();
+                    mFirestore.collection("users").document(id).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            finish();
+                            startActivity(new Intent(RegistroActivity.this, MainActivity.class));
+                            Toast.makeText(RegistroActivity.this, "Registro Exitoso", Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(RegistroActivity.this, "Error al guardar", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    Toast.makeText(RegistroActivity.this, "Error al registrar", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
+
 }
