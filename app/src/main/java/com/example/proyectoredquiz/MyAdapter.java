@@ -2,12 +2,14 @@ package com.example.proyectoredquiz;
 
 import static com.google.firebase.database.DatabaseKt.getSnapshots;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,6 +30,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public MyAdapter(Context context, ArrayList<Question> list) {
         this.context = context;
         this.list = list;
+
     }
 
     @NonNull
@@ -39,34 +42,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        DocumentSnapshot documentSnapshot = getSnapshots().getSnapshot(holder.getAdapterPosition());
-        final String id = documentSnapshot.getId();
 
         Question question = list.get(position);
         holder.pregunta.setText(question.getPregunta());
         holder.categoria.setText(question.getCategoria());
 
-        holder.btn_eliminar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                deletePregunta(id);
-            }
-        });
     }
 
-    private void deletePregunta(String id) {
-        mFirestore.collection("preguntas").document(id).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-
-            }
-        });
-    }
 
     @Override
     public int getItemCount() {

@@ -48,7 +48,7 @@ public class VerReactivos extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference("preguntas");
         list = new ArrayList<>();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new MyAdapter(this, list);
+        adapter = new MyAdapter(this, list); //AQUI se agregó algo
         recyclerView.setAdapter(adapter);
 
         // Inicializa Firestore
