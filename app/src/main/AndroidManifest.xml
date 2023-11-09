@@ -19,7 +19,7 @@
             android:name=".MenuUserActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".VerReactivos"
             android:exported="false" />
         <activity
             android:name=".EditarAvatar"
@@ -37,7 +37,7 @@
             android:name=".RegistroActivity"
             android:exported="false" />
         <activity
-            android:name=".VerReactivos"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
