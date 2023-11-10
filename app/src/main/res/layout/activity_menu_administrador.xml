@@ -4,53 +4,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MenuUserActivity">
-
+    tools:context=".MenuAdministrador">
 
     <Button
-        android:id="@+id/btn_jugar"
+        android:id="@+id/btn_addPregunta"
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="100dp"
+        android:backgroundTint="#E40E0E"
+        android:text="Agregar Pregunta"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="HardcodedText" />
+
+    <Button
+        android:id="@+id/btn_ver"
         android:layout_width="300dp"
         android:layout_height="48dp"
         android:layout_marginTop="510dp"
         android:backgroundTint="#E40E0E"
-        android:text="Jugar"
+        android:text="Ver Preguntas"
+        app:layout_constraintBottom_toTopOf="@+id/btn_addPregunta"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="HardcodedText" />
-
-    <Button
-        android:id="@+id/button11"
-        android:layout_width="300dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="15dp"
-        android:backgroundTint="#E40E0E"
-        android:text="Mi avatar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_jugar"
-        tools:ignore="HardcodedText" />
-
-    <Button
-        android:id="@+id/btn_puntaje"
-        android:layout_width="300dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="15dp"
-        android:backgroundTint="#E40E0E"
-        android:text="Mi puntaje"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button11"
-        tools:ignore="HardcodedText" />
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="HardcodedText,VisualLintOverlap" />
 
     <TextView
-        android:id="@+id/nombreU"
+        android:id="@+id/textView42"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="Administrador"
         android:textColor="#000000"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -60,37 +48,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.472"
-        tools:ignore="HardcodedText" />
+        tools:ignore="HardcodedText,VisualLintOverlap" />
 
     <TextView
-        android:id="@+id/textView12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tiempo de regeneración para la próxima vida:"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.602"
-        tools:ignore="HardcodedText" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="68dp"
-        android:layout_height="31dp"
-        android:layout_marginEnd="144dp"
-        android:text="5 vidas"
-        android:textColor="#000000"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.544"
-        tools:ignore="HardcodedText,TextSizeCheck" />
-
-    <TextView
-        android:id="@+id/textView37"
+        android:id="@+id/textView49"
         android:layout_width="413dp"
         android:layout_height="235dp"
         android:background="#FF0000"
@@ -103,11 +64,11 @@
         app:layout_constraintVertical_bias="0.0"
         tools:ignore="VisualLintBounds" />
 
-
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/imageView4"
         android:layout_width="200dp"
         android:layout_height="200dp"
+        android:layout_marginBottom="420dp"
         android:padding="4dp"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -119,24 +80,11 @@
         app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
         app:strokeColor="@color/white"
         app:strokeWidth="4dp"
-        tools:ignore="ImageContrastCheck"
+        tools:ignore="ImageContrastCheck,UnknownIdInLayout"
         tools:srcCompat="@tools:sample/avatars" />
 
     <Button
-        android:id="@+id/btn_perfil"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:backgroundTint="#FF0000"
-        android:text="Mi Perfil"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.012"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="HardcodedText,TextContrastCheck" />
-
-    <Button
-        android:id="@+id/btn_cerrar"
+        android:id="@+id/btn_cerrar2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -149,23 +97,22 @@
         tools:ignore="TextContrastCheck" />
 
     <TextView
-        android:id="@+id/textView39"
+        android:id="@+id/textView50"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Inicio"
         android:textColor="#FFFFFF"
         android:textSize="34sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/imageView5"
+        app:layout_constraintBottom_toTopOf="@+id/imageView4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView37"
-        app:layout_constraintVertical_bias="0.619"
+        app:layout_constraintTop_toTopOf="@+id/textView49"
         tools:ignore="HardcodedText" />
 
     <ImageButton
-        android:id="@+id/imageButton3"
+        android:id="@+id/imageButton"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:adjustViewBounds="false"
@@ -183,41 +130,15 @@
         tools:srcCompat="@drawable/camara2" />
 
     <TextView
-        android:id="@+id/textView40"
+        android:id="@+id/textView51"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="Accede a tus estadísticas"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_puntaje"
-        tools:ignore="HardcodedText" />
-
-    <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="46dp"
-        android:layout_height="35dp"
+        android:text="Agregue una pregunta al banco"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/textView3"
-        app:layout_constraintHorizontal_bias="0.962"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.541"
-        app:srcCompat="@drawable/corazon"
-        android:contentDescription="TODO"
-        tools:ignore="ContentDescription,HardcodedText" />
-
-    <TextClock
-        android:id="@+id/textClock2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:format12Hour="hh:mm:ss a"
-        android:gravity="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_jugar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView12" />
+        app:layout_constraintVertical_bias="0.905"
+        tools:ignore="HardcodedText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

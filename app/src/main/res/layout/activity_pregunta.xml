@@ -7,7 +7,7 @@
     tools:context=".Pregunta">
 
     <Button
-        android:id="@+id/button19"
+        android:id="@+id/r4"
         android:layout_width="350dp"
         android:layout_height="65dp"
         android:layout_marginTop="15dp"
@@ -19,12 +19,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button16"
+        app:layout_constraintTop_toBottomOf="@+id/r3"
         app:layout_constraintVertical_bias="0.0"
         tools:ignore="HardcodedText,VisualLintButtonSize" />
 
     <Button
-        android:id="@+id/button18"
+        android:id="@+id/r2"
         android:layout_width="350dp"
         android:layout_height="65dp"
         android:layout_marginTop="15dp"
@@ -34,11 +34,11 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button14"
+        app:layout_constraintTop_toBottomOf="@+id/r1"
         tools:ignore="HardcodedText,VisualLintButtonSize" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btn_volverJ"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
@@ -68,30 +68,33 @@
         android:id="@+id/imageView3"
         android:layout_width="37dp"
         android:layout_height="31dp"
-        android:layout_marginStart="324dp"
         android:layout_marginTop="76dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView27"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.85"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/corazon"
         tools:ignore="ContentDescription" />
 
     <TextView
-        android:id="@+id/textView31"
+        android:id="@+id/vidasJ"
         android:layout_width="26dp"
         android:layout_height="27dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="24dp"
         android:text="X 5"
         android:textColor="#000000"
         android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/textView27"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/imageView3"
+        app:layout_constraintHorizontal_bias="0.922"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.898"
         tools:ignore="HardcodedText,TextSizeCheck" />
 
     <TextView
-        android:id="@+id/textView32"
+        android:id="@+id/categoriaJ"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Signos Vitales"
@@ -117,7 +120,7 @@
         tools:ignore="VisualLintOverlap" />
 
     <Button
-        android:id="@+id/button14"
+        android:id="@+id/r1"
         android:layout_width="350dp"
         android:layout_height="65dp"
         android:layout_marginTop="25dp"
@@ -131,7 +134,7 @@
         tools:ignore="HardcodedText,VisualLintButtonSize" />
 
     <Button
-        android:id="@+id/button16"
+        android:id="@+id/r3"
         android:layout_width="350dp"
         android:layout_height="65dp"
         android:layout_marginTop="15dp"
@@ -141,7 +144,7 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button18"
+        app:layout_constraintTop_toBottomOf="@+id/r2"
         tools:ignore="HardcodedText,VisualLintButtonSize" />
 
     <TextView
@@ -156,7 +159,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView27" />
 
     <TextView
-        android:id="@+id/textView35"
+        android:id="@+id/preguntaJ"
         android:layout_width="259dp"
         android:layout_height="131dp"
         android:text="Pregunta"
@@ -168,5 +171,16 @@
         app:layout_constraintStart_toStartOf="@+id/textView34"
         app:layout_constraintTop_toTopOf="@+id/textView34"
         tools:ignore="HardcodedText" />
+
+    <ProgressBar
+        android:id="@+id/progressBar2"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/r1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView33" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -20,6 +20,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class IngresarPregunta extends AppCompatActivity {
 
@@ -97,6 +98,7 @@ public class IngresarPregunta extends AppCompatActivity {
     }
 
     private void postPregunta(String preguntai, String ratingi, String correctai, String incorrecta1i, String incorrecta2i, String incorrecta3i, String categoriai) {
+        String questionUid  = UUID.randomUUID().toString();
         Map<String, Object> map = new HashMap<>();
         map.put("pregunta", preguntai);
         map.put("categoria", categoriai);
@@ -105,6 +107,7 @@ public class IngresarPregunta extends AppCompatActivity {
         map.put("incorrecta1", incorrecta1i);
         map.put("incorrecta2", incorrecta2i);
         map.put("incorrecta3", incorrecta3i);
+        map.put("id",questionUid);
 
         mfirestore.collection("preguntas").add(map).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override

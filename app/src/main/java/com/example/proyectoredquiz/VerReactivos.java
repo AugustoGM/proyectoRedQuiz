@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,6 +29,7 @@ public class VerReactivos extends AppCompatActivity {
     ArrayList<Question> list;
     DatabaseReference databaseReference;
     MyAdapter adapter;
+    Button btn_atras;
 
     @Override
     public void onBackPressed() {
@@ -42,6 +44,15 @@ public class VerReactivos extends AppCompatActivity {
         setContentView(R.layout.activity_ver_reactivos);
 
         btn_agregar = findViewById(R.id.btn_add);
+        btn_atras = findViewById(R.id.btn_volverAdmin);
+
+        btn_atras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent index = new Intent(VerReactivos.this, MenuAdministrador.class);
+                startActivities(new Intent[]{index});
+            }
+        });
 
         //RECYCLER VIEW
         recyclerView = findViewById(R.id.recyclerView);
@@ -70,6 +81,7 @@ public class VerReactivos extends AppCompatActivity {
         }).addOnFailureListener(e -> {
             // Manejar errores en caso de que ocurran
         });
+
 
 
 
