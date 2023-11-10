@@ -1,0 +1,23 @@
+Button deleteButton = findViewById(R.id.deleteButtpruon); // Reemplaza R.id.deleteButton con el ID real de tu botón
+
+deleteButton.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        // Elimina el documento
+        documentReference.delete()
+            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                    // Aquí puedes realizar cualquier acción adicional después de la eliminación exitosa
+                }
+            })
+            .addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.w(TAG, "Error deleting document", e);
+                    // Maneja el error según tus necesidades
+                }
+            });
+    }
+});
