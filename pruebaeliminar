@@ -1,3 +1,5 @@
+DocumentReference documentReference = db.collection("cities").document("DC");
+
 Button deleteButton = findViewById(R.id.deleteButtpruon); // Reemplaza R.id.deleteButton con el ID real de tu botón
 
 deleteButton.setOnClickListener(new View.OnClickListener() {
