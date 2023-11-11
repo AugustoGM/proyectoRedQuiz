@@ -54,7 +54,7 @@
         tools:ignore="HardcodedText,TextContrastCheck,UnknownIdInLayout" />
 
     <TextView
-        android:id="@+id/textView27"
+        android:id="@+id/colorCaregoria"
         android:layout_width="409dp"
         android:layout_height="46dp"
         android:layout_marginTop="100dp"
@@ -69,7 +69,7 @@
         android:layout_width="37dp"
         android:layout_height="31dp"
         android:layout_marginTop="55dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView27"
+        app:layout_constraintBottom_toTopOf="@+id/colorCaregoria"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.85"
         app:layout_constraintStart_toStartOf="parent"
@@ -85,7 +85,7 @@
         android:text="X 5"
         android:textColor="#000000"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/textView27"
+        app:layout_constraintBottom_toTopOf="@+id/colorCaregoria"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.922"
         app:layout_constraintStart_toStartOf="parent"
@@ -102,10 +102,10 @@
         android:textColorHighlight="#000000"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/textView27"
-        app:layout_constraintEnd_toEndOf="@+id/textView27"
-        app:layout_constraintStart_toStartOf="@+id/textView27"
-        app:layout_constraintTop_toTopOf="@+id/textView27"
+        app:layout_constraintBottom_toBottomOf="@+id/colorCaregoria"
+        app:layout_constraintEnd_toEndOf="@+id/colorCaregoria"
+        app:layout_constraintStart_toStartOf="@+id/colorCaregoria"
+        app:layout_constraintTop_toTopOf="@+id/colorCaregoria"
         tools:ignore="HardcodedText" />
 
     <TextView
@@ -116,7 +116,7 @@
         android:backgroundTint="#E1E1E1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView27"
+        app:layout_constraintTop_toBottomOf="@+id/colorCaregoria"
         tools:ignore="VisualLintOverlap" />
 
     <Button
@@ -156,7 +156,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/textView33"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textView33"
-        app:layout_constraintTop_toBottomOf="@+id/textView27" />
+        app:layout_constraintTop_toBottomOf="@+id/colorCaregoria" />
 
     <TextView
         android:id="@+id/preguntaJ"
@@ -173,7 +173,7 @@
         tools:ignore="HardcodedText" />
 
     <ProgressBar
-        android:id="@+id/progressBar2"
+        android:id="@+id/duracion"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -181,6 +181,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
+        android:visibility="visible"
         app:layout_constraintTop_toBottomOf="@+id/textView33" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
