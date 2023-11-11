@@ -1,8 +1,10 @@
 package com.example.proyectoredquiz;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -34,6 +36,8 @@ public class Pregunta extends AppCompatActivity {
     private ProgressBar duracion;
     int counter = 0;
     private Handler handler;
+    private Timer progressBarTimer;
+    private TimerTask progressBarTimerTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +65,9 @@ public class Pregunta extends AppCompatActivity {
         btn_volver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent index = new Intent(Pregunta.this, MenuUserActivity.class);
-                startActivities(new Intent[]{index});
+                mostrarDialogoConfirmacion();
+                //Intent index = new Intent(Pregunta.this, MenuUserActivity.class);
+                //startActivities(new Intent[]{index});
             }
         });
 
@@ -74,6 +79,7 @@ public class Pregunta extends AppCompatActivity {
         boton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                detenerProgreso();
                 verificarRespuesta(boton1);
             }
         });
@@ -81,6 +87,7 @@ public class Pregunta extends AppCompatActivity {
         boton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                detenerProgreso();
                 verificarRespuesta(boton2);
             }
         });
@@ -88,6 +95,7 @@ public class Pregunta extends AppCompatActivity {
         boton3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                detenerProgreso();
                 verificarRespuesta(boton3);
             }
         });
@@ -95,30 +103,72 @@ public class Pregunta extends AppCompatActivity {
         boton4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                detenerProgreso();
                 verificarRespuesta(boton4);
             }
         });
 
     }
 
+    // BOTÓN VOLVER
+    private void mostrarDialogoConfirmacion() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Confirmación");
+        builder.setMessage("¿Estás seguro de que quieres volver?");
+        builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // Acciones a realizar si el usuario hace clic en "Sí"
+                volver();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // Acciones a realizar si el usuario hace clic en "No" o cierra el diálogo
+                dialogInterface.dismiss();
+            }
+        });
+        builder.create().show();
+    }
+
+    private void volver() {
+        Intent index = new Intent(Pregunta.this, MenuUserActivity.class);
+        startActivities(new Intent[]{index});
+    }
+
     // BARRA DE PROGRESO
     public void iniciarProgreso() {
-        final Timer t = new Timer();
-        TimerTask tt = new TimerTask() {
+        progressBarTimer = new Timer();
+        progressBarTimerTask = new TimerTask() {
             @Override
             public void run() {
                 counter++;
                 duracion.setProgress(counter);
 
-                if (counter == 100)
-                    t.cancel();
+                if (counter == 100) {
+                    detenerProgreso();
+                    cargarSiguientePregunta();
+                }
             }
         };
-        t.schedule(tt,0,100);
+        progressBarTimer.schedule(progressBarTimerTask, 0, 100);
+    }
+
+
+    // DETENER BARRA DE PROGRESO
+    public void detenerProgreso() {
+        if (progressBarTimer != null) {
+            progressBarTimer.cancel();
+            progressBarTimer = null;
+            counter = 0; // Reiniciar el contador a cero
+            duracion.setProgress(counter);
+        }
     }
 
     // ASIGNAR VALORES A LOS BOTONES DE FORMA ALEATORIA
     private void getQuestion() {
+        resetColoresBotones(); // Restablecer colores de los botones
         preguntasCollection.limit(1).get().addOnCompleteListener(task -> {
             if (task.isSuccessful()){
                 for (QueryDocumentSnapshot document : task.getResult()){
@@ -158,7 +208,6 @@ public class Pregunta extends AppCompatActivity {
 
                     // Assign each number to a button
                     pregunta.setText(Pregunta);
-                    Log.d("TAG", "Valor de Categoria: " + Categoria);
 
                     if (Categoria.equals("Signos Vitales")) {
                         color.setBackgroundColor(ContextCompat.getColor(this, R.color.signosVitales));
@@ -262,6 +311,7 @@ public class Pregunta extends AppCompatActivity {
                 if (totalPreguntas > 1) {
                     // Si hay más preguntas, carga la siguiente pregunta
                     getQuestion();
+                    iniciarProgreso();
                 } else {
                     // Si no hay más preguntas, realiza la acción que consideres apropiada (mostrar mensaje, volver a la actividad anterior, etc.)
                     // Por ejemplo, mostrar un mensaje y cerrar la actividad actual
@@ -277,5 +327,12 @@ public class Pregunta extends AppCompatActivity {
         });
     }
 
+    // COLOR ORIGINAL DE LOS BOTONES
+    private void resetColoresBotones() {
+        boton1.setBackgroundColor(ContextCompat.getColor(this, R.color.botones));
+        boton2.setBackgroundColor(ContextCompat.getColor(this, R.color.botones));
+        boton3.setBackgroundColor(ContextCompat.getColor(this, R.color.botones));
+        boton4.setBackgroundColor(ContextCompat.getColor(this, R.color.botones));
+    }
 
 }
