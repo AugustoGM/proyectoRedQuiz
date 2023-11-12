@@ -16,7 +16,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -30,6 +33,8 @@ public class Pregunta extends AppCompatActivity {
 
     Button btn_volver, boton1, boton2, boton3, boton4;
     TextView pregunta, categoria, vidas, color;
+    FirebaseAuth mAuth;
+    private String idUser;
     private FirebaseFirestore db;
     private CollectionReference preguntasCollection;
     private String idPreguntaActual;
@@ -43,6 +48,8 @@ public class Pregunta extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pregunta);
+        mAuth = FirebaseAuth.getInstance();
+        idUser = mAuth.getCurrentUser().getUid();
 
         btn_volver = findViewById(R.id.btn_volverJ);
         boton1 = findViewById(R.id.r1);
@@ -108,13 +115,26 @@ public class Pregunta extends AppCompatActivity {
             }
         });
 
+        // OBTENER LAS VIDAS DEL USUARIO
+        DocumentReference documentReference = db.collection("users").document(idUser);
+        documentReference.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists()) {
+                    vidas.setText("X " + String.valueOf(document.get("vidas")));
+                }
+            } else {
+                // Manejar el error, si es necesario
+            }
+        });
+
     }
 
     // BOTÓN VOLVER
     private void mostrarDialogoConfirmacion() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Confirmación");
-        builder.setMessage("¿Estás seguro de que quieres volver?");
+        builder.setTitle("Estás por dejar el juego");
+        builder.setMessage("¿Seguro de que quieres volver?");
         builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
