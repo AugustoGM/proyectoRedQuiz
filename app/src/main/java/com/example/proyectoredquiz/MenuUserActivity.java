@@ -22,7 +22,7 @@ public class MenuUserActivity extends AppCompatActivity {
     Button btn_exit, btn_perfil, btn_jugar, btn_puntaje;
     FirebaseAuth mAuth;
     FirebaseFirestore fStore;
-    private TextView nombreUsuario;
+    private TextView nombreUsuario, vidas;
     private String idUser;
 
     @Override
@@ -38,6 +38,7 @@ public class MenuUserActivity extends AppCompatActivity {
         btn_jugar = findViewById(R.id.btn_jugar);
         btn_puntaje = findViewById(R.id.btn_puntaje);
         nombreUsuario = findViewById(R.id.nombreU);
+        vidas = findViewById(R.id.vidasUsuario);
 
         btn_perfil.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,6 +54,7 @@ public class MenuUserActivity extends AppCompatActivity {
                 DocumentSnapshot document = task.getResult();
                 if (document.exists()) {
                     nombreUsuario.setText(document.getString("nombre"));
+                    vidas.setText(String.valueOf(document.get("vidas")) + " vidas");
                 }
             } else {
                 // Manejar el error, si es necesario

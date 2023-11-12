@@ -30,7 +30,7 @@ import java.util.Objects;
 public class RegistroActivity extends AppCompatActivity {
 
     Button btn_register, btn_index;
-    EditText name, lastname, email, password, date, curp;
+    EditText name, lastname, email, password, date;
     FirebaseFirestore mFirestore;
     FirebaseAuth mAuth;
     private Spinner spinnerGender;
@@ -48,7 +48,7 @@ public class RegistroActivity extends AppCompatActivity {
         email = findViewById(R.id.correo);
         password = findViewById(R.id.contrasena);
         date = findViewById(R.id.fechaN);
-        curp = findViewById(R.id.curp);
+        //curp = findViewById(R.id.curp);
         btn_register = findViewById(R.id.btn_registrar);
         btn_index = findViewById(R.id.btn_inicio);
 
@@ -88,19 +88,19 @@ public class RegistroActivity extends AppCompatActivity {
                 String emailUser = email.getText().toString().trim();
                 String passUser = password.getText().toString().trim();
                 String dateUser = date.getText().toString().trim();
-                String curpUser = curp.getText().toString().trim();
+                //String curpUser = curp.getText().toString().trim();
                 String selectedGender = spinnerGender.getSelectedItem().toString();
 
-                if (nameUser.isEmpty() && lastnameUser.isEmpty() && emailUser.isEmpty() && passUser.isEmpty() && dateUser.isEmpty() && curpUser.isEmpty()){
+                if (nameUser.isEmpty() && lastnameUser.isEmpty() && emailUser.isEmpty() && passUser.isEmpty() && dateUser.isEmpty()){
                     Toast.makeText(RegistroActivity.this, "Complete los datos", Toast.LENGTH_SHORT).show();
                 }else{
-                    registerUser(nameUser, lastnameUser, emailUser, passUser, dateUser, curpUser, selectedGender);
+                    registerUser(nameUser, lastnameUser, emailUser, passUser, dateUser, selectedGender);
                 }
             }
         });
     }
 
-    private void registerUser(String nameUser, String lastnameUser, String emailUser, String passUser, String dateUser, String curpUser, String selectedGender) {
+    private void registerUser(String nameUser, String lastnameUser, String emailUser, String passUser, String dateUser, String selectedGender) {
         //String selectedGender = spinnerGender.getSelectedItem().toString();
 
         mAuth.createUserWithEmailAndPassword(emailUser, passUser).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -115,8 +115,9 @@ public class RegistroActivity extends AppCompatActivity {
                     map.put("email", emailUser);
                     map.put("password", passUser);
                     map.put("fechaNacimiento", dateUser);
-                    map.put("curp", curpUser);
+                    //map.put("curp", curpUser);
                     map.put("genero", selectedGender); // Agregar el género al mapa de datos
+                    map.put("vidas", 5);
 
                     mFirestore.collection("users").document(id).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override

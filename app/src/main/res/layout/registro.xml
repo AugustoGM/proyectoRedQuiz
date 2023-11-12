@@ -66,12 +66,12 @@
         tools:ignore="Autofill,DuplicateSpeakableTextCheck,HardcodedText,MissingConstraints,TouchTargetSizeCheck" />
 
     <EditText
-        android:id="@+id/curp"
+        android:id="@+id/confirmar"
         android:layout_width="289dp"
         android:layout_height="40dp"
         android:layout_marginBottom="15dp"
         android:ems="10"
-        android:hint="CURP"
+        android:hint="Confirmar contraseña"
         android:importantForAutofill="no"
         android:inputType="text"
         android:minHeight="48dp"
@@ -117,7 +117,7 @@
         android:ems="10"
         android:hint="Fecha de nacimiento"
         android:inputType="date"
-        app:layout_constraintBottom_toTopOf="@+id/curp"
+        app:layout_constraintBottom_toTopOf="@+id/confirmar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="Autofill,HardcodedText,TextContrastCheck,TouchTargetSizeCheck" />
