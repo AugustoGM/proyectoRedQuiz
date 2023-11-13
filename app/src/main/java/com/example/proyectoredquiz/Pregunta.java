@@ -43,6 +43,8 @@ public class Pregunta extends AppCompatActivity {
     private Handler handler;
     private Timer progressBarTimer;
     private TimerTask progressBarTimerTask;
+    private int preguntaActualIndex = 0;
+    private List<DocumentSnapshot> preguntasList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,8 +75,6 @@ public class Pregunta extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 mostrarDialogoConfirmacion();
-                //Intent index = new Intent(Pregunta.this, MenuUserActivity.class);
-                //startActivities(new Intent[]{index});
             }
         });
 
@@ -86,6 +86,7 @@ public class Pregunta extends AppCompatActivity {
         boton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(Pregunta.this, "no se perdió", Toast.LENGTH_SHORT).show();
                 detenerProgreso();
                 verificarRespuesta(boton1);
             }
@@ -129,6 +130,7 @@ public class Pregunta extends AppCompatActivity {
         });
 
     }
+
 
     // BOTÓN VOLVER
     private void mostrarDialogoConfirmacion() {
@@ -186,80 +188,96 @@ public class Pregunta extends AppCompatActivity {
         }
     }
 
-    // ASIGNAR VALORES A LOS BOTONES DE FORMA ALEATORIA
     private void getQuestion() {
         resetColoresBotones(); // Restablecer colores de los botones
-        preguntasCollection.limit(1).get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()){
-                for (QueryDocumentSnapshot document : task.getResult()){
-                    idPreguntaActual = document.getId();
 
-                    String Pregunta = document.getString("pregunta");
-                    String Categoria = document.getString("categoria");
-                    String correcta = document.getString("correcta");
-                    String incorrecta1 = document.getString("incorrecta1");
-                    String incorrecta2 = document.getString("incorrecta2");
-                    String incorrecta3 = document.getString("incorrecta3");
-                    String rating = document.getString("rating");
+        // Verificar si hay preguntas disponibles
+        if (preguntasList == null || preguntaActualIndex >= preguntasList.size()) {
+            // Obtener una nueva lista de preguntas
+            preguntasCollection.get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    preguntasList = task.getResult().getDocuments();
+                    mostrarPreguntaActual();
 
-                    List<Integer> numbers = new ArrayList<>();
-                    for (int i = 1; i <= 4; i++) {
-                        numbers.add(i);
-                    }
-
-                    // Shuffle the list to get random order
-                    Collections.shuffle(numbers);
-
-                    List<String> respuestas = new ArrayList<>();
-                    for (int j = 0; j < numbers.size(); j++){
-                        if (numbers.size() > 0 && numbers.get(j) == 1){
-                            respuestas.add(correcta);
-                        }
-                        if (numbers.size() > 0 && numbers.get(j) == 2){
-                            respuestas.add(incorrecta1);
-                        }
-                        if (numbers.size() > 0 && numbers.get(j) == 3){
-                            respuestas.add(incorrecta2);
-                        }
-                        if (numbers.size() > 0 && numbers.get(j) == 4){
-                            respuestas.add(incorrecta3);
-                        }
-                    }
-
-                    // Assign each number to a button
-                    pregunta.setText(Pregunta);
-
-                    if (Categoria.equals("Signos Vitales")) {
-                        color.setBackgroundColor(ContextCompat.getColor(this, R.color.signosVitales));
-                        color.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.signosVitales));
-                    } else if (Categoria.equals("Curación")) {
-                        color.setBackgroundColor(ContextCompat.getColor(this, R.color.curacion));
-                        color.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.curacion));
-                    } else if (Categoria.equals("Síntomas")) {
-                        color.setBackgroundColor(ContextCompat.getColor(this, R.color.sintomas));
-                        color.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.sintomas));
-                    } else if (Categoria.equals("Anatomía")) {
-                        color.setBackgroundColor(ContextCompat.getColor(this, R.color.anatomia));
-                        color.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.anatomia));
-                    } else {
-                        color.setBackgroundColor(ContextCompat.getColor(this, R.color.bonus));
-                        color.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.bonus));
-                    }
-
-                    categoria.setText(Categoria);
-                    boton1.setText(String.valueOf(respuestas.get(0)));
-                    boton2.setText(String.valueOf(respuestas.get(1)));
-                    boton3.setText(String.valueOf(respuestas.get(2)));
-                    boton4.setText(String.valueOf(respuestas.get(3)));
+                    // Incrementar el índice después de mostrar la pregunta actual
+                    preguntaActualIndex++;
+                } else {
+                    // Manejar el error si es necesario
                 }
-            } else {
-                Exception exception = task.getException();
-                if (exception != null){
-                    exception.printStackTrace();
-                }
-            }
-        });
+            });
+        } else {
+            // Mostrar la pregunta actual
+            mostrarPreguntaActual();
+
+            // Incrementar el índice si ya hay preguntas disponibles en la lista
+            preguntaActualIndex++;
+        }
     }
+
+
+    // ASIGNAR VALORES A LOS BOTONES DE FORMA ALEATORIA
+    private void mostrarPreguntaActual() {
+        DocumentSnapshot document = preguntasList.get(preguntaActualIndex);
+
+        String Pregunta = document.getString("pregunta");
+        String Categoria = document.getString("categoria");
+        String correcta = document.getString("correcta");
+        String incorrecta1 = document.getString("incorrecta1");
+        String incorrecta2 = document.getString("incorrecta2");
+        String incorrecta3 = document.getString("incorrecta3");
+        String rating = document.getString("rating");
+
+        List<Integer> numbers = new ArrayList<>();
+        for (int i = 1; i <= 4; i++) {
+            numbers.add(i);
+        }
+
+        // Shuffle the list to get random order
+        Collections.shuffle(numbers);
+
+        List<String> respuestas = new ArrayList<>();
+        for (int j = 0; j < numbers.size(); j++){
+            if (numbers.size() > 0 && numbers.get(j) == 1){
+                respuestas.add(correcta);
+            }
+            if (numbers.size() > 0 && numbers.get(j) == 2){
+                respuestas.add(incorrecta1);
+            }
+            if (numbers.size() > 0 && numbers.get(j) == 3){
+                respuestas.add(incorrecta2);
+            }
+            if (numbers.size() > 0 && numbers.get(j) == 4){
+                respuestas.add(incorrecta3);
+            }
+        }
+
+        // Assign each number to a button
+        pregunta.setText(Pregunta);
+
+        if (Categoria.equals("Signos Vitales")) {
+            color.setBackgroundColor(ContextCompat.getColor(this, R.color.signosVitales));
+            color.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.signosVitales));
+        } else if (Categoria.equals("Curación")) {
+            color.setBackgroundColor(ContextCompat.getColor(this, R.color.curacion));
+            color.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.curacion));
+        } else if (Categoria.equals("Síntomas")) {
+            color.setBackgroundColor(ContextCompat.getColor(this, R.color.sintomas));
+            color.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.sintomas));
+        } else if (Categoria.equals("Anatomía")) {
+            color.setBackgroundColor(ContextCompat.getColor(this, R.color.anatomia));
+            color.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.anatomia));
+        } else {
+            color.setBackgroundColor(ContextCompat.getColor(this, R.color.bonus));
+            color.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.bonus));
+        }
+
+        categoria.setText(Categoria);
+        boton1.setText(String.valueOf(respuestas.get(0)));
+        boton2.setText(String.valueOf(respuestas.get(1)));
+        boton3.setText(String.valueOf(respuestas.get(2)));
+        boton4.setText(String.valueOf(respuestas.get(3)));
+    }
+//}); }
 
     private void verificarRespuesta(Button boton) {
         String respuestaSeleccionada = boton.getText().toString();
@@ -321,30 +339,19 @@ public class Pregunta extends AppCompatActivity {
     }
 
     private void cargarSiguientePregunta() {
-        // Antes de cargar la siguiente pregunta, verifica si hay más preguntas disponibles
-        // Puedes hacer esto comparando el número total de preguntas con el número de preguntas ya mostradas o mediante otro criterio de tu elección
-        // Si no hay más preguntas, puedes mostrar un mensaje o realizar otra acción
-        // En este ejemplo, simplemente se obtiene el total de documentos en la colección "preguntas"
-        preguntasCollection.get().addOnCompleteListener(totalTask -> {
-            if (totalTask.isSuccessful()) {
-                int totalPreguntas = totalTask.getResult().size();
-                if (totalPreguntas > 1) {
-                    // Si hay más preguntas, carga la siguiente pregunta
-                    getQuestion();
-                    iniciarProgreso();
-                } else {
-                    // Si no hay más preguntas, realiza la acción que consideres apropiada (mostrar mensaje, volver a la actividad anterior, etc.)
-                    // Por ejemplo, mostrar un mensaje y cerrar la actividad actual
-                    Toast.makeText(this, "¡Has respondido todas las preguntas!", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
-            } else {
-                // Maneja el caso en que no se pueda obtener el número total de preguntas
-                Toast.makeText(this, "Error al obtener preguntas", Toast.LENGTH_SHORT).show();
-                // Puedes realizar otras acciones, como volver a la actividad anterior, por ejemplo
-                finish();
-            }
-        });
+        // Verificar si hay más preguntas disponibles
+        if (preguntaActualIndex < preguntasList.size()) {
+            // Si hay más preguntas, cargar la siguiente pregunta
+            getQuestion();
+            iniciarProgreso();
+        } else {
+            // Si no hay más preguntas, restablecer el índice a cero
+            preguntaActualIndex = 0;
+            // Realizar la acción que consideres apropiada (mostrar mensaje, volver a la actividad anterior, etc.)
+            // Por ejemplo, mostrar un mensaje y cerrar la actividad actual
+            Toast.makeText(this, "¡Has respondido todas las preguntas!", Toast.LENGTH_SHORT).show();
+            finish();
+        }
     }
 
     // COLOR ORIGINAL DE LOS BOTONES
