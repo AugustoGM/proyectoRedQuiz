@@ -160,6 +160,7 @@ public class Pregunta extends AppCompatActivity {
     }
 
     // BARRA DE PROGRESO
+    // BARRA DE PROGRESO
     public void iniciarProgreso() {
         progressBarTimer = new Timer();
         progressBarTimerTask = new TimerTask() {
@@ -170,12 +171,19 @@ public class Pregunta extends AppCompatActivity {
 
                 if (counter == 100) {
                     detenerProgreso();
-                    cargarSiguientePregunta();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            preguntaActualIndex ++;
+                            cargarSiguientePregunta();
+                        }
+                    });
                 }
             }
         };
         progressBarTimer.schedule(progressBarTimerTask, 0, 100);
     }
+
 
 
     // DETENER BARRA DE PROGRESO
@@ -200,7 +208,7 @@ public class Pregunta extends AppCompatActivity {
                     mostrarPreguntaActual();
 
                     // Incrementar el índice después de mostrar la pregunta actual
-                    preguntaActualIndex++;
+                    //preguntaActualIndex++;
                 } else {
                     // Manejar el error si es necesario
                 }
@@ -210,13 +218,19 @@ public class Pregunta extends AppCompatActivity {
             mostrarPreguntaActual();
 
             // Incrementar el índice si ya hay preguntas disponibles en la lista
-            preguntaActualIndex++;
+            //preguntaActualIndex++;
         }
     }
 
 
     // ASIGNAR VALORES A LOS BOTONES DE FORMA ALEATORIA
     private void mostrarPreguntaActual() {
+        // Limpiar acciones previas de los botones
+        boton1.setOnClickListener(null);
+        boton2.setOnClickListener(null);
+        boton3.setOnClickListener(null);
+        boton4.setOnClickListener(null);
+
         DocumentSnapshot document = preguntasList.get(preguntaActualIndex);
 
         String Pregunta = document.getString("pregunta");
@@ -276,69 +290,98 @@ public class Pregunta extends AppCompatActivity {
         boton2.setText(String.valueOf(respuestas.get(1)));
         boton3.setText(String.valueOf(respuestas.get(2)));
         boton4.setText(String.valueOf(respuestas.get(3)));
+
+        // Restablecer la funcionalidad de los botones
+        asignarFuncionalidadBotones();
     }
 //}); }
 
-    private void verificarRespuesta(Button boton) {
-        String respuestaSeleccionada = boton.getText().toString();
+    private void asignarFuncionalidadBotones() {
+        boton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                detenerProgreso();
+                verificarRespuesta(boton1);
+            }
+        });
 
-        preguntasCollection.limit(1).get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                Button botonCorrecto = null; // Variable para almacenar el botón correcto
+        boton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                detenerProgreso();
+                verificarRespuesta(boton2);
+            }
+        });
 
-                for (QueryDocumentSnapshot document : task.getResult()) {
-                    idPreguntaActual = document.getId();
-                    String respuestaCorrecta = document.getString("correcta");
+        boton3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                detenerProgreso();
+                verificarRespuesta(boton3);
+            }
+        });
 
-                    if (boton1.getText().toString().equals(respuestaCorrecta)) {
-                        botonCorrecto = boton1;
-                    } else if (boton2.getText().toString().equals(respuestaCorrecta)) {
-                        botonCorrecto = boton2;
-                    } else if (boton3.getText().toString().equals(respuestaCorrecta)) {
-                        botonCorrecto = boton3;
-                    } else if (boton4.getText().toString().equals(respuestaCorrecta)) {
-                        botonCorrecto = boton4;
-                    }
-                }
-
-                // Ahora puedes usar la variable botonCorrecto fuera de la lambda
-                for (QueryDocumentSnapshot document : task.getResult()) {
-                    String respuestaCorrecta = document.getString("correcta");
-                    if (botonCorrecto != null) {
-                        if (respuestaSeleccionada.equals(respuestaCorrecta)) {
-                            // Respuesta correcta, cambiar color a verde
-                            boton.setBackgroundColor(Color.GREEN);
-                            // Aquí puedes hacer otras acciones relacionadas con la respuesta correcta
-                            new android.os.Handler().postDelayed(
-                                    new Runnable() {
-                                        public void run() {
-                                            cargarSiguientePregunta();
-                                        }
-                                    },
-                                    2000 // 1 segundo de retraso
-                            );
-                        } else {
-                            // Respuesta incorrecta, cambiar color a rojo
-                            boton.setBackgroundColor(Color.RED);
-                            // Cambiar el color del botón correcto a verde
-                            botonCorrecto.setBackgroundColor(Color.GREEN);
-                            // Aquí puedes hacer otras acciones relacionadas con la respuesta incorrecta
-                            new android.os.Handler().postDelayed(
-                                    new Runnable() {
-                                        public void run() {
-                                            cargarSiguientePregunta();
-                                        }
-                                    },
-                                    2000 // 1 segundo de retraso
-                            );
-                        }
-                }
-                }
+        boton4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                detenerProgreso();
+                verificarRespuesta(boton4);
             }
         });
     }
 
+    private void verificarRespuesta(Button boton) {
+        String respuestaSeleccionada = boton.getText().toString();
+
+        if (preguntaActualIndex < preguntasList.size()) {
+            DocumentSnapshot document = preguntasList.get(preguntaActualIndex);
+            String correcta = document.getString("correcta").trim();
+
+            Log.d("DEBUG", "Respuesta seleccionada: " + respuestaSeleccionada);
+            Log.d("DEBUG", "Respuesta correcta: " + correcta);
+
+            // Verificar la respuesta seleccionada con la respuesta correcta
+            if (respuestaSeleccionada.equals(correcta)) {
+                // Respuesta correcta, cambiar color a verde
+                boton.setBackgroundColor(Color.GREEN);
+            } else {
+                // Respuesta incorrecta, cambiar color a rojo
+                boton.setBackgroundColor(Color.RED);
+
+                // Encontrar el botón correcto y cambiar su color a verde
+                Button botonCorrecto = encontrarBotonRespuestaCorrecta(correcta);
+                if (botonCorrecto != null) {
+                    botonCorrecto.setBackgroundColor(Color.GREEN);
+                }
+            }
+
+            // Realizar acciones relacionadas con la respuesta (por ejemplo, cargar la siguiente pregunta)
+            preguntaActualIndex ++;
+            new Handler().postDelayed(this::cargarSiguientePregunta, 2000);
+        }
+    }
+
+    private Button encontrarBotonRespuestaCorrecta(String respuestaCorrecta) {
+        // Convertir todas las respuestas a minúsculas para realizar una comparación sin distinción de mayúsculas
+        //String respuestaCorrectaLower = respuestaCorrecta.toLowerCase();
+
+        if (respuestaCorrecta.equals(boton1.getText().toString())) {
+            return boton1;
+        } else if (respuestaCorrecta.equals(boton2.getText().toString())) {
+            return boton2;
+        } else if (respuestaCorrecta.equals(boton3.getText().toString())) {
+            return boton3;
+        } else if (respuestaCorrecta.equals(boton4.getText().toString())) {
+            return boton4;
+        }
+
+        return null; // No se encontró el botón correspondiente
+    }
+
+
+
     private void cargarSiguientePregunta() {
+        counter = 0;
         // Verificar si hay más preguntas disponibles
         if (preguntaActualIndex < preguntasList.size()) {
             // Si hay más preguntas, cargar la siguiente pregunta
