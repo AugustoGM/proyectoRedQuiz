@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextClock;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -23,8 +25,11 @@ public class MenuUserActivity extends AppCompatActivity {
     Button btn_exit, btn_perfil, btn_jugar, btn_puntaje;
     FirebaseAuth mAuth;
     FirebaseFirestore fStore;
-    private TextView nombreUsuario, vidas;
+    private TextView nombreUsuario, vidas, mensajeTiempo;
     private String idUser;
+    private TextClock textClock;
+    private CountDownTimer countDownTimer;
+    private int tiempoRestante;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +39,18 @@ public class MenuUserActivity extends AppCompatActivity {
         fStore = FirebaseFirestore.getInstance();
         idUser = mAuth.getCurrentUser().getUid();
 
+        mensajeTiempo = findViewById(R.id.mensaje);
         btn_exit = findViewById(R.id.btn_cerrar);
         btn_perfil = findViewById(R.id.btn_perfil);
         btn_jugar = findViewById(R.id.btn_jugar);
         btn_puntaje = findViewById(R.id.btn_puntaje);
         nombreUsuario = findViewById(R.id.nombreU);
         vidas = findViewById(R.id.vidasUsuario);
+
+        textClock = findViewById(R.id.clock);
+        tiempoRestante = 15000;
+
+        mensajeVidas();
 
         btn_perfil.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,7 +119,87 @@ public class MenuUserActivity extends AppCompatActivity {
             AlertDialog dialog = builder.create();
             dialog.show();
         });
+
+        // COUNT
+        countDownTimer = new CountDownTimer(tiempoRestante, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                tiempoRestante = (int) millisUntilFinished;
+
+                // Actualizar el tiempo en el TextClock
+                if (vidas.getText().toString().equals("5 vidas")) {
+                    // Mostrar "00:00:00" si vidas es igual a 5
+                    textClock.setFormat24Hour("00");
+                } else {
+                    // Mostrar solo los segundos restantes
+                    textClock.setFormat24Hour("ss");
+                    textClock.setText(String.valueOf(tiempoRestante / 1000));
+                }
+            }
+
+            @Override
+            public void onFinish() {
+                // Regenerar una vida y actualizar en la base de datos
+                regenerarVida();
+                // Reiniciar el contador
+                tiempoRestante = 15000;
+                countDownTimer.start();
+            }
+        };
+
+        // Iniciar el contador
+        countDownTimer.start();
     }
+
+    private void mensajeVidas() {
+        DocumentReference documentReference = fStore.collection("users").document(idUser);
+
+        documentReference.addSnapshotListener(this, (documentSnapshot, e) -> {
+            if (e != null) {
+                // Manejar el error, si es necesario
+                Log.e("ERROR", "Error al escuchar cambios en el documento", e);
+                return;
+            }
+
+            if (documentSnapshot != null && documentSnapshot.exists()) {
+                int vidasActuales = documentSnapshot.getLong("vidas").intValue();
+
+                // Verificar si el número de vidas es menor que 5 antes de regenerar
+                if (vidasActuales == 5) {
+                    mensajeTiempo.setText("¡Vidas Completas!");
+                } else {
+                    mensajeTiempo.setText("Tiempo de regeneración para la próxima vida:");
+                }
+            }
+        });
+    }
+
+
+    // Método para regenerar una vida y actualizar en la base de datos
+    private void regenerarVida() {
+        // Obtener las vidas actuales del usuario
+        DocumentReference documentReference = fStore.collection("users").document(idUser);
+        documentReference.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists()) {
+                    int vidasActuales = document.getLong("vidas").intValue();
+
+                    // Verificar si el número de vidas es menor que 5 antes de regenerar
+                    if (vidasActuales < 5) {
+                        // Incrementar el número de vidas y actualizar en la base de datos
+                        documentReference.update("vidas", vidasActuales + 1);
+                    } else {
+                        // Detener el contador si el número de vidas es igual a 5
+                        countDownTimer.cancel();
+                    }
+                }
+            } else {
+                Log.d("TAG", "Error obteniendo documento: ", task.getException());
+            }
+        });
+    }
+
 
     // Método para mostrar el mensaje cuando el usuario no tiene vidas
     private void mostrarMensajeSinVidas() {

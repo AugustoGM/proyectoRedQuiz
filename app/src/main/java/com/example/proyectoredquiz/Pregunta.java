@@ -153,6 +153,7 @@ public class Pregunta extends AppCompatActivity {
         builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                onPause();
                 // Acciones a realizar si el usuario hace clic en "Sí"
                 volver();
             }
@@ -333,6 +334,12 @@ public class Pregunta extends AppCompatActivity {
     }
 //}); }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        detenerProgreso();
+    }
+
     private void asignarFuncionalidadBotones() {
         boton1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -418,6 +425,12 @@ public class Pregunta extends AppCompatActivity {
                 }
             }
 
+            // Desactivar todos los botones después de la respuesta
+            boton1.setEnabled(false);
+            boton2.setEnabled(false);
+            boton3.setEnabled(false);
+            boton4.setEnabled(false);
+
             // Realizar acciones relacionadas con la respuesta (por ejemplo, cargar la siguiente pregunta)
             preguntaActualIndex++;
             new Handler().postDelayed(this::cargarSiguientePregunta, 2000);
@@ -446,6 +459,12 @@ public class Pregunta extends AppCompatActivity {
 
     private void cargarSiguientePregunta() {
         counter = 0;
+        // Volver a habilitar todos los botones
+        boton1.setEnabled(true);
+        boton2.setEnabled(true);
+        boton3.setEnabled(true);
+        boton4.setEnabled(true);
+
         // Verificar si hay más preguntas disponibles
         if (preguntaActualIndex < preguntasList.size()) {
             // Si hay más preguntas, cargar la siguiente pregunta
@@ -457,6 +476,7 @@ public class Pregunta extends AppCompatActivity {
             // Realizar la acción que consideres apropiada (mostrar mensaje, volver a la actividad anterior, etc.)
             // Por ejemplo, mostrar un mensaje y cerrar la actividad actual
             Toast.makeText(this, "¡Has respondido todas las preguntas!", Toast.LENGTH_SHORT).show();
+            onPause();
             finish();
         }
     }
