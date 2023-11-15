@@ -1,8 +1,7 @@
 package com.example.proyectoredquiz;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import android.content.DialogInterface;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -17,8 +16,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 public class MenuUserActivity extends AppCompatActivity {
 
@@ -73,6 +70,7 @@ public class MenuUserActivity extends AppCompatActivity {
                 // Actualizar el valor de las vidas en el TextView
                 int vidasDisponibles = documentSnapshot.getLong("vidas").intValue();
                 vidas.setText(String.valueOf(vidasDisponibles)+ " vidas");
+                nombreUsuario.setText(documentSnapshot.getString("nombre"));
             }
         });
 
@@ -94,7 +92,7 @@ public class MenuUserActivity extends AppCompatActivity {
 
                 if (vidasDisponibles > 0) {
                     // El usuario tiene vidas, iniciar el juego
-                    Intent index = new Intent(MenuUserActivity.this, Pregunta.class);
+                    Intent index = new Intent(MenuUserActivity.this, PreguntaActivity.class);
                     startActivities(new Intent[]{index});
                 } else {
                     // El usuario no tiene vidas, mostrar un mensaje

@@ -30,7 +30,7 @@ import java.util.Objects;
 public class RegistroActivity extends AppCompatActivity {
 
     Button btn_register, btn_index;
-    EditText name, lastname, email, password, date;
+    EditText name, lastname, email, password, confPassword, date;
     FirebaseFirestore mFirestore;
     FirebaseAuth mAuth;
     private Spinner spinnerGender;
@@ -47,6 +47,7 @@ public class RegistroActivity extends AppCompatActivity {
         lastname = findViewById(R.id.apellidos);
         email = findViewById(R.id.correo);
         password = findViewById(R.id.contrasena);
+        confPassword = findViewById(R.id.confContrasena);
         date = findViewById(R.id.fechaN);
         //curp = findViewById(R.id.curp);
         btn_register = findViewById(R.id.btn_registrar);
@@ -87,14 +88,19 @@ public class RegistroActivity extends AppCompatActivity {
                 String lastnameUser = lastname.getText().toString().trim();
                 String emailUser = email.getText().toString().trim();
                 String passUser = password.getText().toString().trim();
+                String confirmPassUser = confPassword.getText().toString().trim();
                 String dateUser = date.getText().toString().trim();
                 //String curpUser = curp.getText().toString().trim();
                 String selectedGender = spinnerGender.getSelectedItem().toString();
 
-                if (nameUser.isEmpty() && lastnameUser.isEmpty() && emailUser.isEmpty() && passUser.isEmpty() && dateUser.isEmpty()){
+                if (nameUser.isEmpty() || lastnameUser.isEmpty() || emailUser.isEmpty() || passUser.isEmpty() || confirmPassUser.isEmpty() || dateUser.isEmpty()){
                     Toast.makeText(RegistroActivity.this, "Complete los datos", Toast.LENGTH_SHORT).show();
                 }else{
-                    registerUser(nameUser, lastnameUser, emailUser, passUser, dateUser, selectedGender);
+                    if (passUser.equals(confirmPassUser)){
+                        registerUser(nameUser, lastnameUser, emailUser, passUser, dateUser, selectedGender);
+                    } else {
+                        Toast.makeText(RegistroActivity.this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
@@ -118,6 +124,7 @@ public class RegistroActivity extends AppCompatActivity {
                     //map.put("curp", curpUser);
                     map.put("genero", selectedGender); // Agregar el género al mapa de datos
                     map.put("vidas", 5);
+                    map.put("puntaje", 0);
 
                     mFirestore.collection("users").document(id).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override

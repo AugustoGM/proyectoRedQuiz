@@ -6,9 +6,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -27,7 +29,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,8 +36,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Pregunta extends AppCompatActivity {
-
+public class PreguntaActivity extends AppCompatActivity {
     Button btn_volver, boton1, boton2, boton3, boton4;
     TextView pregunta, categoria, vidas, color;
     FirebaseAuth mAuth;
@@ -52,6 +52,55 @@ public class Pregunta extends AppCompatActivity {
     private int preguntaActualIndex = 0;
     private List<DocumentSnapshot> preguntasList;
     private  int VIDAS;
+
+    public static class SoundManager {
+        private static MediaPlayer mediaPlayerCorrecta;
+        private static MediaPlayer mediaPlayerIncorrecta;
+
+        public static void reproducirSonidoCorrecto(Context context) {
+            try {
+                mediaPlayerCorrecta = MediaPlayer.create(context, R.raw.success);
+                mediaPlayerCorrecta.start();
+                mediaPlayerCorrecta.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        mp.release();
+                        mediaPlayerCorrecta = null;
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        public static void reproducirSonidoIncorrecto(Context context) {
+            try {
+                mediaPlayerIncorrecta = MediaPlayer.create(context, R.raw.negative);
+                mediaPlayerIncorrecta.start();
+                mediaPlayerIncorrecta.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        mp.release();
+                        mediaPlayerIncorrecta = null;
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (SoundManager.mediaPlayerCorrecta != null) {
+            SoundManager.mediaPlayerCorrecta.release();
+            SoundManager.mediaPlayerCorrecta = null;
+        }
+        if (SoundManager.mediaPlayerIncorrecta != null) {
+            SoundManager.mediaPlayerIncorrecta.release();
+            SoundManager.mediaPlayerIncorrecta = null;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +142,7 @@ public class Pregunta extends AppCompatActivity {
         boton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(Pregunta.this, "no se perdió", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PreguntaActivity.this, "no se perdió", Toast.LENGTH_SHORT).show();
                 detenerProgreso();
                 verificarRespuesta(boton1);
             }
@@ -169,7 +218,7 @@ public class Pregunta extends AppCompatActivity {
     }
 
     private void volver() {
-        Intent index = new Intent(Pregunta.this, MenuUserActivity.class);
+        Intent index = new Intent(PreguntaActivity.this, MenuUserActivity.class);
         startActivities(new Intent[]{index});
     }
 
@@ -372,6 +421,7 @@ public class Pregunta extends AppCompatActivity {
                 verificarRespuesta(boton4);
             }
         });
+
     }
 
     private void verificarRespuesta(Button boton) {
@@ -388,9 +438,11 @@ public class Pregunta extends AppCompatActivity {
             if (respuestaSeleccionada.equals(correcta)) {
                 // Respuesta correcta, cambiar color a verde
                 boton.setBackgroundColor(Color.GREEN);
+                SoundManager.reproducirSonidoCorrecto(this);
             } else {
                 // Respuesta incorrecta, cambiar color a rojo
                 boton.setBackgroundColor(Color.RED);
+                SoundManager.reproducirSonidoIncorrecto(this);
 
                 // Encontrar el botón correcto y cambiar su color a verde
                 Button botonCorrecto = encontrarBotonRespuestaCorrecta(correcta);
@@ -473,11 +525,13 @@ public class Pregunta extends AppCompatActivity {
         } else {
             // Si no hay más preguntas, restablecer el índice a cero
             preguntaActualIndex = 0;
+            getQuestion();
+            iniciarProgreso();
             // Realizar la acción que consideres apropiada (mostrar mensaje, volver a la actividad anterior, etc.)
             // Por ejemplo, mostrar un mensaje y cerrar la actividad actual
-            Toast.makeText(this, "¡Has respondido todas las preguntas!", Toast.LENGTH_SHORT).show();
-            onPause();
-            finish();
+            //Toast.makeText(this, "¡Has respondido todas las preguntas!", Toast.LENGTH_SHORT).show();
+            //onPause();
+            //finish();
         }
     }
 
@@ -494,7 +548,7 @@ public class Pregunta extends AppCompatActivity {
     }
 
     private void volverAMenuPrincipal() {
-        Intent intent = new Intent(Pregunta.this, MenuUserActivity.class);
+        Intent intent = new Intent(PreguntaActivity.this, MenuUserActivity.class);
         startActivity(intent);
         finish(); // Cierra la actividad actual para que el usuario no pueda volver atrás desde el menú principal
     }
