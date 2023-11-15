@@ -1,5 +1,7 @@
 package com.example.proyectoredquiz;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -16,11 +18,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
@@ -45,6 +51,7 @@ public class Pregunta extends AppCompatActivity {
     private TimerTask progressBarTimerTask;
     private int preguntaActualIndex = 0;
     private List<DocumentSnapshot> preguntasList;
+    private  int VIDAS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,14 +125,20 @@ public class Pregunta extends AppCompatActivity {
 
         // OBTENER LAS VIDAS DEL USUARIO
         DocumentReference documentReference = db.collection("users").document(idUser);
-        documentReference.get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                DocumentSnapshot document = task.getResult();
-                if (document.exists()) {
-                    vidas.setText("X " + String.valueOf(document.get("vidas")));
+        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    // Manejar el error, si es necesario
+                    Log.e("ERROR", "Error al escuchar cambios en el documento", e);
+                    return;
                 }
-            } else {
-                // Manejar el error, si es necesario
+
+                if (documentSnapshot != null && documentSnapshot.exists()) {
+                    // Actualizar el valor de las vidas en el TextView
+                    VIDAS = documentSnapshot.getLong("vidas").intValue();
+                    vidas.setText("X " + String.valueOf(VIDAS));
+                }
             }
         });
 
@@ -174,6 +187,30 @@ public class Pregunta extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            if (VIDAS > 0) {
+                                // Si el usuario aún tiene vidas, restar una vida
+                                VIDAS = VIDAS - 1;
+
+                                // Actualizar el valor de "vidas" en Firestore
+                                DocumentReference userDocumentRef = db.collection("users").document(idUser);
+                                userDocumentRef
+                                        .update("vidas", VIDAS)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Log.d("DEBUG", "Valor de vidas actualizado correctamente en Firestore");
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.e("ERROR", "Error al actualizar el valor de vidas en Firestore", e);
+                                            }
+                                        });
+                            } else {
+                                // El usuario ya no tiene vidas, mostrar mensaje
+                                mostrarMensajeSinVidas();
+                            }
                             preguntaActualIndex ++;
                             cargarSiguientePregunta();
                         }
@@ -350,16 +387,43 @@ public class Pregunta extends AppCompatActivity {
 
                 // Encontrar el botón correcto y cambiar su color a verde
                 Button botonCorrecto = encontrarBotonRespuestaCorrecta(correcta);
+
                 if (botonCorrecto != null) {
                     botonCorrecto.setBackgroundColor(Color.GREEN);
+                }
+
+                if (VIDAS > 0) {
+                    // Si el usuario aún tiene vidas, restar una vida
+                    VIDAS = VIDAS - 1;
+
+                    // Actualizar el valor de "vidas" en Firestore
+                    DocumentReference userDocumentRef = db.collection("users").document(idUser);
+                    userDocumentRef
+                            .update("vidas", VIDAS)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d("DEBUG", "Valor de vidas actualizado correctamente en Firestore");
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.e("ERROR", "Error al actualizar el valor de vidas en Firestore", e);
+                                }
+                            });
+                } else {
+                    // El usuario ya no tiene vidas, mostrar mensaje
+                    mostrarMensajeSinVidas();
                 }
             }
 
             // Realizar acciones relacionadas con la respuesta (por ejemplo, cargar la siguiente pregunta)
-            preguntaActualIndex ++;
+            preguntaActualIndex++;
             new Handler().postDelayed(this::cargarSiguientePregunta, 2000);
         }
     }
+
 
     private Button encontrarBotonRespuestaCorrecta(String respuestaCorrecta) {
         // Convertir todas las respuestas a minúsculas para realizar una comparación sin distinción de mayúsculas
@@ -395,6 +459,24 @@ public class Pregunta extends AppCompatActivity {
             Toast.makeText(this, "¡Has respondido todas las preguntas!", Toast.LENGTH_SHORT).show();
             finish();
         }
+    }
+
+    // Método para mostrar el mensaje cuando el usuario no tiene vidas
+    private void mostrarMensajeSinVidas() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("¡Te has quedado sin vidas! Vuelve a la interfaz principal.")
+                .setPositiveButton("Aceptar", (dialog, which) -> {
+                    // Acciones a realizar si el usuario hace clic en "Aceptar"
+                    volverAMenuPrincipal();
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void volverAMenuPrincipal() {
+        Intent intent = new Intent(Pregunta.this, MenuUserActivity.class);
+        startActivity(intent);
+        finish(); // Cierra la actividad actual para que el usuario no pueda volver atrás desde el menú principal
     }
 
     // COLOR ORIGINAL DE LOS BOTONES
