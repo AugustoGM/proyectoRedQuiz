@@ -21,7 +21,7 @@
         tools:ignore="HardcodedText" />
 
     <Button
-        android:id="@+id/button11"
+        android:id="@+id/btn_avatar"
         android:layout_width="300dp"
         android:layout_height="48dp"
         android:layout_marginTop="15dp"
@@ -43,7 +43,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button11"
+        app:layout_constraintTop_toBottomOf="@+id/btn_avatar"
         tools:ignore="HardcodedText" />
 
     <TextView

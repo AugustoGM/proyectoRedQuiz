@@ -19,7 +19,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MenuUserActivity extends AppCompatActivity {
 
-    Button btn_exit, btn_perfil, btn_jugar, btn_puntaje;
+    Button btn_exit, btn_perfil, btn_jugar, btn_puntaje, btn_avatar;
     FirebaseAuth mAuth;
     FirebaseFirestore fStore;
     private TextView nombreUsuario, vidas, mensajeTiempo;
@@ -39,6 +39,7 @@ public class MenuUserActivity extends AppCompatActivity {
         mensajeTiempo = findViewById(R.id.mensaje);
         btn_exit = findViewById(R.id.btn_cerrar);
         btn_perfil = findViewById(R.id.btn_perfil);
+        btn_avatar = findViewById(R.id.btn_avatar);
         btn_jugar = findViewById(R.id.btn_jugar);
         btn_puntaje = findViewById(R.id.btn_puntaje);
         nombreUsuario = findViewById(R.id.nombreU);
@@ -79,6 +80,15 @@ public class MenuUserActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent index = new Intent(MenuUserActivity.this, MiPuntaje.class);
+                startActivities(new Intent[]{index});
+            }
+        });
+
+        // ACCEDER AL AVATAR
+        btn_avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent index = new Intent(MenuUserActivity.this, miavatar.class);
                 startActivities(new Intent[]{index});
             }
         });

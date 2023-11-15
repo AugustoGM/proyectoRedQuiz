@@ -31,7 +31,7 @@
         tools:ignore="HardcodedText" />
 
     <Button
-        android:id="@+id/button9"
+        android:id="@+id/btn_volverA"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="#FF0000"
@@ -45,49 +45,29 @@
         tools:ignore="HardcodedText,TextContrastCheck" />
 
     <Button
-        android:id="@+id/button13"
+        android:id="@+id/btn_editarA"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="276dp"
         android:backgroundTint="#FF0000"
         android:text="Editar"
         android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView23"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.746"
         tools:ignore="HardcodedText,TextContrastCheck" />
 
-    <TextView
-        android:id="@+id/textView22"
-        android:layout_width="377dp"
-        android:layout_height="213dp"
-        android:background="#E3DDDD"
-        android:backgroundTint="#EFECEC"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button13"
-        app:layout_constraintVertical_bias="0.578" />
-
-    <TextView
-        android:id="@+id/textView23"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="___________________________________"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView19"
-        tools:ignore="HardcodedText" />
-
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="351dp"
-        android:layout_height="193dp"
+        android:layout_height="130dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/textView22"
         app:layout_constraintStart_toStartOf="@+id/textView22"
         app:layout_constraintTop_toTopOf="@+id/textView22"
-        app:layout_constraintVertical_bias="0.25"
+        app:layout_constraintVertical_bias="0.186"
         tools:ignore="SpeakableTextPresentCheck">
 
         <LinearLayout
@@ -96,4 +76,28 @@
             android:orientation="vertical"
             tools:ignore="UselessLeaf" />
     </ScrollView>
+
+    <TextView
+        android:id="@+id/textView22"
+        android:layout_width="365dp"
+        android:layout_height="150dp"
+        android:background="#E3DDDD"
+        android:backgroundTint="#EFECEC"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_editarA"
+        app:layout_constraintVertical_bias="0.772" />
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="264dp"
+        android:layout_height="403dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView7"
+        app:layout_constraintVertical_bias="0.35"
+        app:srcCompat="@drawable/mujer" />
 </androidx.constraintlayout.widget.ConstraintLayout>
