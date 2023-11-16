@@ -59,7 +59,7 @@ public class MenuUserActivity extends AppCompatActivity {
         });
 
         // OBTENER LAS VIDAS DEL USUARIO
-        DocumentReference documentReference = fStore.collection("users").document(idUser);
+        DocumentReference documentReference = fStore.collection("rqUsers").document(idUser);
         documentReference.addSnapshotListener(this, (documentSnapshot, e) -> {
             if (e != null) {
                 // Manejar el error, si es necesario
@@ -160,7 +160,7 @@ public class MenuUserActivity extends AppCompatActivity {
     }
 
     private void mensajeVidas() {
-        DocumentReference documentReference = fStore.collection("users").document(idUser);
+        DocumentReference documentReference = fStore.collection("rqUsers").document(idUser);
 
         documentReference.addSnapshotListener(this, (documentSnapshot, e) -> {
             if (e != null) {
@@ -186,7 +186,7 @@ public class MenuUserActivity extends AppCompatActivity {
     // Método para regenerar una vida y actualizar en la base de datos
     private void regenerarVida() {
         // Obtener las vidas actuales del usuario
-        DocumentReference documentReference = fStore.collection("users").document(idUser);
+        DocumentReference documentReference = fStore.collection("rqUsers").document(idUser);
         documentReference.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();

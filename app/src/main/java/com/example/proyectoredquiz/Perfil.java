@@ -45,7 +45,7 @@ public class Perfil extends AppCompatActivity {
             }
         });
 
-        DocumentReference documentReference = fStore.collection("users").document(idUser);
+        DocumentReference documentReference = fStore.collection("rqUsers").document(idUser);
         documentReference.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();

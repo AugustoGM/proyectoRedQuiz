@@ -126,7 +126,7 @@ public class RegistroActivity extends AppCompatActivity {
                     map.put("vidas", 5);
                     map.put("puntaje", 0);
 
-                    mFirestore.collection("users").document(id).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    mFirestore.collection("rqUsers").document(id).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
                             finish();

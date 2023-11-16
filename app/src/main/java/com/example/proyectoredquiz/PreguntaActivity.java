@@ -173,7 +173,7 @@ public class PreguntaActivity extends AppCompatActivity {
         });
 
         // OBTENER LAS VIDAS DEL USUARIO
-        DocumentReference documentReference = db.collection("users").document(idUser);
+        DocumentReference documentReference = db.collection("rqUsers").document(idUser);
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
@@ -242,7 +242,7 @@ public class PreguntaActivity extends AppCompatActivity {
                                 VIDAS = VIDAS - 1;
 
                                 // Actualizar el valor de "vidas" en Firestore
-                                DocumentReference userDocumentRef = db.collection("users").document(idUser);
+                                DocumentReference userDocumentRef = db.collection("rqUsers").document(idUser);
                                 userDocumentRef
                                         .update("vidas", VIDAS)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -326,7 +326,7 @@ public class PreguntaActivity extends AppCompatActivity {
         String incorrecta1 = document.getString("incorrecta1");
         String incorrecta2 = document.getString("incorrecta2");
         String incorrecta3 = document.getString("incorrecta3");
-        String rating = document.getString("rating");
+        String puntos = document.getString("puntos");
 
         List<Integer> numbers = new ArrayList<>();
         for (int i = 1; i <= 4; i++) {
@@ -456,7 +456,7 @@ public class PreguntaActivity extends AppCompatActivity {
                     VIDAS = VIDAS - 1;
 
                     // Actualizar el valor de "vidas" en Firestore
-                    DocumentReference userDocumentRef = db.collection("users").document(idUser);
+                    DocumentReference userDocumentRef = db.collection("rqUsers").document(idUser);
                     userDocumentRef
                             .update("vidas", VIDAS)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {

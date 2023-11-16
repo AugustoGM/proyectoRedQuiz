@@ -80,29 +80,29 @@ public class IngresarPregunta extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String preguntai = question.getText().toString();
-                String ratingi = rate.getText().toString();
+                String puntajei = rate.getText().toString();
                 String correctai = correct.getText().toString();
                 String incorrecta1i = incorrect1.getText().toString();
                 String incorrecta2i = incorrect2.getText().toString();
                 String incorrecta3i = incorrect3.getText().toString();
                 String categoriai = spinnerCategory.getSelectedItem().toString();
 
-                if (preguntai.isEmpty() && ratingi.isEmpty() && correctai.isEmpty() && incorrecta1i.isEmpty() && incorrecta2i.isEmpty() && incorrecta3i.isEmpty()){
+                if (preguntai.isEmpty() && puntajei.isEmpty() && correctai.isEmpty() && incorrecta1i.isEmpty() && incorrecta2i.isEmpty() && incorrecta3i.isEmpty()){
                     Toast.makeText(new IngresarPregunta(), "Ingrese los datos", Toast.LENGTH_SHORT).show();
                 }else {
-                    postPregunta(preguntai, ratingi, correctai, incorrecta1i, incorrecta2i, incorrecta3i, categoriai);
+                    postPregunta(preguntai, puntajei, correctai, incorrecta1i, incorrecta2i, incorrecta3i, categoriai);
                 }
             }
         });
 
     }
 
-    private void postPregunta(String preguntai, String ratingi, String correctai, String incorrecta1i, String incorrecta2i, String incorrecta3i, String categoriai) {
+    private void postPregunta(String preguntai, String puntajei, String correctai, String incorrecta1i, String incorrecta2i, String incorrecta3i, String categoriai) {
         String questionUid  = UUID.randomUUID().toString();
         Map<String, Object> map = new HashMap<>();
         map.put("pregunta", preguntai);
         map.put("categoria", categoriai);
-        map.put("rating", ratingi);
+        map.put("puntos", puntajei);
         map.put("correcta", correctai);
         map.put("incorrecta1", incorrecta1i);
         map.put("incorrecta2", incorrecta2i);
