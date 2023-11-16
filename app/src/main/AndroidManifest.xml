@@ -16,7 +16,7 @@
             android:name=".Perfil"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".MenuAdministrador"
             android:exported="false" />
         <activity
             android:name=".IngresarPregunta"
@@ -43,7 +43,7 @@
             android:name=".RegistroActivity"
             android:exported="false" />
         <activity
-            android:name=".MenuAdministrador"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

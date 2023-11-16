@@ -326,7 +326,7 @@ public class PreguntaActivity extends AppCompatActivity {
         String incorrecta1 = document.getString("incorrecta1");
         String incorrecta2 = document.getString("incorrecta2");
         String incorrecta3 = document.getString("incorrecta3");
-        String puntos = document.getString("puntos");
+        //Long puntos = document.getLong("puntos");
 
         List<Integer> numbers = new ArrayList<>();
         for (int i = 1; i <= 4; i++) {
@@ -439,6 +439,53 @@ public class PreguntaActivity extends AppCompatActivity {
                 // Respuesta correcta, cambiar color a verde
                 boton.setBackgroundColor(Color.GREEN);
                 SoundManager.reproducirSonidoCorrecto(this);
+
+                // SUMAR EL PUNTAJE
+                DocumentSnapshot preguntaActual = preguntasList.get(preguntaActualIndex);
+                // OBTENER EL PUNTAJE DEL USUARIO
+                DocumentReference documentReference = db.collection("rqUsers").document(idUser);
+                documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            Long puntaje = documentSnapshot.getLong("puntaje");
+
+                            Log.d("DEBUG", "Puntaje actual: " + String.valueOf(puntaje));
+
+                            if (puntaje == null) {
+                                puntaje = 0L;
+                            }
+
+                            // Sumar los puntos de la pregunta actual al puntaje
+                            Long puntosPregunta = preguntaActual.getLong("puntos");
+                            Log.d("DEBUG", "Puntos de la pregunta: " + String.valueOf(puntosPregunta));
+
+                            if (puntosPregunta != null) {
+                                puntaje += puntosPregunta;
+                                Log.d("DEBUG", "Nuevo puntaje: " + String.valueOf(puntaje));
+
+                                // Actualizar el valor de "puntaje" en Firestore
+                                documentReference.update("puntaje", puntaje)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Log.d("DEBUG", "Valor de puntaje actualizado correctamente en Firestore");
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.e("ERROR", "Error al actualizar el valor de puntaje en Firestore", e);
+                                            }
+                                        });
+                            }
+                        } else {
+                            Log.e("ERROR", "El documento del usuario no existe");
+                        }
+                    }
+                });
+
+
             } else {
                 // Respuesta incorrecta, cambiar color a rojo
                 boton.setBackgroundColor(Color.RED);
