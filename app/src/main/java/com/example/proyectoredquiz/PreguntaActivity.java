@@ -20,19 +20,25 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -318,6 +324,68 @@ public class PreguntaActivity extends AppCompatActivity {
         boton3.setOnClickListener(null);
         boton4.setOnClickListener(null);
 
+        // CUENTA LAS PREGUNTAS QUE SE MUESTRAN
+        // Obtén la referencia al documento en la colección "rqConteo" usando el ID del usuario
+        DocumentReference conteoDocumentRef = db.collection("rqConteo").document(idUser);
+
+        // Verifica si el documento ya existe en la colección
+        conteoDocumentRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+
+                    if (document.exists()) {
+                        // El documento ya existe, obtén el valor actual de conteoC
+                        Long conteoActual = document.getLong("conteoT");
+
+                        // Incrementa el valor de conteoC
+                        if (conteoActual != null) {
+                            conteoActual += 1;
+                        } else {
+                            conteoActual = 1L;
+                        }
+
+                        // Actualiza el valor de conteoC en Firestore
+                        conteoDocumentRef.update("conteoT", conteoActual)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d("DEBUG", "Valor de conteoT actualizado correctamente en Firestore");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.e("ERROR", "Error al actualizar el valor de conteoC en Firestore", e);
+                                    }
+                                });
+                    } else {
+                        // El documento no existe, crea uno nuevo con conteoC igual a 1
+                        Map<String, Object> conteoData = new HashMap<>();
+                        conteoData.put("idUser", idUser);
+                        conteoData.put("conteoC", 1);
+
+                        conteoDocumentRef.set(conteoData)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d("DEBUG", "Documento creado correctamente en Firestore");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.e("ERROR", "Error al crear el documento en Firestore", e);
+                                    }
+                                });
+                    }
+                } else {
+                    Log.e("ERROR", "Error al obtener el documento en Firestore", task.getException());
+                }
+            }
+        });
+
         DocumentSnapshot document = preguntasList.get(preguntaActualIndex);
 
         String Pregunta = document.getString("pregunta");
@@ -430,6 +498,9 @@ public class PreguntaActivity extends AppCompatActivity {
         if (preguntaActualIndex < preguntasList.size()) {
             DocumentSnapshot document = preguntasList.get(preguntaActualIndex);
             String correcta = document.getString("correcta").trim();
+            String catego = document.getString("categoria").trim();
+            Log.d("DEBUG", "Valor de Categoria: " + catego);
+
 
             Log.d("DEBUG", "Respuesta seleccionada: " + respuestaSeleccionada);
             Log.d("DEBUG", "Respuesta correcta: " + correcta);
@@ -449,8 +520,7 @@ public class PreguntaActivity extends AppCompatActivity {
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if (documentSnapshot.exists()) {
                             Long puntaje = documentSnapshot.getLong("puntaje");
-
-                            Log.d("DEBUG", "Puntaje actual: " + String.valueOf(puntaje));
+                            //Log.d("DEBUG", "Puntaje actual: " + String.valueOf(puntaje));
 
                             if (puntaje == null) {
                                 puntaje = 0L;
@@ -458,11 +528,11 @@ public class PreguntaActivity extends AppCompatActivity {
 
                             // Sumar los puntos de la pregunta actual al puntaje
                             Long puntosPregunta = preguntaActual.getLong("puntos");
-                            Log.d("DEBUG", "Puntos de la pregunta: " + String.valueOf(puntosPregunta));
+                            //Log.d("DEBUG", "Puntos de la pregunta: " + String.valueOf(puntosPregunta));
 
                             if (puntosPregunta != null) {
                                 puntaje += puntosPregunta;
-                                Log.d("DEBUG", "Nuevo puntaje: " + String.valueOf(puntaje));
+                                //Log.d("DEBUG", "Nuevo puntaje: " + String.valueOf(puntaje));
 
                                 // Actualizar el valor de "puntaje" en Firestore
                                 documentReference.update("puntaje", puntaje)
@@ -485,7 +555,254 @@ public class PreguntaActivity extends AppCompatActivity {
                     }
                 });
 
+                // SUMA CUANDO LA RESPUESTA ES CORRECTA
+                // Obtén la referencia al documento en la colección "rqConteo" usando el ID del usuario
+                DocumentReference conteoDocumentRef = db.collection("rqConteo").document(idUser);
 
+                // Verifica si el documento ya existe en la colección
+                conteoDocumentRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+
+                            if (document.exists()) {
+                                // El documento ya existe, obtén el valor actual de conteoC
+                                Long conteoActual = document.getLong("conteoC");
+
+                                // Incrementa el valor de conteoC
+                                if (conteoActual != null) {
+                                    conteoActual += 1;
+                                } else {
+                                    conteoActual = 1L;
+                                }
+
+                                // Actualiza el valor de conteoC en Firestore
+                                conteoDocumentRef.update("conteoC", conteoActual)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Log.d("DEBUG", "Valor de conteoC actualizado correctamente en Firestore");
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.e("ERROR", "Error al actualizar el valor de conteoC en Firestore", e);
+                                            }
+                                        });
+                            } else {
+                                // El documento no existe, crea uno nuevo con conteoC igual a 1
+                                Map<String, Object> conteoData = new HashMap<>();
+                                conteoData.put("idUser", idUser);
+                                conteoData.put("conteoC", 1);
+
+                                conteoDocumentRef.set(conteoData)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Log.d("DEBUG", "Documento creado correctamente en Firestore");
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.e("ERROR", "Error al crear el documento en Firestore", e);
+                                            }
+                                        });
+                            }
+                        } else {
+                            Log.e("ERROR", "Error al obtener el documento en Firestore", task.getException());
+                        }
+                    }
+                });
+
+
+                // SUMAR DE ACUERDO A LA CATEGORÍA
+                if (catego.equals("Curación")) { // CATEGORIA: CURACION
+                    // Mapa para almacenar datos a actualizar
+                    Map<String, Object> updateData = new HashMap<>();
+
+                    // Añadir el ID del usuario al mapa
+                    updateData.put("idUser", idUser);
+
+                    // Actualizar el atributo "acumulado" en la colección "rqCuracion"
+                    DocumentReference curacionDocumentRef = db.collection("rqCuracion").document(idUser);
+                    curacionDocumentRef
+                            .set(updateData, SetOptions.merge())
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    // Documento creado correctamente o ya existía
+                                    Log.d("DEBUG", "Documento creado o existente en Firestore para Curación");
+
+                                    // Continuar con la actualización de "acumulado"
+                                    curacionDocumentRef.update("acumulado", FieldValue.increment(1))
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Log.d("DEBUG", "Valor de acumulado actualizado correctamente en Firestore para Curación");
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Log.e("ERROR", "Error al actualizar el valor de acumulado en Firestore para Curación", e);
+                                                }
+                                            });
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.e("ERROR", "Error al crear el documento en Firestore para Curación", e);
+                                }
+                            });
+                } else if (catego.equals("Anatomía")) {
+                    Map<String, Object> updateData = new HashMap<>();
+                    updateData.put("idUser", idUser);
+
+
+                    DocumentReference signosDocumentRef = db.collection("rqAnatomia").document(idUser);
+                    signosDocumentRef
+                            .set(updateData, SetOptions.merge())
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    // Documento creado correctamente o ya existía
+                                    Log.d("DEBUG", "Documento creado o existente en Firestore para Signos Vitales");
+
+                                    // Continuar con la actualización de "acumulado"
+                                    signosDocumentRef.update("acumulado", FieldValue.increment(1))
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Log.d("DEBUG", "Valor de acumulado actualizado correctamente en Firestore para Signos Vitales");
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Log.e("ERROR", "Error al actualizar el valor de acumulado en Firestore para Signos Vitales", e);
+                                                }
+                                            });
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.e("ERROR", "Error al crear o actualizar el documento en Firestore para Signos Vitales", e);
+                                }
+                            });
+                } else if (catego.equals("Signos Vitales")) {
+                    Map<String, Object> updateData = new HashMap<>();
+                    updateData.put("idUser", idUser);
+
+
+                    DocumentReference signosDocumentRef = db.collection("rqSignosVitales").document(idUser);
+                    signosDocumentRef
+                            .set(updateData, SetOptions.merge())
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    // Documento creado correctamente o ya existía
+                                    Log.d("DEBUG", "Documento creado o existente en Firestore para Signos Vitales");
+
+                                    // Continuar con la actualización de "acumulado"
+                                    signosDocumentRef.update("acumulado", FieldValue.increment(1))
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Log.d("DEBUG", "Valor de acumulado actualizado correctamente en Firestore para Signos Vitales");
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Log.e("ERROR", "Error al actualizar el valor de acumulado en Firestore para Signos Vitales", e);
+                                                }
+                                            });
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.e("ERROR", "Error al crear o actualizar el documento en Firestore para Signos Vitales", e);
+                                }
+                            });
+                } else if (catego.equals("Síntomas")) {
+                    Map<String, Object> updateData = new HashMap<>();
+                    updateData.put("idUser", idUser);
+
+
+                    DocumentReference signosDocumentRef = db.collection("rqSintomas").document(idUser);
+                    signosDocumentRef
+                            .set(updateData, SetOptions.merge())
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    // Documento creado correctamente o ya existía
+                                    Log.d("DEBUG", "Documento creado o existente en Firestore para Signos Vitales");
+
+                                    // Continuar con la actualización de "acumulado"
+                                    signosDocumentRef.update("acumulado", FieldValue.increment(1))
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Log.d("DEBUG", "Valor de acumulado actualizado correctamente en Firestore para Signos Vitales");
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Log.e("ERROR", "Error al actualizar el valor de acumulado en Firestore para Signos Vitales", e);
+                                                }
+                                            });
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.e("ERROR", "Error al crear o actualizar el documento en Firestore para Signos Vitales", e);
+                                }
+                            });
+                } else {
+                        Map<String, Object> updateData = new HashMap<>();
+                        updateData.put("idUser", idUser);
+
+
+                        DocumentReference signosDocumentRef = db.collection("rqBonus").document(idUser);
+                        signosDocumentRef
+                                .set(updateData, SetOptions.merge())
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        // Documento creado correctamente o ya existía
+                                        Log.d("DEBUG", "Documento creado o existente en Firestore para Signos Vitales");
+
+                                        // Continuar con la actualización de "acumulado"
+                                        signosDocumentRef.update("acumulado", FieldValue.increment(1))
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Log.d("DEBUG", "Valor de acumulado actualizado correctamente en Firestore para Signos Vitales");
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Log.e("ERROR", "Error al actualizar el valor de acumulado en Firestore para Signos Vitales", e);
+                                                    }
+                                                });
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.e("ERROR", "Error al crear o actualizar el documento en Firestore para Signos Vitales", e);
+                                    }
+                                });
+                }
             } else {
                 // Respuesta incorrecta, cambiar color a rojo
                 boton.setBackgroundColor(Color.RED);

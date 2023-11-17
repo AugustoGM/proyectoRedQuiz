@@ -16,7 +16,8 @@
         app:layout_constraintHorizontal_bias="0.933"
         app:layout_constraintStart_toStartOf="@+id/textView15"
         app:layout_constraintTop_toTopOf="@+id/textView15"
-        app:layout_constraintVertical_bias="0.476" />
+        app:layout_constraintVertical_bias="0.476"
+        tools:ignore="HardcodedText,VisualLintOverlap" />
 
     <TextView
         android:id="@+id/textView5"
@@ -26,27 +27,29 @@
         android:text="Reactivos Totales"
         android:textColor="#000000"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/textView6"
+        app:layout_constraintBottom_toTopOf="@+id/reactivosT"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.221"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.294" />
+        app:layout_constraintVertical_bias="0.294"
+        tools:ignore="HardcodedText" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/reactivosT"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="10dp"
         android:text="0"
         android:textColor="#000000"
         app:layout_constraintBottom_toTopOf="@+id/textView10"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.163"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="HardcodedText" />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/reactivosC"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="492dp"
@@ -55,7 +58,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.163"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="HardcodedText" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -63,6 +67,8 @@
         android:layout_width="112dp"
         android:layout_height="116dp"
         android:progressTint="#1F9C08"
+        android:max="100"
+        android:progress="0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -78,10 +84,11 @@
         android:text="Respondidos Correctamente"
         android:textColor="#000000"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/textView9"
+        app:layout_constraintBottom_toTopOf="@+id/reactivosC"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.288"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/textView11"
@@ -97,7 +104,8 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.133" />
+        app:layout_constraintVertical_bias="0.133"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/textView13"
@@ -112,7 +120,8 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/textView14"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/textView14"
@@ -127,7 +136,8 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/textView15"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/textView15"
@@ -142,10 +152,11 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/textView17"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="HardcodedText" />
 
     <TextView
-        android:id="@+id/textView24"
+        android:id="@+id/curacionPor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0%"
@@ -154,10 +165,11 @@
         app:layout_constraintHorizontal_bias="0.933"
         app:layout_constraintStart_toStartOf="@+id/textView14"
         app:layout_constraintTop_toTopOf="@+id/textView14"
-        app:layout_constraintVertical_bias="0.428" />
+        app:layout_constraintVertical_bias="0.428"
+        tools:ignore="HardcodedText" />
 
     <TextView
-        android:id="@+id/textView25"
+        android:id="@+id/sintomasPor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0%"
@@ -166,7 +178,8 @@
         app:layout_constraintHorizontal_bias="0.933"
         app:layout_constraintStart_toStartOf="@+id/textView15"
         app:layout_constraintTop_toTopOf="@+id/textView15"
-        app:layout_constraintVertical_bias="0.476" />
+        app:layout_constraintVertical_bias="0.476"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/textView16"
@@ -181,7 +194,8 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/textView17"
@@ -197,7 +211,8 @@
         app:layout_constraintBottom_toTopOf="@+id/textView16"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.508"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/textView18"
@@ -220,7 +235,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView18"
-        app:layout_constraintVertical_bias="0.73" />
+        app:layout_constraintVertical_bias="0.73"
+        tools:ignore="HardcodedText" />
 
     <Button
         android:id="@+id/btn_volverP"
@@ -233,10 +249,11 @@
         app:layout_constraintHorizontal_bias="0.326"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.704" />
+        app:layout_constraintVertical_bias="0.704"
+        tools:ignore="HardcodedText,TouchTargetSizeCheck,TextContrastCheck" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/por"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0%"
@@ -244,10 +261,11 @@
         app:layout_constraintBottom_toBottomOf="@+id/progressBar"
         app:layout_constraintEnd_toEndOf="@+id/progressBar"
         app:layout_constraintStart_toStartOf="@+id/progressBar"
-        app:layout_constraintTop_toTopOf="@+id/progressBar" />
+        app:layout_constraintTop_toTopOf="@+id/progressBar"
+        tools:ignore="HardcodedText,TextContrastCheck" />
 
     <TextView
-        android:id="@+id/textView21"
+        android:id="@+id/signosPor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0%"
@@ -256,10 +274,11 @@
         app:layout_constraintHorizontal_bias="0.933"
         app:layout_constraintStart_toStartOf="@+id/textView13"
         app:layout_constraintTop_toTopOf="@+id/textView13"
-        app:layout_constraintVertical_bias="0.523" />
+        app:layout_constraintVertical_bias="0.523"
+        tools:ignore="HardcodedText" />
 
     <TextView
-        android:id="@+id/textView29"
+        android:id="@+id/anatomiaPor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0%"
@@ -268,10 +287,11 @@
         app:layout_constraintHorizontal_bias="0.933"
         app:layout_constraintStart_toStartOf="@+id/textView17"
         app:layout_constraintTop_toTopOf="@+id/textView17"
-        app:layout_constraintVertical_bias="0.476" />
+        app:layout_constraintVertical_bias="0.476"
+        tools:ignore="HardcodedText" />
 
     <TextView
-        android:id="@+id/textView30"
+        android:id="@+id/bonusPor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0%"
@@ -280,6 +300,7 @@
         app:layout_constraintHorizontal_bias="0.933"
         app:layout_constraintStart_toStartOf="@+id/textView16"
         app:layout_constraintTop_toTopOf="@+id/textView16"
-        app:layout_constraintVertical_bias="0.523" />
+        app:layout_constraintVertical_bias="0.523"
+        tools:ignore="HardcodedText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
