@@ -138,7 +138,7 @@ public class MiPuntaje extends AppCompatActivity {
                                             if (conteoC != null) {
                                                 // Calcular el porcentaje y mostrarlo en la vista correspondiente
                                                 double porcentaje = (acumulado * 100.0) / conteoC;
-                                                curacionPorcentaje.setText(String.format(String.valueOf(porcentaje)) + "%");
+                                                curacionPorcentaje.setText(String.format("%.2f%%", porcentaje));
                                             } else {
                                                 Log.e("ERROR", "El valor de conteoC es nulo");
                                             }
@@ -193,7 +193,7 @@ public class MiPuntaje extends AppCompatActivity {
                                             if (conteoC != null) {
                                                 // Calcular el porcentaje y mostrarlo en la vista correspondiente
                                                 double porcentaje = (acumulado * 100.0) / conteoC;
-                                                anatomiaPorcentaje.setText(String.format(String.valueOf(porcentaje)) + "%");
+                                                anatomiaPorcentaje.setText(String.format("%.2f%%", porcentaje));
                                             } else {
                                                 Log.e("ERROR", "El valor de conteoC es nulo");
                                             }
@@ -248,7 +248,7 @@ public class MiPuntaje extends AppCompatActivity {
                                             if (conteoC != null) {
                                                 // Calcular el porcentaje y mostrarlo en la vista correspondiente
                                                 double porcentaje = (acumulado * 100.0) / conteoC;
-                                                signosPocentaje.setText(String.format(String.valueOf(porcentaje)) + "%");
+                                                signosPocentaje.setText(String.format("%.2f%%", porcentaje));
                                             } else {
                                                 Log.e("ERROR", "El valor de conteoC es nulo");
                                             }
@@ -303,7 +303,7 @@ public class MiPuntaje extends AppCompatActivity {
                                             if (conteoC != null) {
                                                 // Calcular el porcentaje y mostrarlo en la vista correspondiente
                                                 double porcentaje = (acumulado * 100.0) / conteoC;
-                                                sintomasPorcentaje.setText(String.format(String.valueOf(porcentaje)) + "%");
+                                                sintomasPorcentaje.setText(String.format("%.2f%%", porcentaje));
                                             } else {
                                                 Log.e("ERROR", "El valor de conteoC es nulo");
                                             }
@@ -357,7 +357,7 @@ public class MiPuntaje extends AppCompatActivity {
                                             if (conteoC != null) {
                                                 // Calcular el porcentaje y mostrarlo en la vista correspondiente
                                                 double porcentaje = (acumulado * 100.0) / conteoC;
-                                                bonusPorcentaje.setText(String.format(String.valueOf(porcentaje)) + "%");
+                                                bonusPorcentaje.setText(String.format("%.2f%%", porcentaje));
                                             } else {
                                                 Log.e("ERROR", "El valor de conteoC es nulo");
                                             }
