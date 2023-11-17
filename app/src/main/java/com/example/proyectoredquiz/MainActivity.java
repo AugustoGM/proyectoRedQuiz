@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -49,14 +50,30 @@ public class MainActivity extends AppCompatActivity {
                 String emailUser = emailI.getText().toString().trim();
                 String passUser = passwordI.getText().toString().trim();
 
-                if (emailUser.isEmpty() && passUser.isEmpty()){
-                    Toast.makeText(MainActivity.this, "Ingrese los datos", Toast.LENGTH_SHORT).show();
-
-                }else {
-                    loginUser(emailUser, passUser);
+                // Verifica si las credenciales coinciden con las del administrador
+                if (esCuentaDeAdmin(emailUser, passUser)) {
+                    // Credenciales de administrador, redirige a la interfaz del administrador
+                    finish();
+                    startActivity(new Intent(MainActivity.this, MenuAdministrador.class));
+                    Toast.makeText(MainActivity.this, "¡Bienvenido Administrador!", Toast.LENGTH_SHORT).show();
+                } else {
+                    // No son credenciales de administrador, realiza el inicio de sesión normal
+                    if (TextUtils.isEmpty(emailUser) || TextUtils.isEmpty(passUser)) {
+                        Toast.makeText(MainActivity.this, "Ingrese los datos", Toast.LENGTH_SHORT).show();
+                    } else {
+                        loginUser(emailUser, passUser);
+                    }
                 }
             }
         });
+
+    }
+
+    private boolean esCuentaDeAdmin(String email, String contraseña) {
+        // Verifica aquí si las credenciales coinciden con las de una cuenta de administrador
+        // Puedes almacenar las cuentas de administrador en una base de datos o en algún otro lugar seguro
+        // Por ahora, usaremos credenciales "dummy" para demostración.
+        return email.equals("admin@gmail.com") && contraseña.equals("admin123#");
     }
 
     private void loginUser(String emailUser, String passUser) {
