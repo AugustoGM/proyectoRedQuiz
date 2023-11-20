@@ -13,6 +13,9 @@
         android:theme="@style/Theme.ProyectoRedQuiz"
         tools:targetApi="31">
         <activity
+            android:name=".UpdatePregunta"
+            android:exported="false" />
+        <activity
             android:name=".Perfil"
             android:exported="false" />
         <activity

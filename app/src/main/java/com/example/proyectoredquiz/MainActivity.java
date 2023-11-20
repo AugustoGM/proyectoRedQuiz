@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         // Verifica aquí si las credenciales coinciden con las de una cuenta de administrador
         // Puedes almacenar las cuentas de administrador en una base de datos o en algún otro lugar seguro
         // Por ahora, usaremos credenciales "dummy" para demostración.
-        return email.equals("admin@gmail.com") && contraseña.equals("admin123#");
+        return email.equals("admin@gmail.com") && contraseña.equals("admin123#");  //checar si se puden poner mas cuentas de admin
     }
 
     private void loginUser(String emailUser, String passUser) {
