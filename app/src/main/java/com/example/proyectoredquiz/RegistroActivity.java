@@ -114,6 +114,7 @@ public class RegistroActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     String id = mAuth.getCurrentUser().getUid();
+                    createRecompensasDocument(id);
                     Map<String, Object> map = new HashMap<>();
                     map.put("id", id);
                     map.put("nombre", nameUser);
@@ -144,6 +145,35 @@ public class RegistroActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void createRecompensasDocument(String id) {
+        Map<String, Object> recompensasMap = new HashMap<>();
+
+        // Aquí puedes agregar los atributos deseados, como recompensa1, recompensa2, etc.
+        recompensasMap.put("recompensa1", "false");
+        recompensasMap.put("recompensa2", "false");
+        recompensasMap.put("recompensa3", "false");
+        recompensasMap.put("recompensa4", "false");
+        recompensasMap.put("recompensa5", "false");
+        // Agrega más atributos según sea necesario...
+
+        // Crear el documento en la colección "rqRecompensas" con el ID del usuario
+        mFirestore.collection("rqRecompensas").document(id).set(recompensasMap)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        // Documento creado con éxito
+                        Toast.makeText(RegistroActivity.this, "Documento de recompensas creado con éxito", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Error al crear el documento
+                        Toast.makeText(RegistroActivity.this, "Error al crear el documento de recompensas", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
 }

@@ -52,7 +52,7 @@
                 android:src="@drawable/ic_delete" />
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/btn_actualizar"
                 android:layout_width="107dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

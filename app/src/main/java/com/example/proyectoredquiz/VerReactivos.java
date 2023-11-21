@@ -83,9 +83,6 @@ public class VerReactivos extends AppCompatActivity {
         });
 
 
-
-
-
         btn_agregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

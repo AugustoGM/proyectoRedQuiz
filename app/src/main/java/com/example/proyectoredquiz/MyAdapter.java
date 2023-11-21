@@ -7,9 +7,11 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +37,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     private FirebaseFirestore mfirestore;
     DocumentSnapshot documentSnapshot;
 
+
     public MyAdapter(Context context, ArrayList<Question> list) {
         this.context = context;
         this.list = list;
@@ -59,6 +62,29 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             @Override
             public void onClick(View view) {
                 mostrarDialogoConfirmacion(position);
+            }
+        });
+
+        holder.btn_actualizar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Obtén la pregunta seleccionada
+                Question pregunta = list.get(position);
+                // Obtén el DocumentSnapshot asociado a la pregunta
+                DocumentSnapshot documentSnapshot = pregunta.getDocumentSnapshot();
+                // Obtener el nombre del documento (ID del documento)
+                String documentName = documentSnapshot.getId();
+
+                // Crea un Intent para abrir la nueva actividad
+                Intent intent = new Intent(context, UpdatePregunta.class);
+
+                // Pasa la información de la pregunta a la nueva actividad
+                intent.putExtra("PREGUNTA_ID", documentName);
+                intent.putExtra("PREGUNTA_TEXT", pregunta.getPregunta());
+                intent.putExtra("CATEGORIA", pregunta.getCategoria());
+
+                // Inicia la nueva actividad
+                context.startActivity(intent);
             }
         });
     }
@@ -130,6 +156,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         TextView pregunta, categoria;
         ImageView btn_eliminar;
+        Button btn_actualizar;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -137,6 +164,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             categoria = itemView.findViewById(R.id.textcategoria);
 
             btn_eliminar = itemView.findViewById(R.id.btn_delete);
+            btn_actualizar = itemView.findViewById(R.id.btn_actualizar);
         }
     }
 }
