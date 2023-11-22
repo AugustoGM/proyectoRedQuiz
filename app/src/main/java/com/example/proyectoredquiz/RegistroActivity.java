@@ -126,6 +126,8 @@ public class RegistroActivity extends AppCompatActivity {
                     map.put("genero", selectedGender); // Agregar el género al mapa de datos
                     map.put("vidas", 5);
                     map.put("puntaje", 0);
+                    map.put("prendaI", 1);
+                    map.put("prendaS", 1);
 
                     mFirestore.collection("rqUsers").document(id).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -151,11 +153,12 @@ public class RegistroActivity extends AppCompatActivity {
         Map<String, Object> recompensasMap = new HashMap<>();
 
         // Aquí puedes agregar los atributos deseados, como recompensa1, recompensa2, etc.
-        recompensasMap.put("recompensa1", "false");
-        recompensasMap.put("recompensa2", "false");
-        recompensasMap.put("recompensa3", "false");
-        recompensasMap.put("recompensa4", "false");
-        recompensasMap.put("recompensa5", "false");
+        recompensasMap.put("id", id);
+        recompensasMap.put("recompensa1", false); // Cambiado a boolean
+        recompensasMap.put("recompensa2", false);
+        recompensasMap.put("recompensa3", false);
+        recompensasMap.put("recompensa4", false);
+        recompensasMap.put("recompensa5", false);
         // Agrega más atributos según sea necesario...
 
         // Crear el documento en la colección "rqRecompensas" con el ID del usuario
@@ -164,7 +167,7 @@ public class RegistroActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void unused) {
                         // Documento creado con éxito
-                        Toast.makeText(RegistroActivity.this, "Documento de recompensas creado con éxito", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(RegistroActivity.this, "Documento de recompensas creado con éxito", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -175,5 +178,7 @@ public class RegistroActivity extends AppCompatActivity {
                     }
                 });
     }
+
+
 
 }

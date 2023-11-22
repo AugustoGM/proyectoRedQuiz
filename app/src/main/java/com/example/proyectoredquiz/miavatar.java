@@ -34,8 +34,14 @@ public class miavatar extends AppCompatActivity {
     private FirebaseFirestore mfirestore;
     FirebaseAuth mAuth;
     private String idUser, generoUsuario;
-    private int puntajeUsuario;
+    private int puntajeUsuario, prendaSuperior, prendaInferior;
     ImageView avatar, superiorH, inferiorH, zapatosH, superiorM, inferiorM, zapatosM;
+
+    private boolean recompensa1Desbloqueada = false;
+    private boolean recompensa2Desbloqueada = false;
+    private boolean recompensa3Desbloqueada = false;
+    private boolean recompensa4Desbloqueada = false;
+    private boolean recompensa5Desbloqueada = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +89,7 @@ public class miavatar extends AppCompatActivity {
                         superiorM.setVisibility(View.GONE);
                         inferiorM.setVisibility(View.GONE);
                         zapatosM.setVisibility(View.GONE);
+                        obtenerPrendas(idUser, generoUsuario);
                     } else if ("Femenino".equals(generoUsuario)) {
                         avatar.setImageResource(R.drawable.mujer);
                         superiorH.setVisibility(View.GONE);
@@ -91,6 +98,7 @@ public class miavatar extends AppCompatActivity {
                         superiorM.setVisibility(View.VISIBLE);
                         inferiorM.setVisibility(View.VISIBLE);
                         zapatosM.setVisibility(View.VISIBLE);
+                        obtenerPrendas(idUser, generoUsuario);
                     }
                     puntajeUsuario = documentSnapshot.getLong("puntaje").intValue();
                     puntaje.setText(String.valueOf(puntajeUsuario));
@@ -116,6 +124,86 @@ public class miavatar extends AppCompatActivity {
                 startActivities(new Intent[]{index});
             }
         });
+
+        obtenerPuntajeUsuarioDesdeFirestore(idUser);
+    }
+
+    private void obtenerPrendas(String userId, String genero) {
+        // Obtener la referencia al documento del usuario en Firestore
+        String usuarioDocumentPath = "rqUsers/" + userId;
+
+        // Realizar la consulta para obtener el documento del usuario
+        mfirestore.document(usuarioDocumentPath)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            // El documento del usuario existe, obtener el puntaje
+                            Long prendaI = documentSnapshot.getLong("prendaI");
+                            Long prendaS = documentSnapshot.getLong("prendaS");
+
+                            if (puntaje != null) {
+                                // Actualizar la variable puntajeUsuario y realizar las acciones necesarias
+                                prendaSuperior = prendaS.intValue();
+                                prendaInferior = prendaI.intValue();
+                                // Realizar otras acciones según el puntaje, como verificar y desbloquear recompensas
+                                asignarPrendas(genero, prendaS, prendaI);
+                            }
+                        } else {
+                            // El documento del usuario no existe
+                            Toast.makeText(miavatar.this, "Documento de usuario no encontrado en Firestore", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Error al obtener el documento del usuario
+                        Toast.makeText(miavatar.this, "Error al obtener las prendas desde Firestore", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void asignarPrendas(String genero, Long prendaS, Long prendaI) {
+        if ("Masculino".equals(genero)){
+            if (prendaS == 1){
+                superiorH.setImageResource(R.drawable.basicahombreb);
+            } else if (prendaS == 2){
+                superiorH.setImageResource(R.drawable.basicahombren);
+            } else if (prendaS == 3) {
+                superiorH.setImageResource(R.drawable.basicahombrev);
+            } else {
+                superiorH.setImageResource(R.drawable.basicahombrecr);
+            }
+
+            if (prendaI == 1){
+                inferiorH.setImageResource(R.drawable.pantalonhombrea);
+            } else if (prendaI == 2) {
+                inferiorH.setImageResource(R.drawable.pantalonhombreac);
+            } else {
+                inferiorH.setImageResource(R.drawable.pantalonhombreg);
+            }
+        }
+        if ("Femenino".equals(genero)){
+            if (prendaS == 1){
+                superiorM.setImageResource(R.drawable.basicamujerb);
+            } else if (prendaS == 2){
+                superiorM.setImageResource(R.drawable.basicamujeraz);
+            } else if (prendaS == 3) {
+                superiorM.setImageResource(R.drawable.basicamujerr);
+            } else {
+                superiorM.setImageResource(R.drawable.basicamujercr);
+            }
+
+            if (prendaI == 1){
+                inferiorM.setImageResource(R.drawable.pantalonmujera);
+            } else if (prendaI == 2) {
+                inferiorM.setImageResource(R.drawable.pantalonmujerc);
+            } else {
+                inferiorM.setImageResource(R.drawable.pantalonmujerg);
+            }
+        }
     }
 
     private void obtenerPuntajeUsuarioDesdeFirestore(String userId) {
@@ -136,7 +224,7 @@ public class miavatar extends AppCompatActivity {
                                 // Actualizar la variable puntajeUsuario y realizar las acciones necesarias
                                 puntajeUsuario = puntaje.intValue();
                                 // Realizar otras acciones según el puntaje, como verificar y desbloquear recompensas
-                                //verificarDesbloqueoRecompensas();
+                                verificarDesbloqueoRecompensas();
                             }
                         } else {
                             // El documento del usuario no existe
@@ -153,35 +241,7 @@ public class miavatar extends AppCompatActivity {
                 });
     }
 
-    private void actualizarRecompensaEnFirestore(String nombreRecompensa, boolean desbloqueada) {
-        // Obtener la referencia al documento del usuario en Firestore (deberías tener un ID de usuario único)
-        String userId = "tu_id_de_usuario"; // Reemplaza con la lógica para obtener el ID del usuario
-        String recompensaDocumentPath = "usuarios/" + userId + "/recompensas";
-
-        // Crear un mapa para actualizar el campo de la recompensa en Firestore
-        Map<String, Object> actualizacionRecompensa = new HashMap<>();
-        actualizacionRecompensa.put(nombreRecompensa, desbloqueada);
-
-        // Actualizar el documento en Firestore
-        mfirestore.document(recompensaDocumentPath)
-                .set(actualizacionRecompensa, SetOptions.merge())
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        // La actualización se realizó con éxito
-                        Toast.makeText(miavatar.this, "Recompensa actualizada en Firestore", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // La actualización falló
-                        Toast.makeText(miavatar.this, "Error al actualizar la recompensa en Firestore", Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
-
-    /*private void verificarDesbloqueoRecompensas() {
+    private void verificarDesbloqueoRecompensas() {
         // Verificar y desbloquear recompensas según el puntaje del usuario
         if (puntajeUsuario >= 50 && !recompensa1Desbloqueada) {
             // Desbloquear recompensa 1
@@ -197,18 +257,53 @@ public class miavatar extends AppCompatActivity {
             actualizarRecompensaEnFirestore("recompensa2", true);
         }
 
-        if (puntajeUsuario >= 150 && !recompensa2Desbloqueada) {
+        if (puntajeUsuario >= 150 && !recompensa3Desbloqueada) {
             // Desbloquear recompensa 3
-            recompensa2Desbloqueada = true;
+            recompensa3Desbloqueada = true;
             // Actualizar en Firestore la recompensa desbloqueada
             actualizarRecompensaEnFirestore("recompensa3", true);
         }
 
-        if (puntajeUsuario >= 200 && !recompensa2Desbloqueada) {
+        if (puntajeUsuario >= 200 && !recompensa4Desbloqueada) {
             // Desbloquear recompensa 4
-            recompensa2Desbloqueada = true;
+            recompensa4Desbloqueada = true;
             // Actualizar en Firestore la recompensa desbloqueada
             actualizarRecompensaEnFirestore("recompensa4", true);
         }
-    } */
+        if (puntajeUsuario >= 350 && !recompensa5Desbloqueada) {
+            // Desbloquear recompensa 4
+            recompensa5Desbloqueada = true;
+            // Actualizar en Firestore la recompensa desbloqueada
+            actualizarRecompensaEnFirestore("recompensa5", true);
+        }
+    }
+
+    private void actualizarRecompensaEnFirestore(String nombreRecompensa, boolean desbloqueada) {
+        // Obtener la referencia al documento del usuario en Firestore
+        String userId = mAuth.getCurrentUser().getUid(); // Obtener el ID del usuario actual
+        String recompensaDocumentPath = "rqRecompensas/" + userId;
+
+        // Crear un mapa para actualizar el campo de la recompensa en Firestore
+        Map<String, Object> actualizacionRecompensa = new HashMap<>();
+        actualizacionRecompensa.put(nombreRecompensa, desbloqueada);
+
+        // Actualizar el documento en Firestore
+        mfirestore.collection("rqRecompensas").document(userId)
+                .set(actualizacionRecompensa, SetOptions.merge())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // La actualización se realizó con éxito
+                        //Toast.makeText(miavatar.this, "Recompensa actualizada en Firestore", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // La actualización falló
+                        Toast.makeText(miavatar.this, "Error al actualizar la recompensa en Firestore", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
 }
