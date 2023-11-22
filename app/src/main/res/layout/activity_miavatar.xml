@@ -100,29 +100,86 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView7"
         app:layout_constraintVertical_bias="0.262"
-        app:srcCompat="@drawable/descargar" />
+        app:srcCompat="@drawable/hombre"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="132dp"
+        android:layout_marginStart="120dp"
         android:text="Puntaje Acumulado:"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/scrollView2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.971" />
+        app:layout_constraintVertical_bias="0.971"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/punt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="100dp"
         android:text="0"
         app:layout_constraintBottom_toTopOf="@+id/scrollView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.056"
         app:layout_constraintStart_toEndOf="@+id/textView8"
         app:layout_constraintTop_toTopOf="@+id/textView7"
-        app:layout_constraintVertical_bias="0.973" />
+        app:layout_constraintVertical_bias="0.973"
+        tools:ignore="HardcodedText" />
+
+    <ImageView
+        android:id="@+id/infH"
+        android:layout_width="189dp"
+        android:layout_height="272dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_editarA"
+        app:layout_constraintEnd_toEndOf="@+id/avatar"
+        app:layout_constraintHorizontal_bias="0.52"
+        app:layout_constraintStart_toStartOf="@+id/avatar"
+        app:layout_constraintTop_toBottomOf="@+id/textView7"
+        app:layout_constraintVertical_bias="0.938"
+        app:srcCompat="@drawable/pantalonhombrea"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/zapH"
+        android:layout_width="76dp"
+        android:layout_height="105dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/avatar"
+        app:layout_constraintStart_toStartOf="@+id/avatar"
+        app:layout_constraintTop_toBottomOf="@+id/textView7"
+        app:layout_constraintVertical_bias="0.551"
+        app:srcCompat="@drawable/zapatoshombre"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/supH"
+        android:layout_width="171dp"
+        android:layout_height="191dp"
+        android:layout_marginBottom="95dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_editarA"
+        app:layout_constraintEnd_toEndOf="@+id/avatar"
+        app:layout_constraintStart_toStartOf="@+id/avatar"
+        app:layout_constraintTop_toBottomOf="@+id/textView7"
+        app:srcCompat="@drawable/basicahombreb"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/supM"
+        android:layout_width="199dp"
+        android:layout_height="236dp"
+        app:layout_constraintBottom_toBottomOf="@+id/infH"
+        app:layout_constraintEnd_toEndOf="@+id/avatar"
+        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintStart_toStartOf="@+id/avatar"
+        app:layout_constraintTop_toBottomOf="@+id/textView7"
+        app:layout_constraintVertical_bias="0.383"
+        app:srcCompat="@drawable/basicamujerb" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -29,13 +29,13 @@ import java.util.Map;
 
 public class miavatar extends AppCompatActivity {
 
-    Button btn_volver;
+    Button btn_volver, btn_editar;
     TextView puntaje;
     private FirebaseFirestore mfirestore;
     FirebaseAuth mAuth;
     private String idUser, generoUsuario;
     private int puntajeUsuario;
-    ImageView avatar;
+    ImageView avatar, superiorH, inferiorH, zapatosH, superiorM, inferiorM, zapatosM;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +45,15 @@ public class miavatar extends AppCompatActivity {
 
         idUser = mAuth.getCurrentUser().getUid();
         btn_volver = findViewById(R.id.btn_volverA);
+        btn_editar = findViewById(R.id.btn_editarA);
         puntaje = findViewById(R.id.punt);
         avatar = findViewById(R.id.avatar);
+
+        superiorH = findViewById(R.id.supH);
+        inferiorH = findViewById(R.id.infH);
+        zapatosH = findViewById(R.id.zapH);
+
+        superiorM = findViewById(R.id.supM);
 
         //FIRESTORE
         mfirestore = FirebaseFirestore.getInstance();
@@ -68,8 +75,15 @@ public class miavatar extends AppCompatActivity {
                     Log.e("EtiquetaDeRegistro", "Valor del género del usuario: " + generoUsuario);
                     if ("Masculino".equals(generoUsuario)) {
                         avatar.setImageResource(R.drawable.hombre);
+                        superiorH.setVisibility(View.VISIBLE);
+                        inferiorH.setVisibility(View.VISIBLE);
+                        zapatosH.setVisibility(View.VISIBLE);
+                        superiorM.setVisibility(View.GONE);
                     } else if ("Femenino".equals(generoUsuario)) {
                         avatar.setImageResource(R.drawable.mujer);
+                        superiorH.setVisibility(View.GONE);
+                        inferiorH.setVisibility(View.GONE);
+                        zapatosH.setVisibility(View.GONE);
                     }
                     puntajeUsuario = documentSnapshot.getLong("puntaje").intValue();
                     puntaje.setText(String.valueOf(puntajeUsuario));
@@ -83,6 +97,15 @@ public class miavatar extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent index = new Intent(miavatar.this, MenuUserActivity.class);
+                startActivities(new Intent[]{index});
+            }
+        });
+
+        // VOLVER EDITAR
+        btn_editar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent index = new Intent(miavatar.this, EditarAvatar.class);
                 startActivities(new Intent[]{index});
             }
         });
