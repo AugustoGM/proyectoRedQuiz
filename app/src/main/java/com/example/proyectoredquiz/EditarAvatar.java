@@ -213,6 +213,7 @@ public class EditarAvatar extends AppCompatActivity {
         btn_color2.setBackgroundColor(ContextCompat.getColor(this, R.color.naranjaH));
         btn_color3.setBackgroundColor(ContextCompat.getColor(this, R.color.verdeH));
         btn_color4.setBackgroundColor(ContextCompat.getColor(this, R.color.cruzRoja));
+        btn_color4.setVisibility(View.VISIBLE);
 
         if (estado == 1){
             btn_color1.setOnClickListener(new View.OnClickListener() {
@@ -255,6 +256,7 @@ public class EditarAvatar extends AppCompatActivity {
         btn_color2.setBackgroundColor(ContextCompat.getColor(this, R.color.pantalonH2));
         btn_color3.setBackgroundColor(ContextCompat.getColor(this, R.color.pantalonH3));
         btn_color4.setBackgroundColor(ContextCompat.getColor(this, R.color.pantalonH4));
+        btn_color4.setVisibility(View.GONE);
 
         if (estado == 2){
             btn_color1.setOnClickListener(new View.OnClickListener() {
@@ -299,6 +301,7 @@ public class EditarAvatar extends AppCompatActivity {
         btn_color2.setBackgroundColor(ContextCompat.getColor(this, R.color.azulM));
         btn_color3.setBackgroundColor(ContextCompat.getColor(this, R.color.rosaM));
         btn_color4.setBackgroundColor(ContextCompat.getColor(this, R.color.cruzRoja));
+        btn_color4.setVisibility(View.VISIBLE);
 
         if (estado == 1){
             btn_color1.setOnClickListener(new View.OnClickListener() {
@@ -341,6 +344,7 @@ public class EditarAvatar extends AppCompatActivity {
         btn_color2.setBackgroundColor(ContextCompat.getColor(this, R.color.pantalonH4));
         btn_color3.setBackgroundColor(ContextCompat.getColor(this, R.color.pantalonH3));
         btn_color4.setBackgroundColor(ContextCompat.getColor(this, R.color.pantalonH4));
+        btn_color4.setVisibility(View.GONE);
 
         if (estado == 2){
             btn_color1.setOnClickListener(new View.OnClickListener() {

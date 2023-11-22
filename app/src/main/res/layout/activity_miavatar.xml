@@ -171,9 +171,23 @@
         tools:ignore="ContentDescription" />
 
     <ImageView
+        android:id="@+id/infM"
+        android:layout_width="197dp"
+        android:layout_height="256dp"
+        android:layout_marginEnd="3dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/avatar"
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintStart_toStartOf="@+id/avatar"
+        app:layout_constraintTop_toBottomOf="@+id/textView7"
+        app:layout_constraintVertical_bias="0.33"
+        app:srcCompat="@drawable/pantalonmujera" />
+
+    <ImageView
         android:id="@+id/supM"
-        android:layout_width="199dp"
-        android:layout_height="236dp"
+        android:layout_width="177dp"
+        android:layout_height="179dp"
+        android:layout_marginEnd="2dp"
         app:layout_constraintBottom_toBottomOf="@+id/infH"
         app:layout_constraintEnd_toEndOf="@+id/avatar"
         app:layout_constraintHorizontal_bias="0.507"
@@ -181,5 +195,18 @@
         app:layout_constraintTop_toBottomOf="@+id/textView7"
         app:layout_constraintVertical_bias="0.383"
         app:srcCompat="@drawable/basicamujerb" />
+
+    <ImageView
+        android:id="@+id/zapM"
+        android:layout_width="56dp"
+        android:layout_height="68dp"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/avatar"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="@+id/avatar"
+        app:layout_constraintTop_toBottomOf="@+id/textView7"
+        app:layout_constraintVertical_bias="0.55"
+        app:srcCompat="@drawable/zapatosmujer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

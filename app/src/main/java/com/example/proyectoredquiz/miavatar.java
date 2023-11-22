@@ -54,6 +54,8 @@ public class miavatar extends AppCompatActivity {
         zapatosH = findViewById(R.id.zapH);
 
         superiorM = findViewById(R.id.supM);
+        inferiorM = findViewById(R.id.infM);
+        zapatosM = findViewById(R.id.zapM);
 
         //FIRESTORE
         mfirestore = FirebaseFirestore.getInstance();
@@ -79,11 +81,16 @@ public class miavatar extends AppCompatActivity {
                         inferiorH.setVisibility(View.VISIBLE);
                         zapatosH.setVisibility(View.VISIBLE);
                         superiorM.setVisibility(View.GONE);
+                        inferiorM.setVisibility(View.GONE);
+                        zapatosM.setVisibility(View.GONE);
                     } else if ("Femenino".equals(generoUsuario)) {
                         avatar.setImageResource(R.drawable.mujer);
                         superiorH.setVisibility(View.GONE);
                         inferiorH.setVisibility(View.GONE);
                         zapatosH.setVisibility(View.GONE);
+                        superiorM.setVisibility(View.VISIBLE);
+                        inferiorM.setVisibility(View.VISIBLE);
+                        zapatosM.setVisibility(View.VISIBLE);
                     }
                     puntajeUsuario = documentSnapshot.getLong("puntaje").intValue();
                     puntaje.setText(String.valueOf(puntajeUsuario));
