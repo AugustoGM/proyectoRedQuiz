@@ -93,7 +93,7 @@ public class RegistroActivity extends AppCompatActivity {
                 //String curpUser = curp.getText().toString().trim();
                 String selectedGender = spinnerGender.getSelectedItem().toString();
 
-                if (nameUser.isEmpty() || lastnameUser.isEmpty() || emailUser.isEmpty() || passUser.isEmpty() || confirmPassUser.isEmpty() || dateUser.isEmpty()){
+                if (nameUser.isEmpty() && lastnameUser.isEmpty() && emailUser.isEmpty() && passUser.isEmpty() && confirmPassUser.isEmpty() && dateUser.isEmpty()){
                     Toast.makeText(RegistroActivity.this, "Complete los datos", Toast.LENGTH_SHORT).show();
                 }else{
                     if (passUser.equals(confirmPassUser)){
@@ -128,6 +128,7 @@ public class RegistroActivity extends AppCompatActivity {
                     map.put("puntaje", 0);
                     map.put("prendaI", 1);
                     map.put("prendaS", 1);
+                    map.put("tipo", "usuario");
 
                     mFirestore.collection("rqUsers").document(id).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override

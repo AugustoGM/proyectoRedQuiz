@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "¡Bienvenido Administrador!", Toast.LENGTH_SHORT).show();
                 } else {
                     // No son credenciales de administrador, realiza el inicio de sesión normal
-                    if (TextUtils.isEmpty(emailUser) || TextUtils.isEmpty(passUser)) {
+                    if (TextUtils.isEmpty(emailUser) && TextUtils.isEmpty(passUser)) {
                         Toast.makeText(MainActivity.this, "Ingrese los datos", Toast.LENGTH_SHORT).show();
                     } else {
                         loginUser(emailUser, passUser);
