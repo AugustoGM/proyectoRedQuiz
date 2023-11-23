@@ -162,6 +162,7 @@
         android:id="@+id/preguntaJ"
         android:layout_width="259dp"
         android:layout_height="131dp"
+        android:paddingTop="25sp"
         android:text="Pregunta"
         android:textAlignment="center"
         android:textColor="#000000"

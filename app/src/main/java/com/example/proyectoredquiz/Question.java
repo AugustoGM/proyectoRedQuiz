@@ -14,10 +14,12 @@ public class Question {
     public Question() {
     }
 
-    public Question(String pregunta, String categoria, String id) {
+    public Question(String pregunta, String categoria, String id, DocumentSnapshot documentSnapshot) {
         this.id = id;
         this.pregunta = pregunta;
         this.categoria = categoria;
+        this.documentSnapshot = documentSnapshot;
+
     }
 
     public String getPregunta() {

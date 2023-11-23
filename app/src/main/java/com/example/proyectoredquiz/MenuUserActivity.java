@@ -17,6 +17,9 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
+
 public class MenuUserActivity extends AppCompatActivity {
 
     Button btn_exit, btn_perfil, btn_jugar, btn_puntaje, btn_avatar;
@@ -24,7 +27,7 @@ public class MenuUserActivity extends AppCompatActivity {
     FirebaseFirestore fStore;
     private TextView nombreUsuario, vidas, mensajeTiempo;
     private String idUser;
-    private TextClock textClock;
+    private TextView reloj;
     private CountDownTimer countDownTimer;
     private int tiempoRestante;
 
@@ -45,7 +48,7 @@ public class MenuUserActivity extends AppCompatActivity {
         nombreUsuario = findViewById(R.id.nombreU);
         vidas = findViewById(R.id.vidasUsuario);
 
-        textClock = findViewById(R.id.clock);
+        reloj = findViewById(R.id.hora);
         tiempoRestante = 15000;
 
         mensajeVidas();
@@ -129,19 +132,27 @@ public class MenuUserActivity extends AppCompatActivity {
         });
 
         // COUNT
+        // Establecer el tiempo inicial en 5 minutos (300,000 milisegundos)
+        tiempoRestante = 300000;
+
+        // Inicializar el CountDownTimer con el nuevo tiempoRestante
         countDownTimer = new CountDownTimer(tiempoRestante, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 tiempoRestante = (int) millisUntilFinished;
 
-                // Actualizar el tiempo en el TextClock
                 if (vidas.getText().toString().equals("5 vidas")) {
-                    // Mostrar "00:00:00" si vidas es igual a 5
-                    textClock.setFormat24Hour("00");
+                    // Mostrar el tiempo en minutos y segundos
+                    long minutos = TimeUnit.MILLISECONDS.toMinutes(tiempoRestante);
+                    long segundos = TimeUnit.MILLISECONDS.toSeconds(tiempoRestante) -
+                            TimeUnit.MINUTES.toSeconds(minutos);
+
+                    String tiempoFormato = String.format(Locale.getDefault(), "%02d:%02d", minutos, segundos);
+
+                    reloj.setText(tiempoFormato);
                 } else {
                     // Mostrar solo los segundos restantes
-                    textClock.setFormat24Hour("ss");
-                    textClock.setText(String.valueOf(tiempoRestante / 1000));
+                    reloj.setText(String.valueOf(TimeUnit.MILLISECONDS.toSeconds(tiempoRestante)));
                 }
             }
 
@@ -149,11 +160,13 @@ public class MenuUserActivity extends AppCompatActivity {
             public void onFinish() {
                 // Regenerar una vida y actualizar en la base de datos
                 regenerarVida();
-                // Reiniciar el contador
-                tiempoRestante = 15000;
+                // Reiniciar el contador con el nuevo tiempoRestante
+                tiempoRestante = 300000; // 5 minutos en milisegundos
                 countDownTimer.start();
             }
         };
+
+
 
         // Iniciar el contador
         countDownTimer.start();
