@@ -30,6 +30,7 @@ public class MenuUserActivity extends AppCompatActivity {
     private TextView reloj;
     private CountDownTimer countDownTimer;
     private int tiempoRestante;
+    private int vidasDisponibles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +73,7 @@ public class MenuUserActivity extends AppCompatActivity {
 
             if (documentSnapshot != null && documentSnapshot.exists()) {
                 // Actualizar el valor de las vidas en el TextView
-                int vidasDisponibles = documentSnapshot.getLong("vidas").intValue();
+                vidasDisponibles = documentSnapshot.getLong("vidas").intValue();
                 vidas.setText(String.valueOf(vidasDisponibles)+ " vidas");
                 nombreUsuario.setText(documentSnapshot.getString("nombre"));
             }
@@ -141,7 +142,10 @@ public class MenuUserActivity extends AppCompatActivity {
             public void onTick(long millisUntilFinished) {
                 tiempoRestante = (int) millisUntilFinished;
 
-                if (vidas.getText().toString().equals("5 vidas")) {
+                if (vidasDisponibles == 5) {
+                    // Mostrar "00:00" si vidasDisponibles es igual a 5
+                    reloj.setText("00:00");
+                } else {
                     // Mostrar el tiempo en minutos y segundos
                     long minutos = TimeUnit.MILLISECONDS.toMinutes(tiempoRestante);
                     long segundos = TimeUnit.MILLISECONDS.toSeconds(tiempoRestante) -
@@ -150,11 +154,9 @@ public class MenuUserActivity extends AppCompatActivity {
                     String tiempoFormato = String.format(Locale.getDefault(), "%02d:%02d", minutos, segundos);
 
                     reloj.setText(tiempoFormato);
-                } else {
-                    // Mostrar solo los segundos restantes
-                    reloj.setText(String.valueOf(TimeUnit.MILLISECONDS.toSeconds(tiempoRestante)));
                 }
             }
+
 
             @Override
             public void onFinish() {
