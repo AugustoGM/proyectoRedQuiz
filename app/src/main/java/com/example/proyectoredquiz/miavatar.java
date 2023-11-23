@@ -257,20 +257,20 @@ public class miavatar extends AppCompatActivity {
             actualizarRecompensaEnFirestore("recompensa2", true);
         }
 
-        if (puntajeUsuario >= 150 && !recompensa3Desbloqueada) {
+        if (puntajeUsuario >= 200 && !recompensa3Desbloqueada) {
             // Desbloquear recompensa 3
             recompensa3Desbloqueada = true;
             // Actualizar en Firestore la recompensa desbloqueada
             actualizarRecompensaEnFirestore("recompensa3", true);
         }
 
-        if (puntajeUsuario >= 200 && !recompensa4Desbloqueada) {
+        if (puntajeUsuario >= 400 && !recompensa4Desbloqueada) {
             // Desbloquear recompensa 4
             recompensa4Desbloqueada = true;
             // Actualizar en Firestore la recompensa desbloqueada
             actualizarRecompensaEnFirestore("recompensa4", true);
         }
-        if (puntajeUsuario >= 350 && !recompensa5Desbloqueada) {
+        if (puntajeUsuario >= 800 && !recompensa5Desbloqueada) {
             // Desbloquear recompensa 4
             recompensa5Desbloqueada = true;
             // Actualizar en Firestore la recompensa desbloqueada

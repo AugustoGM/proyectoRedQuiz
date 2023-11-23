@@ -25,10 +25,11 @@ import com.google.firebase.firestore.SetOptions;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 public class EditarAvatar extends AppCompatActivity {
 
-    Button btn_superior, btn_inferior, btn_color1, btn_color2, btn_color3, btn_color4, btn_volver, btn_guardar;
+    Button btn_superior, btn_inferior, btn_color1, btn_color2, btn_color3, btn_color4, btn_volver, btn_guardar, btn_color1B, btn_color2B, btn_color3B;
     ImageView superior, inferior, avatar, zapatosH, superiorM, inferiorM, zapatosM;
     private int estado = 1;
     private FirebaseFirestore mfirestore;
@@ -56,6 +57,9 @@ public class EditarAvatar extends AppCompatActivity {
         btn_color2 = findViewById(R.id.color2);
         btn_color3 = findViewById(R.id.color3);
         btn_color4 = findViewById(R.id.color4);
+        btn_color1B = findViewById(R.id.color1B);
+        btn_color2B = findViewById(R.id.color2B);
+        btn_color3B = findViewById(R.id.color3B);
         superior = findViewById(R.id.superiorHombre);
         inferior = findViewById(R.id.inferiorHombre);
         avatar = findViewById(R.id.avatar2);
@@ -69,8 +73,12 @@ public class EditarAvatar extends AppCompatActivity {
         //btn_color3.setVisibility(View.GONE);
         //btn_color4.setVisibility(View.GONE);
 
+        btn_color1B.setVisibility(View.GONE);
+        btn_color2B.setVisibility(View.GONE);
+        btn_color3B.setVisibility(View.GONE);
+
         verificar();
-        verificar2();
+        //verificar2();
 
         // OBTENER GENERO DEL USUARIO
         DocumentReference documentReference = mfirestore.collection("rqUsers").document(idUser);
@@ -191,14 +199,14 @@ public class EditarAvatar extends AppCompatActivity {
             public void onClick(View view) {
                 if ("Masculino".equals(generoUsuario)) {
                     estado = 1;
-                    verificar();
-                    verificar2();
+                    //verificar();
+                    //verificar2();
                     botonActual1();
                 }
                 if ("Femenino".equals(generoUsuario)){
                     estado = 1;
-                    verificar();
-                    verificar2();
+                    //verificar();
+                    //verificar2();
                     botonActualM1();
                 }
             }
@@ -210,14 +218,14 @@ public class EditarAvatar extends AppCompatActivity {
             public void onClick(View view) {
                 if ("Masculino".equals(generoUsuario)) {
                     estado = 2;
-                    verificar();
-                    verificar2();
+                    //verificar();
+                    //verificar2();
                     botonActual2();
                 }
                 if ("Femenino".equals(generoUsuario)){
                     estado = 2;
-                    verificar();
-                    verificar2();
+                    //verificar();
+                    //verificar2();
                     botonActualM2();
                 }
             }
@@ -248,7 +256,14 @@ public class EditarAvatar extends AppCompatActivity {
         btn_color3.setBackgroundColor(ContextCompat.getColor(this, R.color.verdeH));
         btn_color4.setBackgroundColor(ContextCompat.getColor(this, R.color.cruzRoja));
 
+        btn_color1.setVisibility(View.VISIBLE);
+
         verificar();
+
+        btn_color1B.setVisibility(View.GONE);
+        btn_color2B.setVisibility(View.GONE);
+        btn_color3B.setVisibility(View.GONE);
+
         //btn_color4.setVisibility(View.VISIBLE);
 
         if (estado == 1){
@@ -292,16 +307,21 @@ public class EditarAvatar extends AppCompatActivity {
         btn_inferior.setBackgroundColor(ContextCompat.getColor(this, R.color.actual));
         btn_inferior.setTextColor(ContextCompat.getColor(this, R.color.white));
 
-        btn_color1.setBackgroundColor(ContextCompat.getColor(this, R.color.pantalonH1));
-        btn_color2.setBackgroundColor(ContextCompat.getColor(this, R.color.pantalonH2));
-        btn_color3.setBackgroundColor(ContextCompat.getColor(this, R.color.pantalonH3));
-        btn_color4.setBackgroundColor(ContextCompat.getColor(this, R.color.pantalonH4));
-        btn_color4.setVisibility(View.GONE);
+        btn_color1B.setBackgroundColor(ContextCompat.getColor(this, R.color.pantalonH1));
+        btn_color2B.setBackgroundColor(ContextCompat.getColor(this, R.color.pantalonH2));
+        btn_color3B.setBackgroundColor(ContextCompat.getColor(this, R.color.pantalonH3));
+
+        btn_color1B.setVisibility(View.VISIBLE);
 
         verificar2();
 
+        btn_color1.setVisibility(View.GONE);
+        btn_color2.setVisibility(View.GONE);
+        btn_color3.setVisibility(View.GONE);
+        btn_color4.setVisibility(View.GONE);
+
         if (estado == 2){
-            btn_color1.setOnClickListener(new View.OnClickListener() {
+            btn_color1B.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     prendaI = 1;
@@ -309,7 +329,7 @@ public class EditarAvatar extends AppCompatActivity {
                 }
             });
 
-            btn_color2.setOnClickListener(new View.OnClickListener() {
+            btn_color2B.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     prendaI = 2;
@@ -317,17 +337,10 @@ public class EditarAvatar extends AppCompatActivity {
                 }
             });
 
-            btn_color3.setOnClickListener(new View.OnClickListener() {
+            btn_color3B.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     prendaI = 3;
-                    inferior.setImageResource(R.drawable.pantalonhombreg);
-                }
-            });
-
-            btn_color4.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
                     inferior.setImageResource(R.drawable.pantalonhombreg);
                 }
             });
@@ -349,6 +362,12 @@ public class EditarAvatar extends AppCompatActivity {
         btn_color3.setBackgroundColor(ContextCompat.getColor(this, R.color.rosaM));
         btn_color4.setBackgroundColor(ContextCompat.getColor(this, R.color.cruzRoja));
         //btn_color4.setVisibility(View.VISIBLE);
+
+        btn_color1.setVisibility(View.VISIBLE);
+
+        btn_color1B.setVisibility(View.GONE);
+        btn_color2B.setVisibility(View.GONE);
+        btn_color3B.setVisibility(View.GONE);
 
         if (estado == 1){
             btn_color1.setOnClickListener(new View.OnClickListener() {
@@ -391,16 +410,21 @@ public class EditarAvatar extends AppCompatActivity {
         btn_inferior.setBackgroundColor(ContextCompat.getColor(this, R.color.actual));
         btn_inferior.setTextColor(ContextCompat.getColor(this, R.color.white));
 
-        btn_color1.setBackgroundColor(ContextCompat.getColor(this, R.color.pantalonH1));
-        btn_color2.setBackgroundColor(ContextCompat.getColor(this, R.color.pantalonH4));
-        btn_color3.setBackgroundColor(ContextCompat.getColor(this, R.color.pantalonH3));
-        btn_color4.setBackgroundColor(ContextCompat.getColor(this, R.color.pantalonH4));
-        btn_color4.setVisibility(View.GONE);
+        btn_color1B.setBackgroundColor(ContextCompat.getColor(this, R.color.pantalonH1));
+        btn_color2B.setBackgroundColor(ContextCompat.getColor(this, R.color.pantalonH4));
+        btn_color3B.setBackgroundColor(ContextCompat.getColor(this, R.color.pantalonH3));
+
+        btn_color1B.setVisibility(View.VISIBLE);
 
         verificar2();
 
+        btn_color1.setVisibility(View.GONE);
+        btn_color2.setVisibility(View.GONE);
+        btn_color3.setVisibility(View.GONE);
+        btn_color4.setVisibility(View.GONE);
+
         if (estado == 2){
-            btn_color1.setOnClickListener(new View.OnClickListener() {
+            btn_color1B.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     prendaI = 1;
@@ -408,7 +432,7 @@ public class EditarAvatar extends AppCompatActivity {
                 }
             });
 
-            btn_color2.setOnClickListener(new View.OnClickListener() {
+            btn_color2B.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     prendaI = 2;
@@ -416,7 +440,7 @@ public class EditarAvatar extends AppCompatActivity {
                 }
             });
 
-            btn_color3.setOnClickListener(new View.OnClickListener() {
+            btn_color3B.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     prendaI = 3;
@@ -424,188 +448,244 @@ public class EditarAvatar extends AppCompatActivity {
                 }
             });
 
-            btn_color4.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    inferiorM.setImageResource(R.drawable.pantalonmujerc);
-                }
-            });
-
         }
     }
 
-    private boolean obtenerNombreRecompensa1(String userId) {
+    private CompletableFuture<Boolean> obtenerNombreRecompensa1(String userId) {
         // Construir la referencia al documento de recompensas del usuario en Firestore
         String recompensaDocumentPath = "rqRecompensas/" + userId;
+
+        // Crear un CompletableFuture para manejar el resultado
+        CompletableFuture<Boolean> future = new CompletableFuture<>();
 
         // Obtener el documento de recompensas del usuario
         mfirestore.document(recompensaDocumentPath)
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists() && documentSnapshot.contains("recompensa1")) {
-                        // Obtener el valor del atributo "recompensa1"
-                        boolean recompensa1 = documentSnapshot.getBoolean("recompensa1");
+                        // Obtener el valor del atributo "recompensa5"
+                        boolean recompensa5 = documentSnapshot.getBoolean("recompensa1");
 
-                        // Realizar las acciones necesarias según el valor de recompensa1
-                        if (recompensa1) {
-                            // La recompensa1 está desbloqueada
-                        } else {
-                            // La recompensa1 no está desbloqueada
-                        }
+                        // Resuelve el CompletableFuture con el valor de recompensa5
+                        future.complete(recompensa5);
+                    } else {
+                        // Si no existe el atributo "recompensa5", resuelve con false
+                        future.complete(false);
                     }
                 })
                 .addOnFailureListener(e -> {
                     // Error al obtener el documento de recompensas del usuario
                     Toast.makeText(EditarAvatar.this, "Error al obtener el documento de recompensas desde Firestore", Toast.LENGTH_SHORT).show();
+                    // Resuelve el CompletableFuture con un valor por defecto (puedes ajustarlo según tus necesidades)
+                    future.complete(false);
                 });
 
-        // Retorna true por defecto, ya que la función es booleana
-        return true;
+        // Devuelve el CompletableFuture
+        return future;
     }
 
-    private boolean obtenerNombreRecompensa2(String userId) {
+    private CompletableFuture<Boolean> obtenerNombreRecompensa2(String userId) {
         // Construir la referencia al documento de recompensas del usuario en Firestore
         String recompensaDocumentPath = "rqRecompensas/" + userId;
+
+        // Crear un CompletableFuture para manejar el resultado
+        CompletableFuture<Boolean> future = new CompletableFuture<>();
 
         // Obtener el documento de recompensas del usuario
         mfirestore.document(recompensaDocumentPath)
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists() && documentSnapshot.contains("recompensa2")) {
-                        // Obtener el valor del atributo "recompensa1"
-                        boolean recompensa2 = documentSnapshot.getBoolean("recompensa2");
+                        // Obtener el valor del atributo "recompensa5"
+                        boolean recompensa5 = documentSnapshot.getBoolean("recompensa2");
 
-                        // Realizar las acciones necesarias según el valor de recompensa1
-                        if (recompensa2) {
-                            // La recompensa1 está desbloqueada
-                        } else {
-                            // La recompensa1 no está desbloqueada
-                        }
+                        // Resuelve el CompletableFuture con el valor de recompensa5
+                        future.complete(recompensa5);
+                    } else {
+                        // Si no existe el atributo "recompensa5", resuelve con false
+                        future.complete(false);
                     }
                 })
                 .addOnFailureListener(e -> {
                     // Error al obtener el documento de recompensas del usuario
                     Toast.makeText(EditarAvatar.this, "Error al obtener el documento de recompensas desde Firestore", Toast.LENGTH_SHORT).show();
+                    // Resuelve el CompletableFuture con un valor por defecto (puedes ajustarlo según tus necesidades)
+                    future.complete(false);
                 });
 
-        // Retorna true por defecto, ya que la función es booleana
-        return true;
+        // Devuelve el CompletableFuture
+        return future;
     }
 
-    private boolean obtenerNombreRecompensa3(String userId) {
+    private CompletableFuture<Boolean> obtenerNombreRecompensa3(String userId) {
         // Construir la referencia al documento de recompensas del usuario en Firestore
         String recompensaDocumentPath = "rqRecompensas/" + userId;
+
+        // Crear un CompletableFuture para manejar el resultado
+        CompletableFuture<Boolean> future = new CompletableFuture<>();
 
         // Obtener el documento de recompensas del usuario
         mfirestore.document(recompensaDocumentPath)
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists() && documentSnapshot.contains("recompensa3")) {
-                        // Obtener el valor del atributo "recompensa1"
-                        boolean recompensa2 = documentSnapshot.getBoolean("recompensa3");
+                        // Obtener el valor del atributo "recompensa5"
+                        boolean recompensa5 = documentSnapshot.getBoolean("recompensa3");
 
-                        // Realizar las acciones necesarias según el valor de recompensa1
-                        if (recompensa2) {
-                            // La recompensa1 está desbloqueada
-                        } else {
-                            // La recompensa1 no está desbloqueada
-                        }
+                        // Resuelve el CompletableFuture con el valor de recompensa5
+                        future.complete(recompensa5);
+                    } else {
+                        // Si no existe el atributo "recompensa5", resuelve con false
+                        future.complete(false);
                     }
                 })
                 .addOnFailureListener(e -> {
                     // Error al obtener el documento de recompensas del usuario
                     Toast.makeText(EditarAvatar.this, "Error al obtener el documento de recompensas desde Firestore", Toast.LENGTH_SHORT).show();
+                    // Resuelve el CompletableFuture con un valor por defecto (puedes ajustarlo según tus necesidades)
+                    future.complete(false);
                 });
 
-        // Retorna true por defecto, ya que la función es booleana
-        return true;
+        // Devuelve el CompletableFuture
+        return future;
     }
 
-    private boolean obtenerNombreRecompensa4(String userId) {
+    private CompletableFuture<Boolean> obtenerNombreRecompensa4(String userId) {
         // Construir la referencia al documento de recompensas del usuario en Firestore
         String recompensaDocumentPath = "rqRecompensas/" + userId;
+
+        // Crear un CompletableFuture para manejar el resultado
+        CompletableFuture<Boolean> future = new CompletableFuture<>();
 
         // Obtener el documento de recompensas del usuario
         mfirestore.document(recompensaDocumentPath)
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists() && documentSnapshot.contains("recompensa4")) {
-                        // Obtener el valor del atributo "recompensa1"
-                        boolean recompensa2 = documentSnapshot.getBoolean("recompensa4");
+                        // Obtener el valor del atributo "recompensa5"
+                        boolean recompensa5 = documentSnapshot.getBoolean("recompensa4");
 
-                        // Realizar las acciones necesarias según el valor de recompensa1
-                        if (recompensa2) {
-                            // La recompensa1 está desbloqueada
-                        } else {
-                            // La recompensa1 no está desbloqueada
-                        }
+                        // Resuelve el CompletableFuture con el valor de recompensa5
+                        future.complete(recompensa5);
+                    } else {
+                        // Si no existe el atributo "recompensa5", resuelve con false
+                        future.complete(false);
                     }
                 })
                 .addOnFailureListener(e -> {
                     // Error al obtener el documento de recompensas del usuario
                     Toast.makeText(EditarAvatar.this, "Error al obtener el documento de recompensas desde Firestore", Toast.LENGTH_SHORT).show();
+                    // Resuelve el CompletableFuture con un valor por defecto (puedes ajustarlo según tus necesidades)
+                    future.complete(false);
                 });
 
-        // Retorna true por defecto, ya que la función es booleana
-        return true;
+        // Devuelve el CompletableFuture
+        return future;
     }
 
-    private boolean obtenerNombreRecompensa5(String userId) {
+    private CompletableFuture<Boolean> obtenerNombreRecompensa5(String userId) {
         // Construir la referencia al documento de recompensas del usuario en Firestore
         String recompensaDocumentPath = "rqRecompensas/" + userId;
+
+        // Crear un CompletableFuture para manejar el resultado
+        CompletableFuture<Boolean> future = new CompletableFuture<>();
 
         // Obtener el documento de recompensas del usuario
         mfirestore.document(recompensaDocumentPath)
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists() && documentSnapshot.contains("recompensa5")) {
-                        // Obtener el valor del atributo "recompensa1"
-                        boolean recompensa2 = documentSnapshot.getBoolean("recompensa5");
+                        // Obtener el valor del atributo "recompensa5"
+                        boolean recompensa5 = documentSnapshot.getBoolean("recompensa5");
 
-                        // Realizar las acciones necesarias según el valor de recompensa1
-                        if (recompensa2) {
-                            // La recompensa1 está desbloqueada
-                        } else {
-                            // La recompensa1 no está desbloqueada
-                        }
+                        // Resuelve el CompletableFuture con el valor de recompensa5
+                        future.complete(recompensa5);
+                    } else {
+                        // Si no existe el atributo "recompensa5", resuelve con false
+                        future.complete(false);
                     }
                 })
                 .addOnFailureListener(e -> {
                     // Error al obtener el documento de recompensas del usuario
                     Toast.makeText(EditarAvatar.this, "Error al obtener el documento de recompensas desde Firestore", Toast.LENGTH_SHORT).show();
+                    // Resuelve el CompletableFuture con un valor por defecto (puedes ajustarlo según tus necesidades)
+                    future.complete(false);
                 });
 
-        // Retorna true por defecto, ya que la función es booleana
-        return true;
+        // Devuelve el CompletableFuture
+        return future;
     }
 
     private void verificar(){
         //btn_color2.setVisibility(View.GONE);
-        if (!obtenerNombreRecompensa1(idUser)) {
-            btn_color2.setVisibility(View.GONE);
-        } else if (obtenerNombreRecompensa1(idUser)) {
-            btn_color2.setVisibility(View.VISIBLE);
-        } else if (obtenerNombreRecompensa3(idUser)){
-            btn_color3.setVisibility(View.VISIBLE);
-        } else if (obtenerNombreRecompensa5(idUser)) {
-            btn_color4.setVisibility(View.VISIBLE);
-        }
+        obtenerNombreRecompensa1(idUser).thenAccept(result -> {
+            // Hacer algo con el resultado (result) dentro del bloque thenAccept
+            if (result) {
+                // La recompensa5 está desbloqueada
+                // Realiza las acciones necesarias aquí
+                btn_color2.setVisibility(View.VISIBLE);
+            } else {
+                // La recompensa5 no está desbloqueada
+                // Realiza otras acciones aquí
+                btn_color2.setVisibility(View.GONE);
+            }
+        });
+
+        obtenerNombreRecompensa3(idUser).thenAccept(result -> {
+            // Hacer algo con el resultado (result) dentro del bloque thenAccept
+            if (result) {
+                // La recompensa5 está desbloqueada
+                // Realiza las acciones necesarias aquí
+                btn_color3.setVisibility(View.VISIBLE);
+            } else {
+                // La recompensa5 no está desbloqueada
+                // Realiza otras acciones aquí
+                btn_color3.setVisibility(View.GONE);
+            }
+        });
+
+        obtenerNombreRecompensa5(idUser).thenAccept(result -> {
+            // Hacer algo con el resultado (result) dentro del bloque thenAccept
+            if (result) {
+                // La recompensa5 está desbloqueada
+                // Realiza las acciones necesarias aquí
+                btn_color4.setVisibility(View.VISIBLE);
+            } else {
+                // La recompensa5 no está desbloqueada
+                // Realiza otras acciones aquí
+                btn_color4.setVisibility(View.GONE);
+            }
+        });
     }
 
     private void verificar2(){
-        if (obtenerNombreRecompensa1(idUser)){
-            btn_color2.setVisibility(View.GONE);
-        } else if (obtenerNombreRecompensa2(idUser)) {
-            btn_color2.setVisibility(View.VISIBLE);
-        }
-        if (obtenerNombreRecompensa3(idUser)){
-            btn_color3.setVisibility(View.GONE);
-        } else if (obtenerNombreRecompensa4(idUser)){
-            btn_color3.setVisibility(View.VISIBLE);
-        }
-        if (obtenerNombreRecompensa5(idUser)) {
-            btn_color4.setVisibility(View.GONE);
-        }
+        obtenerNombreRecompensa2(idUser).thenAccept(result -> {
+            // Hacer algo con el resultado (result) dentro del bloque thenAccept
+            if (result) {
+                // La recompensa5 está desbloqueada
+                // Realiza las acciones necesarias aquí
+                btn_color2B.setVisibility(View.VISIBLE);
+            } else {
+                // La recompensa5 no está desbloqueada
+                // Realiza otras acciones aquí
+                btn_color2B.setVisibility(View.GONE);
+            }
+        });
+        /*else{
+            btn_color2B.setVisibility(View.GONE);
+            {*/
+        obtenerNombreRecompensa4(idUser).thenAccept(result -> {
+            // Hacer algo con el resultado (result) dentro del bloque thenAccept
+            if (result) {
+                // La recompensa5 está desbloqueada
+                // Realiza las acciones necesarias aquí
+                btn_color3B.setVisibility(View.VISIBLE);
+            } else {
+                // La recompensa5 no está desbloqueada
+                // Realiza otras acciones aquí
+                btn_color3B.setVisibility(View.GONE);
+            }
+        });
     }
 
     private void guardarPrendasFirestore() {

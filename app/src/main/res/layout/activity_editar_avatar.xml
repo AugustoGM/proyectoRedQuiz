@@ -118,7 +118,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.827"
-        tools:ignore="SpeakableTextPresentCheck" />
+        tools:ignore="HardcodedText,SpeakableTextPresentCheck" />
 
     <Button
         android:id="@+id/color2"
@@ -147,7 +147,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.938"
-        tools:ignore="DuplicateSpeakableTextCheck,HardcodedText" />
+        tools:ignore="DuplicateSpeakableTextCheck,HardcodedText,TextContrastCheck" />
 
     <ImageView
         android:id="@+id/imageView9"
@@ -158,7 +158,8 @@
         app:layout_constraintStart_toStartOf="@+id/avatar2"
         app:layout_constraintTop_toTopOf="@+id/avatar2"
         app:layout_constraintVertical_bias="0.966"
-        app:srcCompat="@drawable/zapatoshombre" />
+        app:srcCompat="@drawable/zapatoshombre"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/inferiorHombre"
@@ -169,7 +170,8 @@
         app:layout_constraintEnd_toEndOf="@+id/avatar2"
         app:layout_constraintStart_toStartOf="@+id/avatar2"
         app:layout_constraintTop_toTopOf="@+id/avatar2"
-        app:srcCompat="@drawable/pantalonhombrea" />
+        app:srcCompat="@drawable/pantalonhombrea"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/superiorHombre"
@@ -180,7 +182,8 @@
         app:layout_constraintEnd_toEndOf="@+id/avatar2"
         app:layout_constraintStart_toStartOf="@+id/avatar2"
         app:layout_constraintTop_toTopOf="@+id/avatar2"
-        app:srcCompat="@drawable/basicahombreb" />
+        app:srcCompat="@drawable/basicahombreb"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/inferiorM"
@@ -193,7 +196,8 @@
         app:layout_constraintStart_toStartOf="@+id/avatar2"
         app:layout_constraintTop_toTopOf="@+id/avatar2"
         app:layout_constraintVertical_bias="0.755"
-        app:srcCompat="@drawable/pantalonmujera" />
+        app:srcCompat="@drawable/pantalonmujera"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/superiorM"
@@ -207,7 +211,8 @@
         app:layout_constraintStart_toStartOf="@+id/avatar2"
         app:layout_constraintTop_toTopOf="@+id/avatar2"
         app:layout_constraintVertical_bias="0.365"
-        app:srcCompat="@drawable/basicamujerb" />
+        app:srcCompat="@drawable/basicamujerb"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/zapatosM"
@@ -220,6 +225,40 @@
         app:layout_constraintStart_toStartOf="@+id/avatar2"
         app:layout_constraintTop_toTopOf="@+id/avatar2"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/zapatosmujer" />
+        app:srcCompat="@drawable/zapatosmujer"
+        tools:ignore="ContentDescription" />
+
+    <Button
+        android:id="@+id/color1B"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.081"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.827" />
+
+    <Button
+        android:id="@+id/color2B"
+        android:layout_width="80dp"
+        android:layout_height="80sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.368"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.827" />
+
+    <Button
+        android:id="@+id/color3B"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.643"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.827" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
