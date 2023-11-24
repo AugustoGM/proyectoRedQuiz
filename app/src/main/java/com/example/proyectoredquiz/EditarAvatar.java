@@ -463,24 +463,17 @@ public class EditarAvatar extends AppCompatActivity {
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists() && documentSnapshot.contains("recompensa1")) {
-                        // Obtener el valor del atributo "recompensa5"
                         boolean recompensa5 = documentSnapshot.getBoolean("recompensa1");
-
-                        // Resuelve el CompletableFuture con el valor de recompensa5
                         future.complete(recompensa5);
                     } else {
-                        // Si no existe el atributo "recompensa5", resuelve con false
                         future.complete(false);
                     }
                 })
                 .addOnFailureListener(e -> {
-                    // Error al obtener el documento de recompensas del usuario
                     Toast.makeText(EditarAvatar.this, "Error al obtener el documento de recompensas desde Firestore", Toast.LENGTH_SHORT).show();
-                    // Resuelve el CompletableFuture con un valor por defecto (puedes ajustarlo según tus necesidades)
                     future.complete(false);
                 });
 
-        // Devuelve el CompletableFuture
         return future;
     }
 
@@ -496,24 +489,17 @@ public class EditarAvatar extends AppCompatActivity {
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists() && documentSnapshot.contains("recompensa2")) {
-                        // Obtener el valor del atributo "recompensa5"
                         boolean recompensa5 = documentSnapshot.getBoolean("recompensa2");
-
-                        // Resuelve el CompletableFuture con el valor de recompensa5
                         future.complete(recompensa5);
                     } else {
-                        // Si no existe el atributo "recompensa5", resuelve con false
                         future.complete(false);
                     }
                 })
                 .addOnFailureListener(e -> {
-                    // Error al obtener el documento de recompensas del usuario
                     Toast.makeText(EditarAvatar.this, "Error al obtener el documento de recompensas desde Firestore", Toast.LENGTH_SHORT).show();
-                    // Resuelve el CompletableFuture con un valor por defecto (puedes ajustarlo según tus necesidades)
                     future.complete(false);
                 });
 
-        // Devuelve el CompletableFuture
         return future;
     }
 
@@ -529,24 +515,17 @@ public class EditarAvatar extends AppCompatActivity {
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists() && documentSnapshot.contains("recompensa3")) {
-                        // Obtener el valor del atributo "recompensa5"
                         boolean recompensa5 = documentSnapshot.getBoolean("recompensa3");
-
-                        // Resuelve el CompletableFuture con el valor de recompensa5
                         future.complete(recompensa5);
                     } else {
-                        // Si no existe el atributo "recompensa5", resuelve con false
                         future.complete(false);
                     }
                 })
                 .addOnFailureListener(e -> {
-                    // Error al obtener el documento de recompensas del usuario
                     Toast.makeText(EditarAvatar.this, "Error al obtener el documento de recompensas desde Firestore", Toast.LENGTH_SHORT).show();
-                    // Resuelve el CompletableFuture con un valor por defecto (puedes ajustarlo según tus necesidades)
                     future.complete(false);
                 });
 
-        // Devuelve el CompletableFuture
         return future;
     }
 
@@ -562,24 +541,17 @@ public class EditarAvatar extends AppCompatActivity {
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists() && documentSnapshot.contains("recompensa4")) {
-                        // Obtener el valor del atributo "recompensa5"
                         boolean recompensa5 = documentSnapshot.getBoolean("recompensa4");
-
-                        // Resuelve el CompletableFuture con el valor de recompensa5
                         future.complete(recompensa5);
                     } else {
-                        // Si no existe el atributo "recompensa5", resuelve con false
                         future.complete(false);
                     }
                 })
                 .addOnFailureListener(e -> {
-                    // Error al obtener el documento de recompensas del usuario
                     Toast.makeText(EditarAvatar.this, "Error al obtener el documento de recompensas desde Firestore", Toast.LENGTH_SHORT).show();
-                    // Resuelve el CompletableFuture con un valor por defecto (puedes ajustarlo según tus necesidades)
                     future.complete(false);
                 });
 
-        // Devuelve el CompletableFuture
         return future;
     }
 
@@ -595,20 +567,14 @@ public class EditarAvatar extends AppCompatActivity {
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists() && documentSnapshot.contains("recompensa5")) {
-                        // Obtener el valor del atributo "recompensa5"
                         boolean recompensa5 = documentSnapshot.getBoolean("recompensa5");
-
-                        // Resuelve el CompletableFuture con el valor de recompensa5
                         future.complete(recompensa5);
                     } else {
-                        // Si no existe el atributo "recompensa5", resuelve con false
                         future.complete(false);
                     }
                 })
                 .addOnFailureListener(e -> {
-                    // Error al obtener el documento de recompensas del usuario
                     Toast.makeText(EditarAvatar.this, "Error al obtener el documento de recompensas desde Firestore", Toast.LENGTH_SHORT).show();
-                    // Resuelve el CompletableFuture con un valor por defecto (puedes ajustarlo según tus necesidades)
                     future.complete(false);
                 });
 
@@ -619,40 +585,25 @@ public class EditarAvatar extends AppCompatActivity {
     private void verificar(){
         //btn_color2.setVisibility(View.GONE);
         obtenerNombreRecompensa1(idUser).thenAccept(result -> {
-            // Hacer algo con el resultado (result) dentro del bloque thenAccept
             if (result) {
-                // La recompensa5 está desbloqueada
-                // Realiza las acciones necesarias aquí
                 btn_color2.setVisibility(View.VISIBLE);
             } else {
-                // La recompensa5 no está desbloqueada
-                // Realiza otras acciones aquí
                 btn_color2.setVisibility(View.GONE);
             }
         });
 
         obtenerNombreRecompensa3(idUser).thenAccept(result -> {
-            // Hacer algo con el resultado (result) dentro del bloque thenAccept
             if (result) {
-                // La recompensa5 está desbloqueada
-                // Realiza las acciones necesarias aquí
                 btn_color3.setVisibility(View.VISIBLE);
             } else {
-                // La recompensa5 no está desbloqueada
-                // Realiza otras acciones aquí
                 btn_color3.setVisibility(View.GONE);
             }
         });
 
         obtenerNombreRecompensa5(idUser).thenAccept(result -> {
-            // Hacer algo con el resultado (result) dentro del bloque thenAccept
             if (result) {
-                // La recompensa5 está desbloqueada
-                // Realiza las acciones necesarias aquí
                 btn_color4.setVisibility(View.VISIBLE);
             } else {
-                // La recompensa5 no está desbloqueada
-                // Realiza otras acciones aquí
                 btn_color4.setVisibility(View.GONE);
             }
         });
@@ -660,29 +611,16 @@ public class EditarAvatar extends AppCompatActivity {
 
     private void verificar2(){
         obtenerNombreRecompensa2(idUser).thenAccept(result -> {
-            // Hacer algo con el resultado (result) dentro del bloque thenAccept
             if (result) {
-                // La recompensa5 está desbloqueada
-                // Realiza las acciones necesarias aquí
                 btn_color2B.setVisibility(View.VISIBLE);
             } else {
-                // La recompensa5 no está desbloqueada
-                // Realiza otras acciones aquí
                 btn_color2B.setVisibility(View.GONE);
             }
         });
-        /*else{
-            btn_color2B.setVisibility(View.GONE);
-            {*/
         obtenerNombreRecompensa4(idUser).thenAccept(result -> {
-            // Hacer algo con el resultado (result) dentro del bloque thenAccept
             if (result) {
-                // La recompensa5 está desbloqueada
-                // Realiza las acciones necesarias aquí
                 btn_color3B.setVisibility(View.VISIBLE);
             } else {
-                // La recompensa5 no está desbloqueada
-                // Realiza otras acciones aquí
                 btn_color3B.setVisibility(View.GONE);
             }
         });

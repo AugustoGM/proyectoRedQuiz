@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,7 +17,6 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -30,7 +30,7 @@ import java.util.Map;
 public class miavatar extends AppCompatActivity {
 
     Button btn_volver, btn_editar;
-    TextView puntaje;
+    TextView puntaje, recompensa1, recompensa2, recompensa3, recompensa4, recompensa5;
     private FirebaseFirestore mfirestore;
     FirebaseAuth mAuth;
     private String idUser, generoUsuario;
@@ -62,6 +62,12 @@ public class miavatar extends AppCompatActivity {
         superiorM = findViewById(R.id.supM);
         inferiorM = findViewById(R.id.infM);
         zapatosM = findViewById(R.id.zapM);
+
+        recompensa1 = findViewById(R.id.reco1);
+        recompensa2 = findViewById(R.id.reco2);
+        recompensa3 = findViewById(R.id.reco3);
+        recompensa4 = findViewById(R.id.reco4);
+        recompensa5 = findViewById(R.id.reco5);
 
         //FIRESTORE
         mfirestore = FirebaseFirestore.getInstance();
@@ -107,6 +113,7 @@ public class miavatar extends AppCompatActivity {
             }
         });
 
+
         // VOLVER A INICIO
         btn_volver.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,6 +133,8 @@ public class miavatar extends AppCompatActivity {
         });
 
         obtenerPuntajeUsuarioDesdeFirestore(idUser);
+        //compara(R1, R2, R3, R4, R5);
+        obtenerRecompensasDesdeFirestore(idUser);
     }
 
     private void obtenerPrendas(String userId, String genero) {
@@ -206,6 +215,39 @@ public class miavatar extends AppCompatActivity {
         }
     }
 
+    private void obtenerRecompensasDesdeFirestore(String userId) {
+        // Obtener la referencia al documento del usuario en Firestore
+        String usuarioDocumentPath = "rqRecompensas/" + userId;
+
+        // Realizar la consulta para obtener el documento del usuario
+        mfirestore.document(usuarioDocumentPath)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            // El documento del usuario existe, obtener el puntaje
+                            Boolean R1 = documentSnapshot.getBoolean("recompensa1");
+                            Boolean R2 = documentSnapshot.getBoolean("recompensa2");
+                            Boolean R3 = documentSnapshot.getBoolean("recompensa3");
+                            Boolean R4 = documentSnapshot.getBoolean("recompensa4");
+                            Boolean R5 = documentSnapshot.getBoolean("recompensa5");
+
+                            compara(R1, R2, R3, R4, R5);
+                        } else {
+                            Toast.makeText(miavatar.this, "Documento de usuario no encontrado en Firestore", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Error al obtener el documento del usuario
+                        Toast.makeText(miavatar.this, "Error al obtener el puntaje desde Firestore", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
     private void obtenerPuntajeUsuarioDesdeFirestore(String userId) {
         // Obtener la referencia al documento del usuario en Firestore
         String usuarioDocumentPath = "rqUsers/" + userId;
@@ -275,6 +317,48 @@ public class miavatar extends AppCompatActivity {
             recompensa5Desbloqueada = true;
             // Actualizar en Firestore la recompensa desbloqueada
             actualizarRecompensaEnFirestore("recompensa5", true);
+        }
+    }
+
+    private void compara(Boolean r1, Boolean r2, Boolean r3, Boolean r4, Boolean r5){
+        if (r1 == true){
+            recompensa1.setText("Desbloqueada");
+            recompensa1.setTextColor(Color.GREEN);
+        } else {
+            recompensa1.setText("Bloqueada");
+            recompensa1.setTextColor(Color.RED);
+        }
+
+        if (r2 == true){
+            recompensa2.setText("Desbloqueada");
+            recompensa2.setTextColor(Color.GREEN);
+        } else {
+            recompensa2.setText("Bloqueada");
+            recompensa2.setTextColor(Color.RED);
+        }
+
+        if (r3 == true){
+            recompensa3.setText("Desbloqueada");
+            recompensa3.setTextColor(Color.GREEN);
+        } else {
+            recompensa3.setText("Bloqueada");
+            recompensa3.setTextColor(Color.RED);
+        }
+
+        if (r4 == true){
+            recompensa4.setText("Desbloqueada");
+            recompensa4.setTextColor(Color.GREEN);
+        } else {
+            recompensa4.setText("Bloqueada");
+            recompensa4.setTextColor(Color.RED);
+        }
+
+        if (r5 == true){
+            recompensa5.setText("Desbloqueada");
+            recompensa5.setTextColor(Color.GREEN);
+        } else {
+            recompensa5.setText("Bloqueada");
+            recompensa5.setTextColor(Color.RED);
         }
     }
 

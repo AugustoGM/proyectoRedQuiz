@@ -70,6 +70,22 @@ public class PreguntaActivity extends AppCompatActivity {
         private static MediaPlayer mediaPlayerCorrecta;
         private static MediaPlayer mediaPlayerIncorrecta;
 
+        public static void reproducirSonidoFinal(Context context) {
+            try {
+                mediaPlayerCorrecta = MediaPlayer.create(context, R.raw.end);
+                mediaPlayerCorrecta.start();
+                mediaPlayerCorrecta.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        mp.release();
+                        mediaPlayerCorrecta = null;
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
         public static void reproducirSonidoCorrecto(Context context) {
             try {
                 mediaPlayerCorrecta = MediaPlayer.create(context, R.raw.success);
@@ -101,6 +117,7 @@ public class PreguntaActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+
     }
     @Override
     protected void onDestroy() {
@@ -280,6 +297,7 @@ public class PreguntaActivity extends AppCompatActivity {
 
                             // Mostrar la respuesta correcta antes de cargar la siguiente pregunta
                             mostrarRespuestaCorrecta();
+                            mostrarRespuestasIncorrectas();
 
                             // Cargar la siguiente pregunta después de un breve retardo
                             new Handler().postDelayed(new Runnable() {
@@ -526,6 +544,7 @@ public class PreguntaActivity extends AppCompatActivity {
             } else {
                 // Respuesta incorrecta, cambiar color a rojo
                 boton.setBackgroundColor(Color.RED);
+                boton.setTextColor(Color.WHITE);
                 SoundManager.reproducirSonidoIncorrecto(this);
 
                 // Encontrar el botón correcto y cambiar su color a verde
@@ -610,23 +629,6 @@ public class PreguntaActivity extends AppCompatActivity {
             // Si no hay más preguntas, mostrar el mensaje de diálogo
             mostrarMensajeFinPreguntas();
         }
-
-        // Verificar si hay más preguntas disponibles
-        /*if (preguntaActualIndex < preguntasList.size()) {
-            // Si hay más preguntas, cargar la siguiente pregunta
-            getQuestion();
-            iniciarProgreso();
-        } else {
-            // Si no hay más preguntas, restablecer el índice a cero
-            preguntaActualIndex = 0;
-            getQuestion();
-            iniciarProgreso();
-            // Realizar la acción que consideres apropiada (mostrar mensaje, volver a la actividad anterior, etc.)
-            // Por ejemplo, mostrar un mensaje y cerrar la actividad actual
-            //Toast.makeText(this, "¡Has respondido todas las preguntas!", Toast.LENGTH_SHORT).show();
-            //onPause();
-            //finish();
-        }*/
     }
 
     private void mostrarMensajeFinPreguntas() {
@@ -636,6 +638,7 @@ public class PreguntaActivity extends AppCompatActivity {
         almacenarResultadoBonus();
         almacenarResultadoCuracion();
         almacenarResultadoSignosVitales();
+        SoundManager.reproducirSonidoFinal(this);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("¡Has respondido todas las preguntas!")
                 .setPositiveButton("Aceptar", (dialog, which) -> {
@@ -675,6 +678,10 @@ public class PreguntaActivity extends AppCompatActivity {
         boton2.setBackgroundColor(ContextCompat.getColor(this, R.color.botones));
         boton3.setBackgroundColor(ContextCompat.getColor(this, R.color.botones));
         boton4.setBackgroundColor(ContextCompat.getColor(this, R.color.botones));
+        boton1.setTextColor(Color.BLACK);
+        boton2.setTextColor(Color.BLACK);
+        boton3.setTextColor(Color.BLACK);
+        boton4.setTextColor(Color.BLACK);
     }
 
     private void mostrarRespuestaCorrecta() {
@@ -685,6 +692,72 @@ public class PreguntaActivity extends AppCompatActivity {
         Button botonCorrecto = encontrarBotonRespuestaCorrecta(correcta);
         if (botonCorrecto != null) {
             botonCorrecto.setBackgroundColor(Color.GREEN);
+        }
+    }
+
+    private Button encontrarBotonRespuestaIncorrecta1(String respuestaIncorrecta) {
+        if (respuestaIncorrecta.equals(boton1.getText().toString())) {
+            return boton1;
+        } else if (respuestaIncorrecta.equals(boton2.getText().toString())) {
+            return boton2;
+        } else if (respuestaIncorrecta.equals(boton3.getText().toString())) {
+            return boton3;
+        } else if (respuestaIncorrecta.equals(boton4.getText().toString())) {
+            return boton4;
+        }
+
+        return null; // No se encontró el botón correspondiente
+    }
+
+    private Button encontrarBotonRespuestaIncorrecta2(String respuestaIncorrecta) {
+        if (respuestaIncorrecta.equals(boton1.getText().toString())) {
+            return boton1;
+        } else if (respuestaIncorrecta.equals(boton2.getText().toString())) {
+            return boton2;
+        } else if (respuestaIncorrecta.equals(boton3.getText().toString())) {
+            return boton3;
+        } else if (respuestaIncorrecta.equals(boton4.getText().toString())) {
+            return boton4;
+        }
+
+        return null; // No se encontró el botón correspondiente
+    }
+
+    private Button encontrarBotonRespuestaIncorrecta3(String respuestaIncorrecta) {
+        if (respuestaIncorrecta.equals(boton1.getText().toString())) {
+            return boton1;
+        } else if (respuestaIncorrecta.equals(boton2.getText().toString())) {
+            return boton2;
+        } else if (respuestaIncorrecta.equals(boton3.getText().toString())) {
+            return boton3;
+        } else if (respuestaIncorrecta.equals(boton4.getText().toString())) {
+            return boton4;
+        }
+
+        return null; // No se encontró el botón correspondiente
+    }
+
+    private void mostrarRespuestasIncorrectas() {
+        DocumentSnapshot document = preguntasList.get(preguntaActualIndex);
+        String incorrecta1 = document.getString("incorrecta1");
+        String incorrecta2 = document.getString("incorrecta2");
+        String incorrecta3 = document.getString("incorrecta3");
+
+        // Encontrar los botones incorrecto y cambiar su color a rojo
+        Button botonInorrecto1 = encontrarBotonRespuestaIncorrecta1(incorrecta1);
+        if (botonInorrecto1 != null) {
+            botonInorrecto1.setBackgroundColor(Color.RED);
+            botonInorrecto1.setTextColor(Color.WHITE);
+        }
+        Button botonInorrecto2 = encontrarBotonRespuestaIncorrecta2(incorrecta2);
+        if (botonInorrecto2 != null) {
+            botonInorrecto2.setBackgroundColor(Color.RED);
+            botonInorrecto2.setTextColor(Color.WHITE);
+        }
+        Button botonInorrecto3 = encontrarBotonRespuestaIncorrecta3(incorrecta3);
+        if (botonInorrecto3 != null) {
+            botonInorrecto3.setBackgroundColor(Color.RED);
+            botonInorrecto3.setTextColor(Color.WHITE);
         }
     }
 
