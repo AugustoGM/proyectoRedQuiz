@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +18,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,21 +53,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String emailUser = emailI.getText().toString().trim();
                 String passUser = passwordI.getText().toString().trim();
-
-                // Verifica si las credenciales coinciden con las del administrador
-                if (esCuentaDeAdmin(emailUser, passUser)) {
-                    // Credenciales de administrador, redirige a la interfaz del administrador
-                    finish();
-                    startActivity(new Intent(MainActivity.this, MenuAdministrador.class));
-                    Toast.makeText(MainActivity.this, "¡Bienvenido Administrador!", Toast.LENGTH_SHORT).show();
-                } else {
                     // No son credenciales de administrador, realiza el inicio de sesión normal
                     if (TextUtils.isEmpty(emailUser) || TextUtils.isEmpty(passUser)) {
                         Toast.makeText(MainActivity.this, "Ingrese los datos", Toast.LENGTH_SHORT).show();
                     } else {
                         loginUser(emailUser, passUser);
                     }
-                }
             }
         });
 
@@ -78,18 +73,60 @@ public class MainActivity extends AppCompatActivity {
         mAuth.signInWithEmailAndPassword(emailUser, passUser).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()){
-                    finish();
-                    startActivity(new Intent(MainActivity.this, MenuUserActivity.class));
-                    Toast.makeText(MainActivity.this, "¡Binvenid@!", Toast.LENGTH_SHORT).show();
-                }else {
-                    Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                if (task.isSuccessful()) {
+                    FirebaseUser user = mAuth.getCurrentUser();
+                    if (user != null) {
+                        Log.e("id Usuario", "user no es nulo");
+                        String userId = user.getUid();
+                        Log.e("id Usuario", userId);
+
+                        verificarTipoUsuario(userId);
+                    }
+                } else {
+                    Toast.makeText(MainActivity.this, "Error al iniciar sesión", Toast.LENGTH_SHORT).show();
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(MainActivity.this, "Error al iniciar sesión", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void verificarTipoUsuario(String userId) {
+        // Obtener referencia a la colección "rqUsers"
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference docRef = db.collection("rqUsers").document(userId);
+        Log.e("id Usuario", userId);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        // Obtener el atributo "tipo" del documento
+                        String tipoUsuario = document.getString("tipo");
+
+                        // Verificar si el usuario es un administrador
+                        if ("administrador".equals(tipoUsuario)) {
+                            // Es un administrador, redirige a la interfaz del administrador
+                            finish();
+                            startActivity(new Intent(MainActivity.this, MenuAdministrador.class));
+                            Toast.makeText(MainActivity.this, "¡Bienvenido Administrador!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            // No es un administrador, redirige a la interfaz de usuario normal
+                            finish();
+                            startActivity(new Intent(MainActivity.this, MenuUserActivity.class));
+                            Toast.makeText(MainActivity.this, "¡Bienvenid@!", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        // El documento no existe, trata este caso según tus necesidades
+                        Toast.makeText(MainActivity.this, "Error: Usuario no encontrado", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(MainActivity.this, "Error al obtener datos del usuario", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

@@ -220,7 +220,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Recompensa 1"
+                android:text="Recompensa 1 (50 pts)"
                 android:textAlignment="center"
                 android:textStyle="bold" />
 
@@ -242,7 +242,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Recompensa 2"
+                android:text="Recompensa 2 (100 pts)"
                 android:textAlignment="center"
                 android:textStyle="bold" />
 
@@ -264,7 +264,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Recompensa 3"
+                android:text="Recompensa 3 (200 pts)"
                 android:textAlignment="center"
                 android:textStyle="bold" />
 
@@ -286,7 +286,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Recompensa 4"
+                android:text="Recompensa 4 (400 pts)"
                 android:textAlignment="center"
                 android:textStyle="bold" />
 
@@ -308,7 +308,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Recompensa 5"
+                android:text="Recompensa 5 (800 pts)"
                 android:textAlignment="center"
                 android:textStyle="bold" />
 

@@ -99,6 +99,7 @@ public class EditarAvatar extends AppCompatActivity {
                         btn_color1.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
+                                prendaS = 1;
                                 superior.setImageResource(R.drawable.basicahombreb);
                             }
                         });
@@ -106,6 +107,7 @@ public class EditarAvatar extends AppCompatActivity {
                         btn_color2.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
+                                prendaS = 2;
                                 superior.setImageResource(R.drawable.basicahombren);
                             }
                         });
@@ -113,6 +115,7 @@ public class EditarAvatar extends AppCompatActivity {
                         btn_color3.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
+                                prendaS = 3;
                                 superior.setImageResource(R.drawable.basicahombrev);
                             }
                         });
@@ -120,6 +123,7 @@ public class EditarAvatar extends AppCompatActivity {
                         btn_color4.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
+                                prendaS = 4;
                                 superior.setImageResource(R.drawable.basicahombrecr);
                             }
                         });
@@ -127,6 +131,7 @@ public class EditarAvatar extends AppCompatActivity {
                         btn_color1.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
+                                prendaI = 1;
                                 superiorM.setImageResource(R.drawable.basicamujerb);
                             }
                         });
@@ -134,6 +139,7 @@ public class EditarAvatar extends AppCompatActivity {
                         btn_color2.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
+                                prendaI = 2;
                                 superiorM.setImageResource(R.drawable.basicamujeraz);
                             }
                         });
@@ -141,6 +147,7 @@ public class EditarAvatar extends AppCompatActivity {
                         btn_color3.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
+                                prendaI = 3;
                                 superiorM.setImageResource(R.drawable.basicamujerr);
                             }
                         });
@@ -148,6 +155,7 @@ public class EditarAvatar extends AppCompatActivity {
                         btn_color4.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
+                                prendaI = 4;
                                 superiorM.setImageResource(R.drawable.basicamujercr);
                             }
                         });
@@ -279,6 +287,7 @@ public class EditarAvatar extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     prendaS = 2;
+                    Log.e("Prenda S:", String.valueOf(prendaS));
                     superior.setImageResource(R.drawable.basicahombren);
                 }
             });
