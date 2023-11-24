@@ -8,6 +8,7 @@ import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextClock;
 import android.widget.TextView;
 
@@ -31,6 +32,8 @@ public class MenuUserActivity extends AppCompatActivity {
     private CountDownTimer countDownTimer;
     private int tiempoRestante;
     private int vidasDisponibles;
+    ImageView profile, editarF;
+    String generoU;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,8 @@ public class MenuUserActivity extends AppCompatActivity {
         fStore = FirebaseFirestore.getInstance();
         idUser = mAuth.getCurrentUser().getUid();
 
+        editarF = findViewById(R.id.editarF);
+        profile = findViewById(R.id.fotoPerfil);
         mensajeTiempo = findViewById(R.id.mensaje);
         btn_exit = findViewById(R.id.btn_cerrar);
         btn_perfil = findViewById(R.id.btn_perfil);
@@ -53,6 +58,8 @@ public class MenuUserActivity extends AppCompatActivity {
         tiempoRestante = 15000;
 
         mensajeVidas();
+
+        editarF.setVisibility(View.GONE);
 
         btn_perfil.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +80,12 @@ public class MenuUserActivity extends AppCompatActivity {
 
             if (documentSnapshot != null && documentSnapshot.exists()) {
                 // Actualizar el valor de las vidas en el TextView
+                generoU = documentSnapshot.getString("genero");
+                if (generoU.equals("Masculino")){
+                    profile.setImageResource(R.drawable.profilemen);
+                } else {
+                    profile.setImageResource(R.drawable.profilewoman);
+                }
                 vidasDisponibles = documentSnapshot.getLong("vidas").intValue();
                 vidas.setText(String.valueOf(vidasDisponibles)+ " vidas");
                 nombreUsuario.setText(documentSnapshot.getString("nombre"));

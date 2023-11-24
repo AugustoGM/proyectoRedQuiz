@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,6 +21,8 @@ public class Perfil extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseFirestore fStore;
     private String idUser;
+    ImageView fotoPerfil, editarF;
+    String generoU;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,8 @@ public class Perfil extends AppCompatActivity {
         correo = findViewById(R.id.correoElectronico);
         fecha = findViewById(R.id.fechaNacimiento);
         genero = findViewById(R.id.generoUsuario);
+        editarF = findViewById(R.id.eF);
+        fotoPerfil = findViewById(R.id.fotoFoto);
 
         btn_inicio.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,6 +55,12 @@ public class Perfil extends AppCompatActivity {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();
                 if (document.exists()) {
+                    generoU = document.getString("genero");
+                    if (generoU.equals("Masculino")){
+                        fotoPerfil.setImageResource(R.drawable.profilemen);
+                    } else {
+                        fotoPerfil.setImageResource(R.drawable.profilewoman);
+                    }
                     String nombreCompleto = document.getString("nombre") + " " + document.getString("apellidos");
                     nombre.setText(nombreCompleto);
                     correo.setText(document.getString("email"));

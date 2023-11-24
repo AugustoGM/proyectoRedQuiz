@@ -24,7 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button bnt_regist, btn_login;
+    Button bnt_regist, btn_login, btn_restaurar;
     EditText emailI, passwordI;
     FirebaseAuth mAuth;
 
@@ -38,11 +38,20 @@ public class MainActivity extends AppCompatActivity {
         emailI = findViewById(R.id.correoI);
         passwordI = findViewById(R.id.contrasenaI);
         btn_login = findViewById(R.id.btn_iniciar);
+        btn_restaurar = findViewById(R.id.olvidar);
 
         bnt_regist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent iregistro = new Intent(MainActivity.this, RegistroActivity.class);
+                startActivities(new Intent[]{iregistro});
+            }
+        });
+
+        btn_restaurar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent iregistro = new Intent(MainActivity.this, RecuperarActivity.class);
                 startActivities(new Intent[]{iregistro});
             }
         });

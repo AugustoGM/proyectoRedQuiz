@@ -57,7 +57,7 @@
         android:layout_marginBottom="5dp"
         android:backgroundTint="#FF0303"
         android:text="Iniciar sesión"
-        app:layout_constraintBottom_toTopOf="@+id/button6"
+        app:layout_constraintBottom_toTopOf="@+id/olvidar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
@@ -83,7 +83,7 @@
         tools:ignore="HardcodedText,TextContrastCheck" />
 
     <Button
-        android:id="@+id/button6"
+        android:id="@+id/olvidar"
         android:layout_width="350dp"
         android:layout_height="52dp"
         android:layout_marginBottom="35dp"

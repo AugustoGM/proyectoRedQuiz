@@ -10,7 +10,7 @@
         android:id="@+id/nombreU2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="375dp"
+        android:layout_marginTop="365dp"
         android:text="Nombre Completo"
         android:textColor="#000000"
         android:textSize="20sp"
@@ -20,20 +20,19 @@
         app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.666"
         tools:ignore="HardcodedText,VisualLintOverlap" />
 
     <TextView
         android:id="@+id/nombreCompleto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="16dp"
         android:text="Hola"
         android:textColor="#000000"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/textView53"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="HardcodedText,TextSizeCheck" />
 
@@ -52,7 +51,7 @@
         tools:ignore="VisualLintBounds" />
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/imageView7"
+        android:id="@+id/fotoFoto"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_marginBottom="400dp"
@@ -66,7 +65,8 @@
         app:strokeColor="@color/white"
         app:strokeWidth="4dp"
         tools:ignore="ImageContrastCheck"
-        tools:srcCompat="@tools:sample/avatars" />
+        android:src="@drawable/hombre"
+        tools:srcCompat="@drawable/hombre" />
 
     <Button
         android:id="@+id/btn_inicioU"
@@ -103,7 +103,7 @@
         android:textColor="#FFFFFF"
         android:textSize="34sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/imageView7"
+        app:layout_constraintBottom_toTopOf="@+id/fotoFoto"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -112,7 +112,7 @@
         tools:ignore="HardcodedText" />
 
     <ImageButton
-        android:id="@+id/imageButton2"
+        android:id="@+id/eF"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:adjustViewBounds="false"
@@ -133,7 +133,7 @@
         android:id="@+id/textView53"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="16dp"
         android:text="Fecha de Nacimiento"
         android:textColor="#000000"
         android:textSize="20sp"
