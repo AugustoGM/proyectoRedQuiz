@@ -43,14 +43,6 @@
                 android:textSize="14dp"
                 android:textColor="@color/black"/>
 
-            <ImageView
-                android:id="@+id/btn_delete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#FF0000"
-                android:padding="1dp"
-                android:src="@drawable/ic_delete" />
-
             <Button
                 android:id="@+id/btn_actualizar"
                 android:layout_width="107dp"
@@ -59,6 +51,12 @@
                 android:text="Actualizar"
                 android:textSize="6sp"
                 tools:ignore="TouchTargetSizeCheck" />
+
+            <Button
+                android:id="@+id/btn_eliminar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="eliminar" />
 
         </LinearLayout>
 

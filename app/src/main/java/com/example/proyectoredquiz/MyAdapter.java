@@ -37,115 +37,38 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     private FirebaseFirestore mfirestore;
     DocumentSnapshot documentSnapshot;
 
+    private static OnQuestionDeleteListener onQuestionDeleteListener;
 
-    public MyAdapter(Context context, ArrayList<Question> list) {
-        this.context = context;
+
+    public MyAdapter( ArrayList<Question> list, OnQuestionDeleteListener onQuestionDeleteListener ) {
         this.list = list;
+        this.onQuestionDeleteListener = onQuestionDeleteListener;
 
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(context).inflate(R.layout.questionentry,parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.questionentry,parent,false);
         return new MyViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
         Question question = list.get(position);
-        holder.pregunta.setText(question.getPregunta());
-        holder.categoria.setText(question.getCategoria());
+        holder.bind(question);
 
-        holder.btn_eliminar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mostrarDialogoConfirmacion(position);
-            }
-        });
 
-        holder.btn_actualizar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Obtén la pregunta seleccionada
-                Question pregunta = list.get(position);
-                // Obtén el DocumentSnapshot asociado a la pregunta
-                DocumentSnapshot documentSnapshot = pregunta.getDocumentSnapshot();
-                // Obtener el nombre del documento (ID del documento)
-                String documentName = documentSnapshot.getId();
-
-                // Crea un Intent para abrir la nueva actividad
-                Intent intent = new Intent(context, UpdatePregunta.class);
-
-                // Pasa la información de la pregunta a la nueva actividad
-                intent.putExtra("PREGUNTA_ID", documentName);
-                intent.putExtra("PREGUNTA_TEXT", pregunta.getPregunta());
-                intent.putExtra("CATEGORIA", pregunta.getCategoria());
-
-                // Inicia la nueva actividad
-                context.startActivity(intent);
-            }
-        });
     }
 
-    // Método para mostrar el cuadro de diálogo de confirmación
-    private void mostrarDialogoConfirmacion(final int position) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("Eliminar pregunta");
-        builder.setMessage("¿Está seguro de que desea eliminar esta pregunta?");
 
-        builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                // Eliminar la pregunta de Firestore
-                eliminarPreguntaFirestore(position);
-            }
-        });
 
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                // No hacer nada si el usuario elige no eliminar
-            }
-        });
 
-        builder.show();
+    public interface OnQuestionDeleteListener {
+        void onQuestionDelete(int position);
     }
 
-    // Método para eliminar la pregunta de Firestore
-    private void eliminarPreguntaFirestore(final int position) {
-        Question pregunta = list.get(position);
-
-        // Obtén el DocumentSnapshot asociado a la pregunta
-        DocumentSnapshot documentSnapshot = pregunta.getDocumentSnapshot();
-
-        if (documentSnapshot != null) {
-            // Obtén el ID del documento (identificador único)
-            String documentId = documentSnapshot.getId();
-
-            mFirestore.collection("preguntas")
-                    .document(documentId)
-                    .delete()
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            // Eliminación exitosa, actualiza la lista y notifica al adaptador
-                            list.remove(position);
-                            notifyItemRemoved(position);
-                            Toast.makeText(context, "Pregunta eliminada", Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(context, "Error al eliminar la pregunta: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-        } else {
-            Toast.makeText(context, "Error: DocumentSnapshot es nulo", Toast.LENGTH_SHORT).show();
-        }
-    }
 
 
     @Override
@@ -155,7 +78,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         TextView pregunta, categoria;
-        ImageView btn_eliminar;
+        Button btn_eliminar;
         Button btn_actualizar;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -163,8 +86,51 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             pregunta = itemView.findViewById(R.id.textPregunta);
             categoria = itemView.findViewById(R.id.textcategoria);
 
-            btn_eliminar = itemView.findViewById(R.id.btn_delete);
+            btn_eliminar = itemView.findViewById(R.id.btn_eliminar);
             btn_actualizar = itemView.findViewById(R.id.btn_actualizar);
         }
+
+        void bind(Question question){
+            pregunta.setText(question.getPregunta());
+            categoria.setText(question.getCategoria());
+
+            btn_eliminar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    onQuestionDeleteListener.onQuestionDelete(position);
+                }
+            });
+
+
+            /*
+            btn_actualizar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+
+                    // Obtén la pregunta seleccionada
+                    Question pregunta = list.get(position);
+                    // Obtén el DocumentSnapshot asociado a la pregunta
+                    DocumentSnapshot documentSnapshot = pregunta.getDocumentSnapshot();
+                    // Obtener el nombre del documento (ID del documento)
+                    String documentName = documentSnapshot.getId();
+
+                    // Crea un Intent para abrir la nueva actividad
+                    Intent intent = new Intent(context, UpdatePregunta.class);
+
+                    // Pasa la información de la pregunta a la nueva actividad
+                    intent.putExtra("PREGUNTA_ID", documentName);
+                    intent.putExtra("PREGUNTA_TEXT", pregunta.getPregunta());
+                    intent.putExtra("CATEGORIA", pregunta.getCategoria());
+
+                    // Inicia la nueva actividad
+                    view.getContext().startActivity(intent);
+
+                }
+            });*/
+        }
     }
+
+
 }
