@@ -292,6 +292,7 @@ public class PreguntaActivity extends AppCompatActivity {
                                             }
                                         });
                             } else {
+                                //almacenarConteoTConteoC();
                                 mostrarMensajeSinVidas();
                             }
 
@@ -347,6 +348,8 @@ public class PreguntaActivity extends AppCompatActivity {
 
     // ASIGNAR VALORES A LOS BOTONES DE FORMA ALEATORIA
     private void mostrarPreguntaActual() {
+        // SUMA CUANDO LA RESPUESTA ES CORRECTA
+        conteoT = conteoT + 1;
         resetColoresBotones(); // Restablecer colores de los botones
         // Limpiar acciones previas de los botones
         boton1.setOnClickListener(null);
@@ -354,8 +357,6 @@ public class PreguntaActivity extends AppCompatActivity {
         boton3.setOnClickListener(null);
         boton4.setOnClickListener(null);
 
-        // CUENTA LAS PREGUNTAS QUE SE MUESTRAN
-        conteoT = conteoT + 1;
 
         DocumentSnapshot document = preguntasList.get(preguntaActualIndex);
 
@@ -479,6 +480,9 @@ public class PreguntaActivity extends AppCompatActivity {
             // Verificar la respuesta seleccionada con la respuesta correcta
             if (respuestaSeleccionada.equals(correcta)) {
                 // Respuesta correcta, cambiar color a verde
+                // SUMA CUANDO LA RESPUESTA ES CORRECTA
+                conteoC = conteoC + 1;
+
                 boton.setBackgroundColor(Color.GREEN);
                 SoundManager.reproducirSonidoCorrecto(this);
 
@@ -525,9 +529,6 @@ public class PreguntaActivity extends AppCompatActivity {
                         }
                     }
                 });
-
-                // SUMA CUANDO LA RESPUESTA ES CORRECTA
-                conteoC = conteoC + 1;
 
                 // SUMAR DE ACUERDO A LA CATEGORÍA
                 if (catego.equals("Curación")) { // CATEGORIA: CURACION
@@ -613,6 +614,7 @@ public class PreguntaActivity extends AppCompatActivity {
 
 
     private void cargarSiguientePregunta() {
+
         counter = 0;
         // Volver a habilitar todos los botones
         boton1.setEnabled(true);
@@ -1094,13 +1096,13 @@ public class PreguntaActivity extends AppCompatActivity {
 
                         // Incrementa los valores actuales de conteoT y conteoC
                         if (conteoTActual != null) {
-                            conteoTActual++;
+                            conteoTActual = conteoTActual + conteoT;
                         } else {
                             conteoTActual = 1L;  // Si es la primera vez, inicializa en 1
                         }
 
                         if (conteoCActual != null) {
-                            conteoCActual++;
+                            conteoCActual = conteoCActual + conteoC;
                         } else {
                             conteoCActual = 1L;  // Si es la primera vez, inicializa en 1
                         }
