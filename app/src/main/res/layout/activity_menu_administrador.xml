@@ -65,7 +65,7 @@
         tools:ignore="VisualLintBounds" />
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/fotoAdmin"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_marginBottom="420dp"
@@ -81,7 +81,8 @@
         app:strokeColor="@color/white"
         app:strokeWidth="4dp"
         tools:ignore="ImageContrastCheck,UnknownIdInLayout"
-        tools:srcCompat="@tools:sample/avatars" />
+        android:src="@drawable/hombre"
+        tools:srcCompat="@drawable/profilemen"/>
 
     <Button
         android:id="@+id/btn_cerrar2"
@@ -104,7 +105,7 @@
         android:textColor="#FFFFFF"
         android:textSize="34sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/imageView4"
+        app:layout_constraintBottom_toTopOf="@+id/fotoAdmin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -112,7 +113,7 @@
         tools:ignore="HardcodedText" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/editarFA"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:adjustViewBounds="false"
