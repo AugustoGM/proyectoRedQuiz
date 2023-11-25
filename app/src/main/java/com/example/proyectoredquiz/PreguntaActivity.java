@@ -294,23 +294,23 @@ public class PreguntaActivity extends AppCompatActivity {
                                                 Log.e("ERROR", "Error al actualizar el valor de vidas en Firestore", e);
                                             }
                                         });
+                                // Mostrar la respuesta correcta antes de cargar la siguiente pregunta
+                                mostrarRespuestaCorrecta();
+                                mostrarRespuestasIncorrectas();
+
+                                // Cargar la siguiente pregunta después de un breve retardo
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        preguntaActualIndex++;
+                                        cargarSiguientePregunta();
+                                    }
+                                }, 2000);
                             } else {
                                 //almacenarConteoTConteoC();
                                 mostrarMensajeSinVidas();
                             }
 
-                            // Mostrar la respuesta correcta antes de cargar la siguiente pregunta
-                            mostrarRespuestaCorrecta();
-                            mostrarRespuestasIncorrectas();
-
-                            // Cargar la siguiente pregunta después de un breve retardo
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    preguntaActualIndex++;
-                                    cargarSiguientePregunta();
-                                }
-                            }, 2000);
                         }
                     });
                 }
@@ -578,21 +578,23 @@ public class PreguntaActivity extends AppCompatActivity {
                                     Log.e("ERROR", "Error al actualizar el valor de vidas en Firestore", e);
                                 }
                             });
+
+                    // Desactivar todos los botones después de la respuesta
+                    boton1.setEnabled(false);
+                    boton2.setEnabled(false);
+                    boton3.setEnabled(false);
+                    boton4.setEnabled(false);
+
+                    // Realizar acciones relacionadas con la respuesta (por ejemplo, cargar la siguiente pregunta)
+                    preguntaActualIndex++;
+                    new Handler().postDelayed(this::cargarSiguientePregunta, 2000);
+
                 } else {
                     // El usuario ya no tiene vidas, mostrar mensaje
                     mostrarMensajeSinVidas();
                 }
             }
 
-            // Desactivar todos los botones después de la respuesta
-            boton1.setEnabled(false);
-            boton2.setEnabled(false);
-            boton3.setEnabled(false);
-            boton4.setEnabled(false);
-
-            // Realizar acciones relacionadas con la respuesta (por ejemplo, cargar la siguiente pregunta)
-            preguntaActualIndex++;
-            new Handler().postDelayed(this::cargarSiguientePregunta, 2000);
         }
     }
 
@@ -661,6 +663,9 @@ public class PreguntaActivity extends AppCompatActivity {
         almacenarResultadoBonus();
         almacenarResultadoCuracion();
         almacenarResultadoSignosVitales();
+
+        detenerJuego(); // Detener el juego
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("¡Te has quedado sin vidas! Vuelve a la interfaz principal.")
                 .setPositiveButton("Aceptar", (dialog, which) -> {
@@ -669,6 +674,15 @@ public class PreguntaActivity extends AppCompatActivity {
                 });
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    private void detenerJuego() {
+        detenerProgreso(); // Detener la barra de progreso
+        // Deshabilitar los botones para evitar que el usuario continúe respondiendo
+        boton1.setEnabled(false);
+        boton2.setEnabled(false);
+        boton3.setEnabled(false);
+        boton4.setEnabled(false);
     }
 
     private void volverAMenuPrincipal() {
