@@ -259,7 +259,6 @@ public class PreguntaActivity extends AppCompatActivity {
     }
 
     // BARRA DE PROGRESO
-    // BARRA DE PROGRESO
     public void iniciarProgreso() {
         progressBarTimer = new Timer();
         progressBarTimerTask = new TimerTask() {
@@ -308,6 +307,8 @@ public class PreguntaActivity extends AppCompatActivity {
                                 }, 2000);
                             } else {
                                 //almacenarConteoTConteoC();
+                                mostrarRespuestaCorrecta();
+                                mostrarRespuestasIncorrectas();
                                 mostrarMensajeSinVidas();
                             }
 
@@ -318,7 +319,6 @@ public class PreguntaActivity extends AppCompatActivity {
         };
         progressBarTimer.schedule(progressBarTimerTask, 0, 100);
     }
-
 
 
 
@@ -333,7 +333,6 @@ public class PreguntaActivity extends AppCompatActivity {
     }
 
     private void getQuestion() {
-
         // Obtener la lista de preguntas de Firestore
         preguntasCollection.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
@@ -424,7 +423,6 @@ public class PreguntaActivity extends AppCompatActivity {
         // Restablecer la funcionalidad de los botones
         asignarFuncionalidadBotones();
     }
-//}); }
 
     @Override
     protected void onPause() {
@@ -545,6 +543,17 @@ public class PreguntaActivity extends AppCompatActivity {
                 } else {
                     acBonus = acBonus + 1;
                 }
+
+                // Desactivar todos los botones después de la respuesta
+                boton1.setEnabled(false);
+                boton2.setEnabled(false);
+                boton3.setEnabled(false);
+                boton4.setEnabled(false);
+
+                // Realizar acciones relacionadas con la respuesta (por ejemplo, cargar la siguiente pregunta)
+                preguntaActualIndex++;
+                new Handler().postDelayed(this::cargarSiguientePregunta, 2000);
+
             } else {
                 // Respuesta incorrecta, cambiar color a rojo
                 boton.setBackgroundColor(Color.RED);
