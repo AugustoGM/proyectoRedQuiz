@@ -70,7 +70,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_editarA"
-        app:layout_constraintVertical_bias="0.772" />
+        app:layout_constraintVertical_bias="0.772"
+        tools:ignore="VisualLintOverlap" />
 
     <ImageView
         android:id="@+id/avatar"
@@ -85,34 +86,34 @@
         app:srcCompat="@drawable/hombre"
         tools:ignore="ContentDescription" />
 
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="560dp"
-        android:text="Puntaje Acumulado:"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/textView22"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        tools:ignore="HardcodedText" />
-
-    <TextView
-        android:id="@+id/punt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="560dp"
-        android:layout_marginEnd="100dp"
-        android:text="0"
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="167dp"
+        android:layout_height="30dp"
+        android:orientation="horizontal"
+        android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/textView22"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.285"
-        app:layout_constraintStart_toEndOf="@+id/textView8"
-        app:layout_constraintTop_toTopOf="@+id/textView7"
-        app:layout_constraintVertical_bias="0.125"
-        tools:ignore="HardcodedText" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        tools:ignore="TextSizeCheck">
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Puntaje Acumulado:  "
+            android:textStyle="bold"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/punt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            tools:ignore="HardcodedText" />
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/infH"
@@ -192,7 +193,8 @@
         app:layout_constraintStart_toStartOf="@+id/avatar"
         app:layout_constraintTop_toBottomOf="@+id/textView7"
         app:layout_constraintVertical_bias="0.55"
-        app:srcCompat="@drawable/zapatosmujer" />
+        app:srcCompat="@drawable/zapatosmujer"
+        tools:ignore="ContentDescription" />
 
     <LinearLayout
         android:layout_width="343dp"
@@ -208,7 +210,7 @@
             android:layout_width="345dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            tools:ignore="UselessLeaf" />
+            tools:ignore="UselessLeaf,VisualLintBounds" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -222,14 +224,16 @@
                 android:layout_weight="1"
                 android:text="Recompensa 1 (50 pts)"
                 android:textAlignment="center"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/reco1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="TextView"
+                tools:ignore="HardcodedText" />
         </LinearLayout>
 
         <LinearLayout
@@ -244,14 +248,16 @@
                 android:layout_weight="1"
                 android:text="Recompensa 2 (100 pts)"
                 android:textAlignment="center"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/reco2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="TextView"
+                tools:ignore="HardcodedText" />
         </LinearLayout>
 
         <LinearLayout
@@ -266,14 +272,16 @@
                 android:layout_weight="1"
                 android:text="Recompensa 3 (200 pts)"
                 android:textAlignment="center"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/reco3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="TextView"
+                tools:ignore="HardcodedText" />
         </LinearLayout>
 
         <LinearLayout
@@ -288,14 +296,16 @@
                 android:layout_weight="1"
                 android:text="Recompensa 4 (400 pts)"
                 android:textAlignment="center"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/reco4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="TextView"
+                tools:ignore="HardcodedText" />
         </LinearLayout>
 
         <LinearLayout
@@ -310,14 +320,16 @@
                 android:layout_weight="1"
                 android:text="Recompensa 5 (800 pts)"
                 android:textAlignment="center"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/reco5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="TextView"
+                tools:ignore="HardcodedText" />
         </LinearLayout>
     </LinearLayout>
 
