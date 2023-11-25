@@ -270,6 +270,9 @@ public class PreguntaActivity extends AppCompatActivity {
 
                 if (counter == 100) {
                     detenerProgreso();
+                    MediaPlayer mediaPlayer = MediaPlayer.create(PreguntaActivity.this, R.raw.negative);
+                    mediaPlayer.start();
+
 
                     runOnUiThread(new Runnable() {
                         @Override
