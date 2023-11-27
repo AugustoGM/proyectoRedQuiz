@@ -317,7 +317,7 @@ public class PreguntaActivity extends AppCompatActivity {
                 }
             }
         };
-        progressBarTimer.schedule(progressBarTimerTask, 0, 100);
+        progressBarTimer.schedule(progressBarTimerTask, 0, 150);
     }
 
 
