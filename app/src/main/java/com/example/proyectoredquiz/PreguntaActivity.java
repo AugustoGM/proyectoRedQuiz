@@ -1155,8 +1155,8 @@ public class PreguntaActivity extends AppCompatActivity {
                         // El documento no existe, crea uno nuevo con los atributos idUsuario, conteoT y conteoC
                         Map<String, Object> conteoData = new HashMap<>();
                         conteoData.put("idUsuario", idUser);
-                        conteoData.put("conteoT", 1L);  // Inicializa en 1 si es la primera vez
-                        conteoData.put("conteoC", 1L);  // Inicializa en 1 si es la primera vez
+                        conteoData.put("conteoT", conteoT);  // Inicializa en 1 si es la primera vez
+                        conteoData.put("conteoC", conteoC);  // Inicializa en 1 si es la primera vez
 
                         conteoDocumentRef.set(conteoData)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
