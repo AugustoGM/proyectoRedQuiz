@@ -85,16 +85,9 @@ public class MainActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     FirebaseUser user = mAuth.getCurrentUser();
                     if (user != null) {
-                        if (user.isEmailVerified()) {
-                            Log.e("id Usuario", "user no es nulo");
-                            String userId = user.getUid();
-                            Log.e("id Usuario", userId);
-
-                            verificarTipoUsuario(userId);
-                        } else {
-                            Toast.makeText(MainActivity.this, "Verifique su correo electrónico antes de iniciar sesión.", Toast.LENGTH_SHORT).show();
-                            mAuth.signOut(); // Cerrar sesión para evitar intentos de inicio de sesión no verificados
-                        }
+                        // Verificar el tipo de usuario
+                        String userId = user.getUid();
+                        verificarTipoUsuario(userId);
                     }
                 } else {
                     Toast.makeText(MainActivity.this, "Error al iniciar sesión", Toast.LENGTH_SHORT).show();
@@ -109,11 +102,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
     private void verificarTipoUsuario(String userId) {
         // Obtener referencia a la colección "rqUsers"
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference docRef = db.collection("rqUsers").document(userId);
-        Log.e("id Usuario", userId);
+
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -123,17 +117,25 @@ public class MainActivity extends AppCompatActivity {
                         // Obtener el atributo "tipo" del documento
                         String tipoUsuario = document.getString("tipo");
 
-                        // Verificar si el usuario es un administrador
+                        // Verificar el tipo de usuario
                         if ("administrador".equals(tipoUsuario)) {
                             // Es un administrador, redirige a la interfaz del administrador
                             finish();
                             startActivity(new Intent(MainActivity.this, MenuAdministrador.class));
                             Toast.makeText(MainActivity.this, "¡Bienvenido Administrador!", Toast.LENGTH_SHORT).show();
                         } else {
-                            // No es un administrador, redirige a la interfaz de usuario normal
-                            finish();
-                            startActivity(new Intent(MainActivity.this, MenuUserActivity.class));
-                            Toast.makeText(MainActivity.this, "¡Bienvenid@!", Toast.LENGTH_SHORT).show();
+                            // No es un administrador, verifica si el correo electrónico está verificado
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            if (user != null && user.isEmailVerified()) {
+                                // El correo electrónico está verificado, redirige a la interfaz de usuario normal
+                                finish();
+                                startActivity(new Intent(MainActivity.this, MenuUserActivity.class));
+                                Toast.makeText(MainActivity.this, "¡Bienvenid@!", Toast.LENGTH_SHORT).show();
+                            } else {
+                                // El correo electrónico no está verificado, muestra un mensaje o realiza otras acciones si es necesario
+                                Toast.makeText(MainActivity.this, "Verifique su correo electrónico antes de iniciar sesión.", Toast.LENGTH_SHORT).show();
+                                mAuth.signOut(); // Cerrar sesión para evitar intentos de inicio de sesión no verificados
+                            }
                         }
                     } else {
                         // El documento no existe, trata este caso según tus necesidades
@@ -145,6 +147,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 
     @Override
     protected void onStart(){
