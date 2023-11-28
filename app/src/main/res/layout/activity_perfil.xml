@@ -81,19 +81,6 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="HardcodedText,TextContrastCheck" />
 
-    <Button
-        android:id="@+id/btn_cerrar3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:backgroundTint="#FF0000"
-        android:text="@string/cerrar_sesi_n"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.981"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="TextContrastCheck" />
-
     <TextView
         android:id="@+id/textView52"
         android:layout_width="wrap_content"
