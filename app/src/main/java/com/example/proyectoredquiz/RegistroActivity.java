@@ -96,15 +96,27 @@ public class RegistroActivity extends AppCompatActivity {
 
                 if (nameUser.isEmpty() || lastnameUser.isEmpty() || emailUser.isEmpty() || passUser.isEmpty() || confirmPassUser.isEmpty() || dateUser.isEmpty()){
                     Toast.makeText(RegistroActivity.this, "Complete los datos", Toast.LENGTH_SHORT).show();
-                }else{
-                    if (passUser.equals(confirmPassUser)){
-                        registerUser(nameUser, lastnameUser, emailUser, passUser, dateUser, selectedGender);
+                } else {
+                    if (passUser.equals(confirmPassUser)) {
+                        if (isValidDate(dateUser)) {
+                            // La fecha tiene el formato correcto, proceder con el registro
+                            registerUser(nameUser, lastnameUser, emailUser, passUser, dateUser, selectedGender);
+                        } else {
+                            Toast.makeText(RegistroActivity.this, "Formato de fecha no válido. Utilice dd/mm/aaaa", Toast.LENGTH_SHORT).show();
+                        }
                     } else {
                         Toast.makeText(RegistroActivity.this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
         });
+    }
+
+    // REGEX PARA LA FECHA
+    // Método para validar el formato de la fecha
+    private boolean isValidDate(String date) {
+        String regex = "^(0[1-9]|[1-2][0-9]|3[0-1])/(0[1-9]|1[0-2])/\\d{4}$";
+        return date.matches(regex);
     }
 
     private void registerUser(String nameUser, String lastnameUser, String emailUser, String passUser, String dateUser, String selectedGender) {
@@ -117,6 +129,12 @@ public class RegistroActivity extends AppCompatActivity {
                         // Email is already in use
                         Toast.makeText(RegistroActivity.this, "El correo electrónico ya está en uso", Toast.LENGTH_SHORT).show();
                     } else {
+                        // VERIFICAR CONTRASEÑA SEGURA
+                        if (passUser.length() < 8 || !containsUpperCase(passUser) || !containsNumber(passUser)) {
+                            Toast.makeText(RegistroActivity.this, "La contraseña debe tener al menos 8 caracteres, una letra mayúscula y un número", Toast.LENGTH_SHORT).show();
+                            return; // Sale del método si la validación de la contraseña falla
+                        }
+
                         // Email is not in use, proceed with registration
                         mAuth.createUserWithEmailAndPassword(emailUser, passUser).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
@@ -131,7 +149,7 @@ public class RegistroActivity extends AppCompatActivity {
                                     map.put("nombre", nameUser);
                                     map.put("apellidos", lastnameUser);
                                     map.put("email", emailUser);
-                                    map.put("password", passUser);
+                                    //map.put("password", passUser);
                                     map.put("fechaNacimiento", dateUser);
                                     map.put("genero", selectedGender);
                                     map.put("vidas", 5);
@@ -166,7 +184,23 @@ public class RegistroActivity extends AppCompatActivity {
         });
     }
 
+    private boolean containsUpperCase(String str) {
+        for (char c : str.toCharArray()) {
+            if (Character.isUpperCase(c)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
+    private boolean containsNumber(String str) {
+        for (char c : str.toCharArray()) {
+            if (Character.isDigit(c)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     private void createRecompensasDocument(String id) {
         Map<String, Object> recompensasMap = new HashMap<>();
