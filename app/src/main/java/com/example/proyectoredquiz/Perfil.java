@@ -34,7 +34,7 @@ public class Perfil extends AppCompatActivity {
         idUser = mAuth.getCurrentUser().getUid();
 
         btn_inicio = findViewById(R.id.btn_inicioU);
-        btn_cerrar = findViewById(R.id.btn_cerrar3);
+        //btn_cerrar = findViewById(R.id.btn_cerrar3);
         nombre = findViewById(R.id.nombreCompleto);
         correo = findViewById(R.id.correoElectronico);
         fecha = findViewById(R.id.fechaNacimiento);
