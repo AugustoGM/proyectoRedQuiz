@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -119,28 +121,48 @@ public class VerReactivos extends AppCompatActivity implements MyAdapter.OnQuest
     public void onQuestionDelete(int position) {
         Question question = list.get(position);
 
-        // Obtener el nombre del documento en Firestore directamente desde la posición
-        String documentId = mFirestore.collection("preguntas").document().getId();
+        // Crear un cuadro de diálogo de confirmación
+        AlertDialog.Builder builder = new AlertDialog.Builder(VerReactivos.this);
+        builder.setTitle("Confirmación");
+        builder.setMessage("¿Estás seguro de que deseas eliminar esta pregunta?");
 
-        mFirestore.collection("preguntas").document(documentId)
-                .delete()
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        // Actualizar la interfaz de usuario después de la eliminación exitosa
-                        deletePosition(position);
-                        list.remove(position);
-                        adapter.notifyDataSetChanged(); // Notificar al adaptador sobre el cambio en los datos
-                        Toast.makeText(VerReactivos.this, "Pregunta eliminada exitosamente", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // Manejar la falla en la eliminación
-                        Toast.makeText(VerReactivos.this, "Error al eliminar la pregunta", Toast.LENGTH_SHORT).show();
-                    }
-                });
+        builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Obtener el nombre del documento en Firestore directamente desde la posición
+                String documentId = mFirestore.collection("preguntas").document().getId();
+
+                mFirestore.collection("preguntas").document(documentId)
+                        .delete()
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                // Actualizar la interfaz de usuario después de la eliminación exitosa
+                                deletePosition(position);
+                                list.remove(position);
+                                adapter.notifyDataSetChanged(); // Notificar al adaptador sobre el cambio en los datos
+                                Toast.makeText(VerReactivos.this, "Pregunta eliminada exitosamente", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                // Manejar la falla en la eliminación
+                                Toast.makeText(VerReactivos.this, "Error al eliminar la pregunta", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            }
+        });
+
+        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // No hacer nada si se cancela la eliminación
+            }
+        });
+
+        // Mostrar el cuadro de diálogo
+        builder.show();
     }
 
     private void deletePosition(int position) {
@@ -176,6 +198,8 @@ public class VerReactivos extends AppCompatActivity implements MyAdapter.OnQuest
             // La posición especificada no es válida
         }
     }
+
+
 
 
 
