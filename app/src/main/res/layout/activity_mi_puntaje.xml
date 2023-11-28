@@ -23,18 +23,17 @@
 
     <ProgressBar
         android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="112dp"
-        android:layout_height="116dp"
-        android:progressTint="#1F9C08"
-        android:max="100"
-        android:progress="0"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_centerInParent="true"
+        android:indeterminateOnly="false"
+        android:progressDrawable="@drawable/progress_circle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView18"
-        app:layout_constraintVertical_bias="0.416" />
+        app:layout_constraintVertical_bias="0.418" />
 
     <TextView
         android:id="@+id/textView10"
@@ -242,12 +241,14 @@
         android:id="@+id/por"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:text="0%"
-        android:textColor="#19A10F"
+        android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="@+id/progressBar"
         app:layout_constraintEnd_toEndOf="@+id/progressBar"
         app:layout_constraintStart_toStartOf="@+id/progressBar"
         app:layout_constraintTop_toTopOf="@+id/progressBar"
+        app:layout_constraintVertical_bias="0.419"
         tools:ignore="HardcodedText,TextContrastCheck" />
 
     <TextView
@@ -288,5 +289,18 @@
         app:layout_constraintTop_toTopOf="@+id/textView16"
         app:layout_constraintVertical_bias="0.523"
         tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/textView29"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Efectividad"
+        android:textColor="#A5A4A4"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/progressBar"
+        app:layout_constraintEnd_toEndOf="@+id/progressBar"
+        app:layout_constraintStart_toStartOf="@+id/progressBar"
+        app:layout_constraintTop_toBottomOf="@+id/por"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -58,17 +58,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         Question question = list.get(position);
         holder.bind(question);
-
-
     }
-
-
 
 
     public interface OnQuestionDeleteListener {
         void onQuestionDelete(int position);
     }
-
 
 
     @Override
