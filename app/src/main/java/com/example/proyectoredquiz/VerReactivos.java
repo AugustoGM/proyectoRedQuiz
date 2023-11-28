@@ -29,8 +29,10 @@ import java.util.ArrayList;
 
 import com.google.firebase.database.annotations.NotNull;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -70,13 +72,17 @@ public class VerReactivos extends AppCompatActivity implements MyAdapter.OnQuest
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String selectedCategoria = (String) categoriaAdapter.getItem(i);
                 Toast.makeText(VerReactivos.this, "Categoria: " + selectedCategoria, Toast.LENGTH_SHORT).show();
+
+                // Llamar a un método para cargar las preguntas con la categoría seleccionada
+                loadQuestionsByCategory(selectedCategoria);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
+                // Puedes dejar esto vacío si no necesitas realizar ninguna acción cuando no se selecciona nada.
             }
         });
+
 
         btn_atras.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,6 +143,66 @@ public class VerReactivos extends AppCompatActivity implements MyAdapter.OnQuest
         });
 
     }
+
+    private void loadQuestionsByCategory(String selectedCategoria) {
+        // Configura la referencia a la colección "preguntas" en Firestore
+        CollectionReference collectionRef = mFirestore.collection("preguntas");
+
+        // Verifica si se seleccionó "Todos"
+        if (selectedCategoria.equals("Todos")) {
+            // Si es "Todos", obtén todas las preguntas sin filtrar por categoría
+            collectionRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                @Override
+                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    list.clear(); // Limpiar la lista actual antes de agregar nuevas preguntas
+
+                    // Iterate over the results of the query
+                    for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
+                        // Convert the document to a Question object
+                        Question question = document.toObject(Question.class);
+                        list.add(question);
+                    }
+
+                    adapter.notifyDataSetChanged();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NotNull Exception e) {
+                    // Handle error if the query fails
+                    Toast.makeText(VerReactivos.this, "Error al obtener todas las preguntas",
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            // Si se selecciona una categoría específica, aplica el filtro por categoría a la consulta
+            Query query = collectionRef.whereEqualTo("categoria", selectedCategoria);
+
+            query.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                @Override
+                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    list.clear(); // Limpiar la lista actual antes de agregar nuevas preguntas
+
+                    // Iterate over the results of the filtered query
+                    for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
+                        // Convert the document to a Question object
+                        Question question = document.toObject(Question.class);
+                        list.add(question);
+                    }
+
+                    adapter.notifyDataSetChanged();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NotNull Exception e) {
+                    // Handle error if the query fails
+                    Toast.makeText(VerReactivos.this, "Error al obtener preguntas por categoría",
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
+
 
     @Override
     public void onQuestionDelete(int position) {
