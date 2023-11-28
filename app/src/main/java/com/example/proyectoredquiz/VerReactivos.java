@@ -115,30 +115,69 @@ public class VerReactivos extends AppCompatActivity implements MyAdapter.OnQuest
 
     }
 
-        @Override
-        public void onQuestionDelete(int position){
-            Question question = list.get(position);
-            String documentId = question.getDocumentSnapshot().getId();
+    @Override
+    public void onQuestionDelete(int position) {
+        Question question = list.get(position);
 
-            mFirestore.collection("preguntas").document(documentId)
-                    .delete()
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            // Update the UI after successful deletion
-                            list.remove(position);
-                            //notifyDataSetChanged();
-                            //Toast.makeText(context, "Pregunta eliminada exitosamente", Toast.LENGTH_SHORT).show();
+        // Obtener el nombre del documento en Firestore directamente desde la posición
+        String documentId = mFirestore.collection("preguntas").document().getId();
+
+        mFirestore.collection("preguntas").document(documentId)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // Actualizar la interfaz de usuario después de la eliminación exitosa
+                        deletePosition(position);
+                        list.remove(position);
+                        adapter.notifyDataSetChanged(); // Notificar al adaptador sobre el cambio en los datos
+                        Toast.makeText(VerReactivos.this, "Pregunta eliminada exitosamente", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Manejar la falla en la eliminación
+                        Toast.makeText(VerReactivos.this, "Error al eliminar la pregunta", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void deletePosition(int position) {
+        if (position >= 0 && position < list.size()) {
+            mFirestore.collection("preguntas")
+                    .get()
+                    .addOnSuccessListener(queryDocumentSnapshots -> {
+                        // Verificar si hay algún documento en la posición especificada
+                        if (position < queryDocumentSnapshots.size()) {
+                            // Obtener el ID del documento en la posición especificada
+                            DocumentSnapshot documentSnapshot = queryDocumentSnapshots.getDocuments().get(position);
+                            String documentIdToDelete = documentSnapshot.getId();
+
+                            // Eliminar el documento
+                            mFirestore.collection("preguntas")
+                                    .document(documentIdToDelete)
+                                    .delete()
+                                    .addOnSuccessListener(aVoid -> {
+                                        // Documento eliminado con éxito
+                                        // Actualiza tu lista u realiza otras acciones necesarias
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        // Manejar errores
+                                    });
+                        } else {
+                            // La posición especificada es mayor que el número de documentos
                         }
                     })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            // Handle the failure to delete
-                            //Toast.makeText(context, "Error al eliminar la pregunta", Toast.LENGTH_SHORT).show();
-                        }
+                    .addOnFailureListener(e -> {
+                        // Manejar errores al obtener la referencia al documento
                     });
+        } else {
+            // La posición especificada no es válida
         }
+    }
+
+
 
 
 }
