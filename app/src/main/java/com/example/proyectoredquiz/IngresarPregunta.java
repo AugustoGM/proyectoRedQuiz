@@ -87,14 +87,18 @@ public class IngresarPregunta extends AppCompatActivity {
                 String incorrecta3i = incorrect3.getText().toString();
                 String categoriai = spinnerCategory.getSelectedItem().toString();
 
-                if (preguntai.isEmpty() && puntajei.isEmpty() && correctai.isEmpty() && incorrecta1i.isEmpty() && incorrecta2i.isEmpty() && incorrecta3i.isEmpty()){
-                    Toast.makeText(new IngresarPregunta(), "Ingrese los datos", Toast.LENGTH_SHORT).show();
-                }else {
+                if (isEmptyOrWhitespace(preguntai) || isEmptyOrWhitespace(puntajei) || isEmptyOrWhitespace(correctai) || isEmptyOrWhitespace(incorrecta1i) || isEmptyOrWhitespace(incorrecta2i) || isEmptyOrWhitespace(incorrecta3i)) {
+                    Toast.makeText(IngresarPregunta.this, "Ingrese todos los datos", Toast.LENGTH_SHORT).show();
+                } else {
                     postPregunta(preguntai, puntajei, correctai, incorrecta1i, incorrecta2i, incorrecta3i, categoriai);
                 }
             }
         });
 
+    }
+
+    private boolean isEmptyOrWhitespace(String input) {
+        return input == null || input.trim().isEmpty();
     }
 
     private void postPregunta(String preguntai, String puntajei, String correctai, String incorrecta1i, String incorrecta2i, String incorrecta3i, String categoriai) {
