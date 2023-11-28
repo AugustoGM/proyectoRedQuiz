@@ -85,11 +85,16 @@ public class MainActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     FirebaseUser user = mAuth.getCurrentUser();
                     if (user != null) {
-                        Log.e("id Usuario", "user no es nulo");
-                        String userId = user.getUid();
-                        Log.e("id Usuario", userId);
+                        if (user.isEmailVerified()) {
+                            Log.e("id Usuario", "user no es nulo");
+                            String userId = user.getUid();
+                            Log.e("id Usuario", userId);
 
-                        verificarTipoUsuario(userId);
+                            verificarTipoUsuario(userId);
+                        } else {
+                            Toast.makeText(MainActivity.this, "Verifique su correo electrónico antes de iniciar sesión.", Toast.LENGTH_SHORT).show();
+                            mAuth.signOut(); // Cerrar sesión para evitar intentos de inicio de sesión no verificados
+                        }
                     }
                 } else {
                     Toast.makeText(MainActivity.this, "Error al iniciar sesión", Toast.LENGTH_SHORT).show();
@@ -102,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 
     private void verificarTipoUsuario(String userId) {
         // Obtener referencia a la colección "rqUsers"
@@ -144,9 +150,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart(){
         super.onStart();
         FirebaseUser user = mAuth.getCurrentUser();
-        if (user != null){
-            startActivities(new Intent[]{new Intent(MainActivity.this, MenuUserActivity.class)});
-            finish();
+        if (user != null && user.isEmailVerified()){
+            // Usuario autenticado y correo electrónico verificado
+            verificarTipoUsuario(user.getUid());
         }
     }
+
 }

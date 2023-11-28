@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.Firebase;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.SignInMethodQueryResult;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -136,46 +137,66 @@ public class RegistroActivity extends AppCompatActivity {
                         }
 
                         // Email is not in use, proceed with registration
-                        mAuth.createUserWithEmailAndPassword(emailUser, passUser).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    // Rest of your registration logic
-                                    String id = mAuth.getCurrentUser().getUid();
-                                    String tipo = "usuario";
-                                    createRecompensasDocument(id);
-                                    Map<String, Object> map = new HashMap<>();
-                                    map.put("id", id);
-                                    map.put("nombre", nameUser);
-                                    map.put("apellidos", lastnameUser);
-                                    map.put("email", emailUser);
-                                    //map.put("password", passUser);
-                                    map.put("fechaNacimiento", dateUser);
-                                    map.put("genero", selectedGender);
-                                    map.put("vidas", 5);
-                                    map.put("puntaje", 0);
-                                    map.put("prendaI", 1);
-                                    map.put("prendaS", 1);
-                                    map.put("tipo", tipo);
+                        mAuth.createUserWithEmailAndPassword(emailUser, passUser)
+                                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (task.isSuccessful()) {
+                                            // Rest of your registration logic
+                                            FirebaseUser user = mAuth.getCurrentUser();
 
-                                    mFirestore.collection("rqUsers").document(id).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void unused) {
-                                            finish();
-                                            startActivity(new Intent(RegistroActivity.this, MainActivity.class));
-                                            Toast.makeText(RegistroActivity.this, "Registro Exitoso", Toast.LENGTH_SHORT).show();
+                                            if (user != null) {
+                                                // Enviar correo de verificación
+                                                user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> emailTask) {
+                                                        if (emailTask.isSuccessful()) {
+                                                            // Correo de verificación enviado exitosamente
+                                                            Toast.makeText(RegistroActivity.this, "Se ha enviado un correo de verificación. Por favor, verifique su correo electrónico.", Toast.LENGTH_SHORT).show();
+                                                        } else {
+                                                            // Error al enviar el correo de verificación
+                                                            Toast.makeText(RegistroActivity.this, "Error al enviar el correo de verificación: " + emailTask.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }
+                                                });
+                                            }
+
+                                            // Resto de tu lógica de registro
+                                            String id = mAuth.getCurrentUser().getUid();
+                                            String tipo = "usuario";
+                                            createRecompensasDocument(id);
+                                            Map<String, Object> map = new HashMap<>();
+                                            map.put("id", id);
+                                            map.put("nombre", nameUser);
+                                            map.put("apellidos", lastnameUser);
+                                            map.put("email", emailUser);
+                                            map.put("fechaNacimiento", dateUser);
+                                            map.put("genero", selectedGender);
+                                            map.put("vidas", 5);
+                                            map.put("puntaje", 0);
+                                            map.put("prendaI", 1);
+                                            map.put("prendaS", 1);
+                                            map.put("tipo", tipo);
+
+                                            mFirestore.collection("rqUsers").document(id).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void unused) {
+                                                    finish();
+                                                    startActivity(new Intent(RegistroActivity.this, MainActivity.class));
+                                                    Toast.makeText(RegistroActivity.this, "Registro Exitoso", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }).addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Toast.makeText(RegistroActivity.this, "Error al guardar", Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+                                        } else {
+                                            Toast.makeText(RegistroActivity.this, "Error al registrar: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                         }
-                                    }).addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(RegistroActivity.this, "Error al guardar", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                                } else {
-                                    Toast.makeText(RegistroActivity.this, "Error al registrar: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
+                                    }
+                                });
+
                     }
                 } else {
                     Toast.makeText(RegistroActivity.this, "Error al verificar el correo electrónico", Toast.LENGTH_SHORT).show();

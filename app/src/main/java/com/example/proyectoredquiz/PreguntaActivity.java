@@ -254,6 +254,8 @@ public class PreguntaActivity extends AppCompatActivity {
     }
 
     private void volver() {
+        // AGREGUÉ ESO:
+        finish();
         Intent index = new Intent(PreguntaActivity.this, MenuUserActivity.class);
         startActivities(new Intent[]{index});
     }
