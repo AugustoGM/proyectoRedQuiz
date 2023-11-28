@@ -66,7 +66,7 @@ public class IngresarPregunta extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String selectedCategory = (String) categoyAdapter.getItem(i);
-                Toast.makeText(IngresarPregunta.this, "Categoría: " + selectedCategory, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(IngresarPregunta.this, "Categoría: " + selectedCategory, Toast.LENGTH_SHORT).show();
             }
 
             @Override

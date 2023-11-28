@@ -89,6 +89,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             pregunta.setText(question.getPregunta());
             categoria.setText(question.getCategoria());
 
+            btn_eliminar.setVisibility(question.isVisible() ? View.VISIBLE : View.INVISIBLE);
+            btn_eliminar.setEnabled(question.isVisible());
+
             btn_eliminar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

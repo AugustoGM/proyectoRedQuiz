@@ -71,7 +71,7 @@ public class VerReactivos extends AppCompatActivity implements MyAdapter.OnQuest
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String selectedCategoria = (String) categoriaAdapter.getItem(i);
-                Toast.makeText(VerReactivos.this, "Categoria: " + selectedCategoria, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(VerReactivos.this, "Categoria: " + selectedCategoria, Toast.LENGTH_SHORT).show();
 
                 // Llamar a un método para cargar las preguntas con la categoría seleccionada
                 loadQuestionsByCategory(selectedCategoria);
@@ -160,6 +160,7 @@ public class VerReactivos extends AppCompatActivity implements MyAdapter.OnQuest
                     for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
                         // Convert the document to a Question object
                         Question question = document.toObject(Question.class);
+                        question.setVisible(true);
                         list.add(question);
                     }
 
@@ -186,6 +187,7 @@ public class VerReactivos extends AppCompatActivity implements MyAdapter.OnQuest
                     for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
                         // Convert the document to a Question object
                         Question question = document.toObject(Question.class);
+                        question.setVisible(false);
                         list.add(question);
                     }
 
@@ -285,6 +287,8 @@ public class VerReactivos extends AppCompatActivity implements MyAdapter.OnQuest
             // La posición especificada no es válida
         }
     }
+
+
 
 }
 

@@ -39,7 +39,7 @@ public class Perfil extends AppCompatActivity {
         correo = findViewById(R.id.correoElectronico);
         fecha = findViewById(R.id.fechaNacimiento);
         genero = findViewById(R.id.generoUsuario);
-        editarF = findViewById(R.id.eF);
+        //editarF = findViewById(R.id.eF);
         fotoPerfil = findViewById(R.id.fotoFoto);
 
         btn_inicio.setOnClickListener(new View.OnClickListener() {

@@ -11,6 +11,8 @@ public class Question {
     private DocumentSnapshot documentSnapshot;
     private String id; // Nueva variable para almacenar el ID
 
+    private boolean isVisible;
+
     public Question() {
     }
 
@@ -45,6 +47,14 @@ public class Question {
     public DocumentSnapshot getDocumentSnapshot() {
         // Retorna el DocumentSnapshot asociado a la pregunta
         return documentSnapshot;
+    }
+
+    public boolean isVisible() {
+        return isVisible;
+    }
+
+    public void setVisible(boolean visible) {
+        isVisible = visible;
     }
 
 }

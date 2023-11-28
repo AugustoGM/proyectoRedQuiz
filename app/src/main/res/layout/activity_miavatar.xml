@@ -88,9 +88,11 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="167dp"
+        android:layout_width="250dp"
         android:layout_height="30dp"
         android:orientation="horizontal"
+        android:padding="2dp"
+        android:paddingLeft="5dp"
         android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/textView22"
         app:layout_constraintEnd_toEndOf="parent"
@@ -103,13 +105,14 @@
             android:id="@+id/textView8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
             android:text="Puntaje Acumulado:  "
             android:textStyle="bold"
             tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/punt"
-            android:layout_width="wrap_content"
+            android:layout_width="35dp"
             android:layout_height="wrap_content"
             android:text="0"
             tools:ignore="HardcodedText" />
@@ -120,7 +123,7 @@
         android:layout_width="189dp"
         android:layout_height="272dp"
         android:layout_marginEnd="2dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="9dp"
         app:layout_constraintBottom_toTopOf="@+id/btn_editarA"
         app:layout_constraintEnd_toEndOf="@+id/avatar"
         app:layout_constraintHorizontal_bias="0.52"
@@ -134,6 +137,7 @@
         android:id="@+id/zapH"
         android:layout_width="76dp"
         android:layout_height="105dp"
+        android:layout_marginBottom="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/avatar"
         app:layout_constraintStart_toStartOf="@+id/avatar"
@@ -146,7 +150,7 @@
         android:id="@+id/supH"
         android:layout_width="171dp"
         android:layout_height="191dp"
-        android:layout_marginBottom="95dp"
+        android:layout_marginBottom="99dp"
         app:layout_constraintBottom_toTopOf="@+id/btn_editarA"
         app:layout_constraintEnd_toEndOf="@+id/avatar"
         app:layout_constraintStart_toStartOf="@+id/avatar"
@@ -159,6 +163,7 @@
         android:layout_width="197dp"
         android:layout_height="256dp"
         android:layout_marginEnd="3dp"
+        android:layout_marginBottom="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/avatar"
         app:layout_constraintHorizontal_bias="0.508"
@@ -173,6 +178,7 @@
         android:layout_width="177dp"
         android:layout_height="179dp"
         android:layout_marginEnd="2dp"
+        android:layout_marginBottom="4dp"
         app:layout_constraintBottom_toBottomOf="@+id/infH"
         app:layout_constraintEnd_toEndOf="@+id/avatar"
         app:layout_constraintHorizontal_bias="0.507"
@@ -187,6 +193,7 @@
         android:layout_width="56dp"
         android:layout_height="68dp"
         android:layout_marginEnd="5dp"
+        android:layout_marginBottom="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/avatar"
         app:layout_constraintHorizontal_bias="0.509"
@@ -224,6 +231,7 @@
                 android:layout_weight="1"
                 android:text="Recompensa 1 (50 pts)"
                 android:textAlignment="center"
+                android:textSize="12sp"
                 android:textStyle="bold"
                 tools:ignore="HardcodedText" />
 
@@ -233,6 +241,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="TextView"
+                android:textSize="12sp"
                 tools:ignore="HardcodedText" />
         </LinearLayout>
 
@@ -248,6 +257,7 @@
                 android:layout_weight="1"
                 android:text="Recompensa 2 (100 pts)"
                 android:textAlignment="center"
+                android:textSize="12sp"
                 android:textStyle="bold"
                 tools:ignore="HardcodedText" />
 
@@ -257,6 +267,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="TextView"
+                android:textSize="12sp"
                 tools:ignore="HardcodedText" />
         </LinearLayout>
 
@@ -272,6 +283,7 @@
                 android:layout_weight="1"
                 android:text="Recompensa 3 (200 pts)"
                 android:textAlignment="center"
+                android:textSize="12sp"
                 android:textStyle="bold"
                 tools:ignore="HardcodedText" />
 
@@ -281,6 +293,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="TextView"
+                android:textSize="12sp"
                 tools:ignore="HardcodedText" />
         </LinearLayout>
 
@@ -296,6 +309,7 @@
                 android:layout_weight="1"
                 android:text="Recompensa 4 (400 pts)"
                 android:textAlignment="center"
+                android:textSize="12sp"
                 android:textStyle="bold"
                 tools:ignore="HardcodedText" />
 
@@ -305,6 +319,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="TextView"
+                android:textSize="12sp"
                 tools:ignore="HardcodedText" />
         </LinearLayout>
 
@@ -320,6 +335,7 @@
                 android:layout_weight="1"
                 android:text="Recompensa 5 (800 pts)"
                 android:textAlignment="center"
+                android:textSize="12sp"
                 android:textStyle="bold"
                 tools:ignore="HardcodedText" />
 
@@ -329,6 +345,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="TextView"
+                android:textSize="12sp"
                 tools:ignore="HardcodedText" />
         </LinearLayout>
     </LinearLayout>
