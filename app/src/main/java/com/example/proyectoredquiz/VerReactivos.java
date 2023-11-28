@@ -10,8 +10,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -39,7 +42,8 @@ public class VerReactivos extends AppCompatActivity implements MyAdapter.OnQuest
     DatabaseReference databaseReference;
     MyAdapter adapter;
     Button btn_atras;
-
+    Spinner categorias;
+    private ArrayAdapter<CharSequence> categoriaAdapter;
     private FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
 
     @Override
@@ -56,6 +60,23 @@ public class VerReactivos extends AppCompatActivity implements MyAdapter.OnQuest
 
         btn_agregar = findViewById(R.id.btn_add);
         btn_atras = findViewById(R.id.btn_volverAdmin);
+        categorias = findViewById(R.id.adminCategorias);
+        categoriaAdapter = ArrayAdapter.createFromResource(this, R.array.categrias_array2, android.R.layout.simple_spinner_item);
+        categoriaAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        categorias.setAdapter(categoriaAdapter);
+
+        categorias.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String selectedCategoria = (String) categoriaAdapter.getItem(i);
+                Toast.makeText(VerReactivos.this, "Categoria: " + selectedCategoria, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         btn_atras.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -198,11 +219,6 @@ public class VerReactivos extends AppCompatActivity implements MyAdapter.OnQuest
             // La posición especificada no es válida
         }
     }
-
-
-
-
-
 
 }
 
