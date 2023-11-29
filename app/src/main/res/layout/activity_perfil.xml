@@ -68,7 +68,7 @@
         app:strokeColor="@color/white"
         app:strokeWidth="4dp"
         tools:ignore="ImageContrastCheck"
-        tools:srcCompat="@drawable/hombre" />
+        tools:srcCompat="@drawable/profilemen" />
 
     <Button
         android:id="@+id/btn_inicioU"

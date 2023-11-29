@@ -25,7 +25,6 @@ public class MenuAdministrador extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         foto = findViewById(R.id.fotoAdmin);
-        editar = findViewById(R.id.editarFA);
         btn_add = findViewById(R.id.btn_addPregunta);
         btn_ver = findViewById(R.id.btn_ver);
         btn_cerrar = findViewById(R.id.btn_cerrar2);
@@ -44,7 +43,7 @@ public class MenuAdministrador extends AppCompatActivity {
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent index = new Intent(MenuAdministrador.this, IngresarPregunta.class);
+                Intent index = new Intent(MenuAdministrador.this, MenuAdministrador.class);
                 startActivities(new Intent[]{index});
             }
         });

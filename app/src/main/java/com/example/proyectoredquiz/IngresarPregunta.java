@@ -3,7 +3,12 @@ package com.example.proyectoredquiz;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -34,6 +39,11 @@ public class IngresarPregunta extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ingresar_pregunta);
+
+        // Verificar la conexión a Internet al inicio de la actividad
+        if (!isInternetAvailable()) {
+            showNoInternetDialogAndLogout();
+        }
 
         //FIRESTORE
         mfirestore = FirebaseFirestore.getInstance();
@@ -95,6 +105,46 @@ public class IngresarPregunta extends AppCompatActivity {
             }
         });
 
+    }
+
+    private boolean isInternetAvailable() {
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if (connectivityManager != null) {
+            NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+            return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+        }
+
+        return false;
+    }
+
+    // Función para mostrar el cuadro de diálogo cuando no hay conexión a Internet y cerrar sesión
+    private void showNoInternetDialogAndLogout() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Sin conexión a Internet")
+                .setMessage("Por favor, verifica tu conexión a Internet.")
+                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Cerrar sesión y redirigir al usuario al Main Activity
+                        logoutAndRedirectToMainActivity();
+                    }
+                })
+                .setCancelable(false) // Impide que el usuario cierre el diálogo haciendo clic fuera de él
+                .show();
+    }
+
+    // Función para cerrar sesión y redirigir al usuario al Main Activity
+    private void logoutAndRedirectToMainActivity() {
+        // Aquí puedes agregar la lógica para cerrar la sesión, por ejemplo, limpiar las preferencias de usuario
+        // o realizar cualquier acción necesaria para cerrar la sesión.
+
+        // Redirigir al usuario al Main Activity
+        //mAuth.signOut();
+        Intent intent = new Intent(IngresarPregunta.this, MenuAdministrador.class);
+        startActivity(intent);
+        finish();
     }
 
     private boolean isEmptyOrWhitespace(String input) {

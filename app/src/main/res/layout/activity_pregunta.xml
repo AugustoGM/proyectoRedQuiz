@@ -12,7 +12,6 @@
         android:layout_height="75dp"
         android:layout_marginTop="12dp"
         android:backgroundTint="#EAEAEA"
-        android:text="D"
         android:textColor="#000000"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -21,7 +20,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/r3"
         app:layout_constraintVertical_bias="0.0"
-        tools:ignore="HardcodedText,VisualLintButtonSize" />
+        tools:ignore="HardcodedText,VisualLintButtonSize,SpeakableTextPresentCheck" />
 
     <Button
         android:id="@+id/r2"
@@ -29,13 +28,12 @@
         android:layout_height="75dp"
         android:layout_marginTop="12dp"
         android:backgroundTint="#EAEAEA"
-        android:text="B"
         android:textColor="#000000"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/r1"
-        tools:ignore="HardcodedText,VisualLintButtonSize" />
+        tools:ignore="HardcodedText,VisualLintButtonSize,SpeakableTextPresentCheck" />
 
     <Button
         android:id="@+id/btn_volverJ"
@@ -127,13 +125,12 @@
         android:layout_height="75dp"
         android:layout_marginTop="25dp"
         android:backgroundTint="#EAEAEA"
-        android:text="A"
         android:textColor="#000000"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView33"
-        tools:ignore="HardcodedText,VisualLintButtonSize" />
+        tools:ignore="HardcodedText,VisualLintButtonSize,SpeakableTextPresentCheck" />
 
     <Button
         android:id="@+id/r3"
@@ -141,13 +138,12 @@
         android:layout_height="75dp"
         android:layout_marginTop="12dp"
         android:backgroundTint="#EAEAEA"
-        android:text="C"
         android:textColor="#000000"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/r2"
-        tools:ignore="HardcodedText,VisualLintButtonSize" />
+        tools:ignore="HardcodedText,VisualLintButtonSize,SpeakableTextPresentCheck" />
 
     <TextView
         android:id="@+id/textView34"
@@ -164,8 +160,8 @@
         android:id="@+id/preguntaJ"
         android:layout_width="259dp"
         android:layout_height="131dp"
-        android:paddingTop="25sp"
-        android:text="Pregunta"
+        android:layout_marginStart="5dp"
+        android:paddingTop="20sp"
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="20sp"

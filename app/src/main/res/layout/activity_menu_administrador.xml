@@ -81,7 +81,7 @@
         app:strokeColor="@color/white"
         app:strokeWidth="4dp"
         tools:ignore="ImageContrastCheck,UnknownIdInLayout"
-        android:src="@drawable/hombre"
+        android:src="@drawable/profilemen"
         tools:srcCompat="@drawable/profilemen"/>
 
     <Button

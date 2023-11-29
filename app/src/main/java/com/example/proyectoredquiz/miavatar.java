@@ -2,10 +2,15 @@ package com.example.proyectoredquiz;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -47,6 +52,13 @@ public class miavatar extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_miavatar);
+
+        // Verificar la conexión a Internet al inicio de la actividad
+        if (!isInternetAvailable()) {
+            showNoInternetDialogAndLogout();
+        }
+
+
         mAuth = FirebaseAuth.getInstance();
 
         idUser = mAuth.getCurrentUser().getUid();
@@ -135,6 +147,46 @@ public class miavatar extends AppCompatActivity {
         obtenerPuntajeUsuarioDesdeFirestore(idUser);
         //compara(R1, R2, R3, R4, R5);
         obtenerRecompensasDesdeFirestore(idUser);
+    }
+
+    private boolean isInternetAvailable() {
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if (connectivityManager != null) {
+            NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+            return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+        }
+
+        return false;
+    }
+
+    // Función para mostrar el cuadro de diálogo cuando no hay conexión a Internet y cerrar sesión
+    private void showNoInternetDialogAndLogout() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Sin conexión a Internet")
+                .setMessage("Por favor, verifica tu conexión a Internet.")
+                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Cerrar sesión y redirigir al usuario al Main Activity
+                        logoutAndRedirectToMainActivity();
+                    }
+                })
+                .setCancelable(false) // Impide que el usuario cierre el diálogo haciendo clic fuera de él
+                .show();
+    }
+
+    // Función para cerrar sesión y redirigir al usuario al Main Activity
+    private void logoutAndRedirectToMainActivity() {
+        // Aquí puedes agregar la lógica para cerrar la sesión, por ejemplo, limpiar las preferencias de usuario
+        // o realizar cualquier acción necesaria para cerrar la sesión.
+
+        // Redirigir al usuario al Main Activity
+        //mAuth.signOut();
+        Intent intent = new Intent(miavatar.this, MenuUserActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void obtenerPrendas(String userId, String genero) {

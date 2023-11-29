@@ -19,6 +19,8 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -136,92 +138,139 @@ public class PreguntaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pregunta);
-        mAuth = FirebaseAuth.getInstance();
-        idUser = mAuth.getCurrentUser().getUid();
 
-        btn_volver = findViewById(R.id.btn_volverJ);
-        boton1 = findViewById(R.id.r1);
-        boton2 = findViewById(R.id.r2);
-        boton3 = findViewById(R.id.r3);
-        boton4 = findViewById(R.id.r4);
+        // Verificar la conexión a Internet al inicio de la actividad
+        if (!isInternetAvailable()) {
+            showNoInternetDialogAndLogout();
+        }
 
-        pregunta = findViewById(R.id.preguntaJ);
-        categoria = findViewById(R.id.categoriaJ);
-        color = findViewById(R.id.colorCaregoria);
-        vidas = findViewById(R.id.vidasJ);
+            mAuth = FirebaseAuth.getInstance();
+            idUser = mAuth.getCurrentUser().getUid();
 
-        duracion = findViewById(R.id.duracion);
-        handler = new Handler();
+            btn_volver = findViewById(R.id.btn_volverJ);
+            boton1 = findViewById(R.id.r1);
+            boton2 = findViewById(R.id.r2);
+            boton3 = findViewById(R.id.r3);
+            boton4 = findViewById(R.id.r4);
 
-        //FIREBASE
-        db = FirebaseFirestore.getInstance();
-        preguntasCollection = db.collection("preguntas");
+            pregunta = findViewById(R.id.preguntaJ);
+            categoria = findViewById(R.id.categoriaJ);
+            color = findViewById(R.id.colorCaregoria);
+            vidas = findViewById(R.id.vidasJ);
 
-        btn_volver.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mostrarDialogoConfirmacion();
-            }
-        });
+            duracion = findViewById(R.id.duracion);
+            handler = new Handler();
 
-        // ASIGNAR RESPUESTAS Y PREGUNTA
-        getQuestion();
-        iniciarProgreso(); // Pasa la vista adecuada
+            //FIREBASE
+            db = FirebaseFirestore.getInstance();
+            preguntasCollection = db.collection("preguntas");
 
-        // ONCLICK PARA LOS BOTONES
-        boton1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(PreguntaActivity.this, "no se perdió", Toast.LENGTH_SHORT).show();
-                detenerProgreso();
-                verificarRespuesta(boton1);
-            }
-        });
-
-        boton2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                detenerProgreso();
-                verificarRespuesta(boton2);
-            }
-        });
-
-        boton3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                detenerProgreso();
-                verificarRespuesta(boton3);
-            }
-        });
-
-        boton4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                detenerProgreso();
-                verificarRespuesta(boton4);
-            }
-        });
-
-        // OBTENER LAS VIDAS DEL USUARIO
-        DocumentReference documentReference = db.collection("rqUsers").document(idUser);
-        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                if (e != null) {
-                    // Manejar el error, si es necesario
-                    Log.e("ERROR", "Error al escuchar cambios en el documento", e);
-                    return;
+            btn_volver.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mostrarDialogoConfirmacion();
                 }
+            });
 
-                if (documentSnapshot != null && documentSnapshot.exists()) {
-                    // Actualizar el valor de las vidas en el TextView
-                    VIDAS = documentSnapshot.getLong("vidas").intValue();
-                    vidas.setText("X " + String.valueOf(VIDAS));
+            // ASIGNAR RESPUESTAS Y PREGUNTA
+            getQuestion();
+            iniciarProgreso(); // Pasa la vista adecuada
+
+            // ONCLICK PARA LOS BOTONES
+            boton1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(PreguntaActivity.this, "no se perdió", Toast.LENGTH_SHORT).show();
+                    detenerProgreso();
+                    verificarRespuesta(boton1);
                 }
-            }
-        });
+            });
+
+            boton2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    detenerProgreso();
+                    verificarRespuesta(boton2);
+                }
+            });
+
+            boton3.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    detenerProgreso();
+                    verificarRespuesta(boton3);
+                }
+            });
+
+            boton4.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    detenerProgreso();
+                    verificarRespuesta(boton4);
+                }
+            });
+
+            // OBTENER LAS VIDAS DEL USUARIO
+            DocumentReference documentReference = db.collection("rqUsers").document(idUser);
+            documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+                @Override
+                public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                    if (e != null) {
+                        // Manejar el error, si es necesario
+                        Log.e("ERROR", "Error al escuchar cambios en el documento", e);
+                        return;
+                    }
+
+                    if (documentSnapshot != null && documentSnapshot.exists()) {
+                        // Actualizar el valor de las vidas en el TextView
+                        VIDAS = documentSnapshot.getLong("vidas").intValue();
+                        vidas.setText("X " + String.valueOf(VIDAS));
+                    }
+                }
+            });
 
     }
+
+    private boolean isInternetAvailable() {
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if (connectivityManager != null) {
+            NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+            return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+        }
+
+        return false;
+    }
+
+    // Función para mostrar el cuadro de diálogo cuando no hay conexión a Internet y cerrar sesión
+    private void showNoInternetDialogAndLogout() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Sin conexión a Internet")
+                .setMessage("Por favor, verifica tu conexión a Internet.")
+                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Cerrar sesión y redirigir al usuario al Main Activity
+                        logoutAndRedirectToMainActivity();
+                    }
+                })
+                .setCancelable(false) // Impide que el usuario cierre el diálogo haciendo clic fuera de él
+                .show();
+    }
+
+    // Función para cerrar sesión y redirigir al usuario al Main Activity
+    private void logoutAndRedirectToMainActivity() {
+        // Aquí puedes agregar la lógica para cerrar la sesión, por ejemplo, limpiar las preferencias de usuario
+        // o realizar cualquier acción necesaria para cerrar la sesión.
+
+        // Redirigir al usuario al Main Activity
+        //mAuth.signOut();
+        Intent intent = new Intent(PreguntaActivity.this, MenuUserActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
 
 
     // BOTÓN VOLVER
