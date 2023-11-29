@@ -21,16 +21,17 @@
     <TextView
         android:id="@+id/textView36"
         android:layout_width="345dp"
-        android:layout_height="67dp"
-        android:layout_marginBottom="20dp"
+        android:layout_height="72dp"
+        android:layout_marginTop="20dp"
         android:text="@string/ingresar_la_informaci_n_de_la_pregunta"
         android:textAlignment="center"
         android:textColor="#000000"
-        android:textSize="26sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/pregunta"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="TextSizeCheck" />
 
     <EditText
@@ -119,6 +120,7 @@
         android:hint="Respuesta correcta"
         android:importantForAutofill="no"
         android:inputType="text"
+        android:textColor="#208115"
         app:layout_constraintBottom_toTopOf="@+id/incorrecta1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -133,6 +135,7 @@
         android:hint="Respuesta incorrecta 2"
         android:importantForAutofill="no"
         android:inputType="text"
+        android:textColor="#D31414"
         app:layout_constraintBottom_toTopOf="@+id/incorrecta3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
@@ -147,6 +150,8 @@
         android:ems="10"
         android:hint="Respuesta incorrecta 1"
         android:inputType="text"
+        android:shadowColor="#D31414"
+        android:textColor="#D31414"
         app:layout_constraintBottom_toTopOf="@+id/incorrecta2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
@@ -161,8 +166,10 @@
         android:ems="10"
         android:hint="Respuesta incorrecta 3"
         android:inputType="text"
+        android:textColor="#D31414"
         app:layout_constraintBottom_toTopOf="@+id/btn_agregar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="TouchTargetSizeCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

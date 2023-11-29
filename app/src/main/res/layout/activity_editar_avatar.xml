@@ -242,7 +242,7 @@
     <Button
         android:id="@+id/color2B"
         android:layout_width="80dp"
-        android:layout_height="80sp"
+        android:layout_height="80dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.368"

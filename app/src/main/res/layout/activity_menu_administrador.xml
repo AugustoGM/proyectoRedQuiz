@@ -37,7 +37,7 @@
         android:id="@+id/textView42"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:text="Administrador"
         android:textColor="#000000"
         android:textSize="24sp"
@@ -111,24 +111,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView49"
         tools:ignore="HardcodedText" />
-
-    <ImageButton
-        android:id="@+id/editarFA"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:adjustViewBounds="false"
-        android:backgroundTint="#00FFFFFF"
-        android:contentDescription="@string/todo"
-        android:scaleType="fitCenter"
-        android:src="@drawable/camara2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.703"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.402"
-        tools:ignore="DuplicateSpeakableTextCheck"
-        tools:srcCompat="@drawable/camara2" />
 
     <TextView
         android:id="@+id/textView51"

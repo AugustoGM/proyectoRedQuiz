@@ -13,7 +13,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextClock;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -33,11 +32,13 @@ public class MenuUserActivity extends AppCompatActivity {
     private TextView nombreUsuario, vidas, mensajeTiempo;
     private String idUser;
     private TextView reloj;
+    String TAG = "Main";
     private CountDownTimer countDownTimer;
     private int tiempoRestante;
     private int vidasDisponibles;
     ImageView profile, editarF;
     String generoU;
+    boolean regenero = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +65,9 @@ public class MenuUserActivity extends AppCompatActivity {
             vidas = findViewById(R.id.vidasUsuario);
 
             reloj = findViewById(R.id.hora);
-            tiempoRestante = 15000;
+            long duration = TimeUnit.MINUTES.toMillis(1);
+
+            //tiempoRestante = 15000;
 
             mensajeVidas();
 
@@ -73,6 +76,7 @@ public class MenuUserActivity extends AppCompatActivity {
             btn_perfil.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    countDownTimer.cancel();
                     Intent index = new Intent(MenuUserActivity.this, Perfil.class);
                     startActivities(new Intent[]{index});
                 }
@@ -105,6 +109,7 @@ public class MenuUserActivity extends AppCompatActivity {
             btn_puntaje.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    countDownTimer.cancel();
                     Intent index = new Intent(MenuUserActivity.this, MiPuntaje.class);
                     startActivities(new Intent[]{index});
                 }
@@ -114,6 +119,7 @@ public class MenuUserActivity extends AppCompatActivity {
             btn_avatar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    countDownTimer.cancel();
                     Intent index = new Intent(MenuUserActivity.this, miavatar.class);
                     startActivities(new Intent[]{index});
                 }
@@ -127,6 +133,7 @@ public class MenuUserActivity extends AppCompatActivity {
                     int vidasDisponibles = Integer.parseInt(vidas.getText().toString().replaceAll("\\D+", ""));
 
                     if (vidasDisponibles > 0) {
+                        countDownTimer.cancel();
                         // El usuario tiene vidas, iniciar el juego
                         Intent index = new Intent(MenuUserActivity.this, PreguntaActivity.class);
                         startActivities(new Intent[]{index});
@@ -155,8 +162,8 @@ public class MenuUserActivity extends AppCompatActivity {
             });
 
             // COUNT
-            // Establecer el tiempo inicial en 5 minutos (300,000 milisegundos)
-            tiempoRestante = 300000;
+            // Establecer el tiempo inicial en 1 minuto (60,000 milisegundos)
+           tiempoRestante = 60000;
 
             // Inicializar el CountDownTimer con el nuevo tiempoRestante
             countDownTimer = new CountDownTimer(tiempoRestante, 1000) {
@@ -167,7 +174,9 @@ public class MenuUserActivity extends AppCompatActivity {
                     if (vidasDisponibles == 5) {
                         // Mostrar "00:00" si vidasDisponibles es igual a 5
                         reloj.setText("00:00");
-                    } else {
+                        reloj.setVisibility(View.GONE);
+                    } else if (vidasDisponibles < 5 && regenero == false){
+                        reloj.setVisibility(View.VISIBLE);
                         // Mostrar el tiempo en minutos y segundos
                         long minutos = TimeUnit.MILLISECONDS.toMinutes(tiempoRestante);
                         long segundos = TimeUnit.MILLISECONDS.toSeconds(tiempoRestante) -
@@ -176,25 +185,38 @@ public class MenuUserActivity extends AppCompatActivity {
                         String tiempoFormato = String.format(Locale.getDefault(), "%02d:%02d", minutos, segundos);
 
                         reloj.setText(tiempoFormato);
+                    } else if (vidasDisponibles < 5 && regenero == true) {
+                        reloj.setText("00:00");
                     }
                 }
 
 
                 @Override
                 public void onFinish() {
-                    // Regenerar una vida y actualizar en la base de datos
+                    countDownTimer.cancel();
                     regenerarVida();
-                    // Reiniciar el contador con el nuevo tiempoRestante
-                    tiempoRestante = 300000; // 5 minutos en milisegundos
-                    countDownTimer.start();
+                    //countDownTimer.start();
+                    //reiniciarTemporizador();
                 }
             };
-
             // Iniciar el contador
             countDownTimer.start();
-
+        // reloj.setVisibility(View.VISIBLE);
 
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Reiniciar el CountDownTimer solo si aún hay vidas disponibles
+        int vidasDisponibles = Integer.parseInt(vidas.getText().toString().replaceAll("\\D+", ""));
+        if (vidasDisponibles < 0) {
+            reiniciarTemporizador();
+            countDownTimer.start();
+        }
+    }
+
+
 
     // Función para verificar la conexión a Internet
     private boolean isInternetAvailable() {
@@ -252,13 +274,14 @@ public class MenuUserActivity extends AppCompatActivity {
                 if (vidasActuales == 5) {
                     mensajeTiempo.setText("¡Vidas Completas!");
                 } else {
-                    mensajeTiempo.setText("Tiempo de regeneración para la próxima vida:");
+                    mensajeTiempo.setText("Tiempo aproximado para la próxima vida:");
                 }
             }
         });
     }
 
 
+    // Método para regenerar una vida y actualizar en la base de datos
     // Método para regenerar una vida y actualizar en la base de datos
     private void regenerarVida() {
         // Obtener las vidas actuales del usuario
@@ -273,6 +296,9 @@ public class MenuUserActivity extends AppCompatActivity {
                     if (vidasActuales < 5) {
                         // Incrementar el número de vidas y actualizar en la base de datos
                         documentReference.update("vidas", vidasActuales + 1);
+
+                        // Reiniciar el temporizador
+                        reiniciarTemporizador();
                     } else {
                         // Detener el contador si el número de vidas es igual a 5
                         countDownTimer.cancel();
@@ -283,6 +309,56 @@ public class MenuUserActivity extends AppCompatActivity {
             }
         });
     }
+
+    // Método para reiniciar el temporizador
+    private void reiniciarTemporizador() {
+        // Cancelar el temporizador si está en ejecución
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
+
+        // Establecer el tiempo inicial en 1 minuto (60,000 milisegundos)
+        tiempoRestante = 60000;
+
+        // Inicializar el CountDownTimer con el nuevo tiempoRestante
+        countDownTimer = new CountDownTimer(tiempoRestante, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                tiempoRestante = (int) millisUntilFinished;
+
+                tiempoRestante = (int) millisUntilFinished;
+
+                if (vidasDisponibles == 5) {
+                    // Mostrar "00:00" si vidasDisponibles es igual a 5
+                    reloj.setText("00:00");
+                    reloj.setVisibility(View.GONE);
+                } else if (vidasDisponibles < 5 && regenero == false){
+                    reloj.setVisibility(View.VISIBLE);
+                    // Mostrar el tiempo en minutos y segundos
+                    long minutos = TimeUnit.MILLISECONDS.toMinutes(tiempoRestante);
+                    long segundos = TimeUnit.MILLISECONDS.toSeconds(tiempoRestante) -
+                            TimeUnit.MINUTES.toSeconds(minutos);
+
+                    String tiempoFormato = String.format(Locale.getDefault(), "%02d:%02d", minutos, segundos);
+
+                    reloj.setText(tiempoFormato);
+                } else if (vidasDisponibles < 5 && regenero == true) {
+                    reloj.setText("00:00");
+                }
+            }
+
+            @Override
+            public void onFinish() {
+                reloj.setText("00:00");
+                countDownTimer.cancel();
+                regenerarVida(); // Llama a la función para regenerar la vida
+            }
+        };
+
+        // Iniciar el temporizador
+        countDownTimer.start();
+    }
+
 
 
     // Método para mostrar el mensaje cuando el usuario no tiene vidas
