@@ -22,22 +22,11 @@
 
             <TextView
                 android:id="@+id/textPregunta"
-                android:layout_width="200dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAlignment="center"
                 android:textColor="@color/black"
-                android:textSize="14dp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/btn_actualizar"
-                android:layout_width="104dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:backgroundTint="#4773DF"
-                android:text="Editar"
-                android:textSize="14sp"
-                tools:ignore="TouchTargetSizeCheck" />
 
         </LinearLayout>
 
@@ -53,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:textColor="@color/black"
-                android:textSize="14dp" />
+                android:textSize="16sp" />
 
             <Button
                 android:id="@+id/btn_eliminar"

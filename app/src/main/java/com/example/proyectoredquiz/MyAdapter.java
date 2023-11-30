@@ -82,7 +82,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             categoria = itemView.findViewById(R.id.textcategoria);
 
             btn_eliminar = itemView.findViewById(R.id.btn_eliminar);
-            btn_actualizar = itemView.findViewById(R.id.btn_actualizar);
         }
 
         void bind(Question question){
@@ -100,33 +99,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                 }
             });
 
-
-            /*
-            btn_actualizar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int position = getAdapterPosition();
-
-                    // Obtén la pregunta seleccionada
-                    Question pregunta = list.get(position);
-                    // Obtén el DocumentSnapshot asociado a la pregunta
-                    DocumentSnapshot documentSnapshot = pregunta.getDocumentSnapshot();
-                    // Obtener el nombre del documento (ID del documento)
-                    String documentName = documentSnapshot.getId();
-
-                    // Crea un Intent para abrir la nueva actividad
-                    Intent intent = new Intent(context, UpdatePregunta.class);
-
-                    // Pasa la información de la pregunta a la nueva actividad
-                    intent.putExtra("PREGUNTA_ID", documentName);
-                    intent.putExtra("PREGUNTA_TEXT", pregunta.getPregunta());
-                    intent.putExtra("CATEGORIA", pregunta.getCategoria());
-
-                    // Inicia la nueva actividad
-                    view.getContext().startActivity(intent);
-
-                }
-            });*/
         }
     }
 
